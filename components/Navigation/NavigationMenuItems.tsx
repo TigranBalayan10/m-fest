@@ -33,7 +33,7 @@ export function NavigationMenuItems() {
                 <NavigationMenuItem>
                     <NavigationMenuTrigger>New Arrivals</NavigationMenuTrigger>
                     <NavigationMenuContent>
-                        <ul className="grid w-[200px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] bg-blue-200">
+                        <ul className="grid w-[200px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] bg-teal-200">
                             {typedCarlist.map((typedCarlist) => (
 
                                 <ListItem
