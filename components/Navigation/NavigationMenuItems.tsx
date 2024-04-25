@@ -4,7 +4,7 @@ import * as React from "react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 import Carlist from "@/lib/Data/CarList.json"
-import { carlist } from "@/lib/types"
+import { CarList } from "@/lib/types"
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/navigation-menu"
 import Image from "next/image"
 
-const typedCarlist: carlist[] = Carlist
+const typedCarlist: CarList[] = Carlist
 
 
 export function NavigationMenuItems() {

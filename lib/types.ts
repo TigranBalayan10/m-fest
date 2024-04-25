@@ -1,4 +1,4 @@
-export interface carlist {
+export interface CarList {
   title: string;
   href: string;
   description: string;
@@ -6,6 +6,9 @@ export interface carlist {
   price: string | number;
   mileage: string;
   year: string;
+  vin: string;
+  exteriorInterior: string;
+  imageCarousel: string[];
 }
 
 export interface searchData {
