@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button } from '../ui/button'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const Hero = () => {
     return (
@@ -12,18 +13,20 @@ const Hero = () => {
                             Welcome to <span className="text-blue-800">M Fest MotorSport</span>
                         </h2>
                         <p className="mt-2 text-sm text-gray-500 md:text-base">
-                        Welcome to M Fest MotorSport, your home for luxury BMW vehicles. Explore our iconic models and start your BMW journey today!
+                            Welcome to M Fest MotorSport, your home for luxury BMW vehicles. Explore our iconic models and start your BMW journey today!
                         </p>
                         <div className="flex justify-center lg:justify-start mt-6">
-                            <Button>Browse Inventory</Button>
+                            <Link href="/carsforsale">
+                                <Button>Browse Inventory</Button>
+                            </Link>
                             <Button variant="ghost" className="ml-2">Learn More</Button>
                         </div>
                     </div>
                 </div>
                 <div className="hidden lg:block lg:w-1/2" style={{ clipPath: "polygon(10% 0, 100% 0%, 100% 100%, 0 100%)" }}>
-                        <div className="">
-                            <Image src="/bmw-landing-page.jpg" width={600} height={300} alt='BMW landing page pic' />
-                        </div>
+                    <div className="">
+                        <Image src="/bmw-landing-page.jpg" width={600} height={300} alt='BMW landing page pic' />
+                    </div>
                 </div>
             </div>
         </div>
