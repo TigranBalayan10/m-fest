@@ -1,0 +1,36 @@
+// schema.prisma
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider  = "postgresql"
+    url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+    directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+
+model Image {
+    id        String  @id @default(cuid())
+    url       String
+    carListId String
+    CarList   CarList @relation(fields: [carListId], references: [id])
+    createdAt DateTime @default(now()) @map(name: "created_at")
+    updatedAt DateTime @updatedAt @map(name: "updated_at")
+}
+
+model CarList {
+    id               String  @id @default(cuid())
+    title            String
+    make             String
+    description      String
+    price            String
+    milage           String
+    vin              String
+    year             String
+    exteriorInterior String
+    Images           Image[]
+    createdAt        DateTime @default(now()) @map(name: "created_at")
+    updatedAt        DateTime @updatedAt @map(name: "updated_at")
+}
