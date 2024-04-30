@@ -2,7 +2,7 @@
 import { CarListSchema } from '@/lib/zodSchema';
 import { useForm } from 'react-hook-form';
 import CustomFormField from './CustomFormField';
-import { CldUploadWidget } from 'next-cloudinary';
+import { CldUploadWidget, CldImage } from 'next-cloudinary';
 import {
     Form
 } from "@/components/ui/form"
@@ -17,8 +17,6 @@ const CarFormSchema = CarListSchema;
 
 const InputForm = () => {
     const [imageData, setImageData] = useState<string[]>([]);
-
-    console.log(imageData);
 
     const form = useForm<z.infer<typeof CarFormSchema>>({
         resolver: zodResolver(CarFormSchema),
@@ -63,24 +61,34 @@ const InputForm = () => {
                     <CustomFormField control={form.control} name="vin" placeholder="VIN" />
                     <CustomFormField control={form.control} name="year" placeholder="Year" />
                     <CustomFormField control={form.control} name="exteriorInterior" placeholder="Exterior/Interior" />
-                    <Button type="submit">Submit</Button>
-                    <CldUploadWidget uploadPreset="n8ak9rol" onSuccess={(results) => {
-                        if (results.info && typeof results.info === 'object') {
-                            const publicId = results.info.public_id;
-                            if (publicId) {
-                                const imageUrl = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${publicId}`;
-                                setImageData(prevState => [...prevState, imageUrl]);
+                    <div className="flex flex-col gap-2">
+
+                        <CldUploadWidget uploadPreset="n8ak9rol" onSuccess={(results) => {
+                            if (results.info && typeof results.info === 'object') {
+                                const publicId = results.info.public_id;
+                                if (publicId) {
+                                    setImageData(prevState => [...prevState, publicId]);
+                                }
                             }
-                        }
-                    }}>
-                        {({ open }) => {
-                            return (
-                                <Button type='button' onClick={() => open()}>
-                                    Upload
-                                </Button>
-                            );
-                        }}
-                    </CldUploadWidget>
+                        }}>
+                            {({ open }) => {
+                                return (
+                                    <Button type='button' variant="secondary" onClick={() => open()}>
+                                        Upload Images
+                                    </Button>
+                                );
+                            }}
+                        </CldUploadWidget>
+                        <div className="flex flex-wrap gap-2">
+                            {imageData.map((imageUrl, index) => {
+                                console.log(imageUrl);
+                                return (
+                                    <CldImage key={index} src={imageUrl} width="100" height="100" crop="fill" alt='' />
+                                );
+                            })}
+                        </div>
+                        <Button type="submit">Submit</Button>
+                    </div>
                 </form>
             </Form>
         </div>
