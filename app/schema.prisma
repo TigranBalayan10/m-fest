@@ -12,12 +12,11 @@ datasource db {
 
 
 model Image {
-    id        String  @id @default(cuid())
-    url       String
-    carListId String
-    CarList   CarList @relation(fields: [carListId], references: [id])
-    createdAt DateTime @default(now()) @map(name: "created_at")
-    updatedAt DateTime @updatedAt @map(name: "updated_at")
+  id        Int      @id @default(autoincrement())
+  url       String?
+  publicId  String?
+  carListId String
+  carList   CarList  @relation(fields: [carListId], references: [id])
 }
 
 model CarList {
@@ -30,6 +29,7 @@ model CarList {
     vin              String
     year             String
     exteriorInterior String
+    coverImage       String?
     Images           Image[]
     createdAt        DateTime @default(now()) @map(name: "created_at")
     updatedAt        DateTime @updatedAt @map(name: "updated_at")
