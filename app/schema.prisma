@@ -10,17 +10,8 @@ datasource db {
     directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
-
-model Image {
-  id        Int      @id @default(autoincrement())
-  url       String?
-  publicId  String?
-  carListId String
-  carList   CarList  @relation(fields: [carListId], references: [id])
-}
-
 model CarList {
-    id               String  @id @default(cuid())
+    id               String   @id @default(cuid())
     title            String
     make             String
     description      String
@@ -29,8 +20,7 @@ model CarList {
     vin              String
     year             String
     exteriorInterior String
-    coverImage       String?
-    Images           Image[]
+    imageUrls        String[]
     createdAt        DateTime @default(now()) @map(name: "created_at")
     updatedAt        DateTime @updatedAt @map(name: "updated_at")
 }
