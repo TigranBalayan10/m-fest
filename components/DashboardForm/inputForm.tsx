@@ -6,6 +6,14 @@ import { CldUploadWidget, CldImage } from 'next-cloudinary';
 import {
     Form
 } from "@/components/ui/form"
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card"
 import { z } from 'zod';
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from '../ui/button';
@@ -49,10 +57,17 @@ const InputForm = () => {
     }
 
     return (
-        <div className='container bg-teal-300 p-4 flex flex-col'>
-            <h1>Car Form</h1>
+        <Card className='bg-slate-300 p-4 flex flex-col items-center'>
+            <CardHeader className='mb-3 items-center'>
+                <CardTitle>
+                    Add Car
+                </CardTitle>
+                <CardDescription>
+                    Add a new car to the inventory
+                </CardDescription>
+            </CardHeader>
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-2">
                     <CustomFormField control={form.control} name="title" placeholder="Title" />
                     <CustomFormField control={form.control} name="make" placeholder="Make" />
                     <CustomFormField control={form.control} name="description" placeholder="Description" />
@@ -73,7 +88,7 @@ const InputForm = () => {
                         }}>
                             {({ open }) => {
                                 return (
-                                    <Button type='button' variant="secondary" onClick={() => open()}>
+                                    <Button type='button' variant="outline" onClick={() => open()}>
                                         Upload Images
                                     </Button>
                                 );
@@ -91,7 +106,7 @@ const InputForm = () => {
                     </div>
                 </form>
             </Form>
-        </div>
+        </Card>
     )
 
 }
