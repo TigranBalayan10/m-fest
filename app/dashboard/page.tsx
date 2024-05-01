@@ -4,6 +4,8 @@ import React from 'react';
 import InputForm from '@/components/DashboardForm/inputForm';
 import DataCard from '@/components/DashboardForm/DataCard';
 import DataTable from '@/components/DashboardForm/DataTable';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 
 
@@ -15,8 +17,10 @@ const Dashboard = () => {
                 <div className='component w-full sm:w-1/2 md:w-1/4 p-2'>
                     <DataCard title="Cars for Sale" description="Active cars for sale" content="135 BMWs" />
                 </div>
-                <div className='component w-full sm:w-1/2 md:w-1/4 p-2'>                    
-                <DataCard title="Cars for Sale" description="Active cars for sale" content="135 BMWs" />
+                <div className='component w-full sm:w-1/2 md:w-1/4 p-2'>
+                    <Link href="/dashboard/add-inventory">
+                        <DataCard title="Add Cars for sale" description="Click here to add inventory" content="First image will be cover image" />
+                    </Link>
                 </div>
                 <div className='component w-full sm:w-1/2 md:w-1/4 p-2'>
                     <DataCard title="Cars for Sale" description="Active cars for sale" content="135 BMWs" />
@@ -25,13 +29,8 @@ const Dashboard = () => {
                     <DataCard title="Cars for Sale" description="Active cars for sale" content="135 BMWs" />
                 </div>
             </div>
-            <div className='flex flex-row justify-between flex-wrap'>
-                <div className='component w-full sm:w-1/2 p-2'>
-                    <InputForm />
-                </div>
-                <div className='component w-full sm:w-1/2 p-2'>
-                    <DataTable />
-                </div>
+            <div className='w-full p-2'>
+                <DataTable />
             </div>
         </div>
     );

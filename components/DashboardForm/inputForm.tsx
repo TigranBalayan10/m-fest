@@ -8,12 +8,11 @@ import {
 } from "@/components/ui/form"
 import {
     Card,
-    CardContent,
     CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
+
 import { z } from 'zod';
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from '../ui/button';
@@ -51,13 +50,19 @@ const InputForm = () => {
                 body: JSON.stringify({ ...values, imageUrl: imageData })
             })
             console.log(response)
+            if (response.ok) {
+                alert('Car added successfully');
+                location.reload();
+            } else {
+                alert('Car could not be added')
+            }
         } catch (error) {
             console.error(error)
         }
     }
 
     return (
-        <Card className='bg-slate-300 p-4 flex flex-col items-center'>
+        <Card className='bg-slate-300 p-4 flex flex-col items-center w-full sm:w-1/2'>
             <CardHeader className='mb-3 items-center'>
                 <CardTitle>
                     Add Car
