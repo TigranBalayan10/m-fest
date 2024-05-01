@@ -54,9 +54,11 @@ const CarCards = () => {
                                                 <CarouselContent>
                                                     {car.imageCarousel.map((imageUrl, carouselIndex) => (
                                                         <CarouselItem key={carouselIndex}>
-                                                                    <CardContent>
-                                                                        <Image src={imageUrl}  width={1024} height={768} alt={`Carousel image ${index + 1}`} />
-                                                                    </CardContent>
+                                                                <CardContent className="flex items-center justify-center">
+                                                                    <div className="max-w-full max-h-full overflow-hidden">
+                                                                        <Image src={imageUrl} width={1000} height={768} alt={`Carousel image ${index + 1}`} />
+                                                                    </div>
+                                                                </CardContent>
                                                         </CarouselItem>
                                                     ))}
                                                 </CarouselContent>
@@ -86,7 +88,7 @@ const CarCards = () => {
                     </Card>
                 ))}
             </div>
-        </div>
+        </div >
     );
 }
 
