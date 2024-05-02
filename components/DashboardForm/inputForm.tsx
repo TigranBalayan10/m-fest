@@ -16,14 +16,12 @@ import {
 import { z } from 'zod';
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from '../ui/button';
-import { useState } from 'react';
 
 
 const CarFormSchema = CarListSchema;
 
 
 const InputForm = () => {
-    const [imageData, setImageData] = useState<string[]>([]);
 
     const form = useForm<z.infer<typeof CarFormSchema>>({
         resolver: zodResolver(CarFormSchema),
@@ -35,21 +33,22 @@ const InputForm = () => {
             milage: "",
             vin: "",
             year: "",
-            exteriorInterior: ""
+            exteriorInterior: "",
+            imageUrls: []
         },
     })
 
     async function onSubmit(values: z.infer<typeof CarFormSchema>) {
-
+        console.log(values, "values")
         try {
             const response = await fetch('/api/add-car', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ ...values, imageUrl: imageData })
+                body: JSON.stringify({ values })
             })
-            console.log(response)
+            console.log(response, "response")
             if (response.ok) {
                 alert('Car added successfully');
                 location.reload();
@@ -87,7 +86,9 @@ const InputForm = () => {
                             if (results.info && typeof results.info === 'object') {
                                 const publicId = results.info.public_id;
                                 if (publicId) {
-                                    setImageData(prevState => [...prevState, publicId]);
+                                    const prevImageUrls = form.getValues('imageUrls');
+                                    form.setValue('imageUrls', [...prevImageUrls, publicId]);
+                                    console.log(form.getValues('imageUrls'));
                                 }
                             }
                         }}>
@@ -100,7 +101,7 @@ const InputForm = () => {
                             }}
                         </CldUploadWidget>
                         <div className="flex flex-wrap gap-2">
-                            {imageData.map((imageUrl, index) => {
+                            {form.watch('imageUrls').map((imageUrl: string, index: number) => {
                                 console.log(imageUrl);
                                 return (
                                     <CldImage key={index} src={imageUrl} width="100" height="100" crop="fill" alt='' />

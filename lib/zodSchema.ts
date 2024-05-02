@@ -13,4 +13,5 @@ export const CarListSchema = z.object({
   exteriorInterior: z
     .string()
     .min(1, { message: "Exterior/Interior is required" }),
+  imageUrls: z.array(z.string()).min(2, { message: "At least 2 Images are required" }),
 });
