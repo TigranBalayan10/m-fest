@@ -13,7 +13,7 @@ interface CarCardProps {
 }
 
 const CarCard: React.FC<CarCardProps> = ({ car }) => (
-  <Card className="w-1/3">
+  <Card>
     <CardHeader>
       <CardTitle>{car.year} {car.title}</CardTitle>
       <CardDescription>{car.milage} mi.</CardDescription>
@@ -21,9 +21,9 @@ const CarCard: React.FC<CarCardProps> = ({ car }) => (
     <CardContent>
       <Dialog>
         <DialogTrigger>
-          <CldImage src={car.imageUrls[0]} width="480" height="240" alt={car.title} />
+          <CldImage src={car.imageUrls[0]} width="480" height="240" crop="fill" alt={car.title} />
         </DialogTrigger>
-        <DialogContent className="w-3/4 h-3/4 items-center  max-w-none bg-transparent border-none">
+        <DialogContent className="w-3/4 h-3/4 items-center  max-w-none bg-transparent border-none shadow-none">
           <DialogHeader>
             <DialogTitle className="text-white text-center mb-5">{car.title}</DialogTitle>
             <DialogDescription className="w-3/4 mx-auto my-auto">

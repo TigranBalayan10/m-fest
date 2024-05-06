@@ -8,25 +8,55 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { Card } from "@/components/ui/card"
-import prisma from "@/lib/prisma"
 import { Button } from "../ui/button"
-import { OctagonX, Settings } from "lucide-react"
+import {
+    Avatar,
+    AvatarFallback,
+} from "@/components/ui/avatar"
+import { Settings } from "lucide-react"
+import { CldImage } from "next-cloudinary"
+import AlertDelete from "../CustomUi/AlertDelete"
+import { useEffect, useState } from "react"
 
-async function getCarList() {
-    const carData = await prisma.carList.findMany()
-    return carData
+interface Car {
+    id: string;
+    title: string;
+    vin: string;
+    make: string;
+    milage: string;
+    year: string;
+    exteriorInterior: string;
+    price: string;
+    imageUrls: string[];
+    createdAt: string;
+    updatedAt: string;
+
 }
 
-const DataTable = async () => {
-    const carData = await getCarList()
-    console.log(carData)
+  
+  const DataTable =  () => {
+    const [carData, setCarData] = useState<Car[]>([]);
+
+  useEffect(() => {
+    async function getCarList() {
+      const response = await fetch('http://localhost:3000/api/inventory');
+      const data = await response.json();
+      setCarData(data.carData);
+    }
+
+    getCarList();
+  }, []);
+
+
     return (
         <Card className='bg-slate-300 p-4 flex flex-col items-center'>
+            
             <Table>
                 <TableCaption>A list of your recently added cars for sale</TableCaption>
                 <TableHeader>
                     <TableRow>
-                        <TableHead className="w-[100px]">Make</TableHead>
+                        <TableHead className="w-[100px]">Image</TableHead>
+                        <TableHead >Make</TableHead>
                         <TableHead>VIN</TableHead>
                         <TableHead>Description</TableHead>
                         <TableHead>Milage</TableHead>
@@ -41,10 +71,11 @@ const DataTable = async () => {
                     {carData.map((car) => {
                         const dateOptions: Intl.DateTimeFormatOptions = {
                             year: 'numeric',
-                            month: 'long',
-                            day: 'numeric',
-                            hour: '2-digit',
-                            minute: '2-digit'
+                            month: '2-digit',
+                            day: '2-digit',
+                            hour: 'numeric',
+                            minute: '2-digit',
+                            hour12: true
                         };
 
                         const carWithDateString = {
@@ -55,6 +86,14 @@ const DataTable = async () => {
 
                         return (
                             <TableRow key={car.id}>
+                                <TableCell>
+                                    <Avatar>
+                                        <CldImage src={car.imageUrls[0]} width="100" height="100" crop="fill" alt={car.title} />
+                                        <AvatarFallback>
+                                            {car.title.slice(0, 2)}
+                                        </AvatarFallback>
+                                    </Avatar>
+                                </TableCell>
                                 <TableCell>{car.title}</TableCell>
                                 <TableCell>{car.vin}</TableCell>
                                 <TableCell>{car.make}</TableCell>
@@ -67,11 +106,9 @@ const DataTable = async () => {
                                 </TableCell>
                                 <TableCell className="text-right">
                                     <Button variant="ghost" size="icon">
-                                    <Settings color="#52489d" />
+                                        <Settings color="black" />
                                     </Button>
-                                    <Button variant="ghost" size="icon">
-                                        <OctagonX color="red" />
-                                    </Button>
+                                <AlertDelete title={car.title} carId={car.id} />
                                 </TableCell>
                             </TableRow>
                         )
