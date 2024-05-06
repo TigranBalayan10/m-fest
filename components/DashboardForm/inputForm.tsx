@@ -14,18 +14,21 @@ import {
 } from "@/components/ui/card"
 
 import { z } from 'zod';
+import { v2 as cloudinary } from 'cloudinary';
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useRouter } from 'next/navigation';
 import { Button } from '../ui/button';
 
 
 const CarFormSchema = CarListSchema;
 
 
-const InputForm = () => {
+const InputForm = ({ mode = 'add', initialData }: { mode?: 'add' | 'edit', initialData?: z.infer<typeof CarFormSchema> }) => {
+    const router = useRouter();
 
     const form = useForm<z.infer<typeof CarFormSchema>>({
         resolver: zodResolver(CarFormSchema),
-        defaultValues: {
+        defaultValues: initialData || {
             title: "",
             make: "",
             description: "",
@@ -41,22 +44,49 @@ const InputForm = () => {
     async function onSubmit(values: z.infer<typeof CarFormSchema>) {
         console.log(values, "values")
         try {
-            const response = await fetch('/api/add-car', {
-                method: 'POST',
+            // Determine the API endpoint and the HTTP method based on the mode
+            const url = mode === 'add' ? '/api/add-car' : `/api/update-inventory/${initialData?.id}`;
+            const method = mode === 'add' ? 'POST' : 'PUT';
+
+            const response = await fetch(url, {
+                method,
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ values })
+                body: JSON.stringify(values)
             })
             console.log(response, "response")
             if (response.ok) {
-                alert('Car added successfully');
-                location.reload();
+                alert(`Car ${mode === 'add' ? 'added' : 'updated'} successfully`);
+                router.push("/dashboard");
             } else {
-                alert('Car could not be added')
+                alert(`Car could not be ${mode === 'add' ? 'added' : 'updated'}`);
             }
         } catch (error) {
             console.error(error)
+        }
+    }
+
+    async function handleRemoveImage(imageUrl: string) {
+        try {
+            const response = await fetch('/api/delete-image', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ imageUrl }),
+            });
+            console.log(response, "response")
+            if (response.ok) {
+                // Remove the image URL from the form
+                const imageUrls = form.getValues('imageUrls');
+                const newImageUrls = imageUrls.filter(url => url !== imageUrl);
+                form.setValue('imageUrls', newImageUrls);
+            } else {
+                console.error('Failed to delete image from Cloudinary');
+            }
+        } catch (error) {
+            console.error(error);
         }
     }
 
@@ -64,10 +94,10 @@ const InputForm = () => {
         <Card className='bg-slate-300 p-4 flex flex-col items-center w-full sm:w-1/2'>
             <CardHeader className='mb-3 items-center'>
                 <CardTitle>
-                    Add Car
+                    {mode === 'add' ? 'Add Inventory' : 'Edit Inventory'}
                 </CardTitle>
                 <CardDescription>
-                    Add a new car to the inventory
+                    {mode === 'add' ? 'Fill out the form below to add inventory' : 'Edit the form below to edit inventory'}
                 </CardDescription>
             </CardHeader>
             <Form {...form}>
@@ -102,13 +132,27 @@ const InputForm = () => {
                         </CldUploadWidget>
                         <div className="flex flex-wrap gap-2">
                             {form.watch('imageUrls').map((imageUrl: string, index: number) => {
-                                console.log(imageUrl);
                                 return (
-                                    <CldImage key={index} src={imageUrl} width="100" height="100" crop="fill" alt='' />
+                                    <div key={index} className="relative">
+                                        <CldImage key={index} src={imageUrl} width="100" height="100" crop="fill" alt='' />
+                                        <Button
+                                            type='button'
+                                            variant="destructive"
+                                            size="badge"
+                                            className="absolute top-0 right-0"
+
+                                            onClick={() => handleRemoveImage(imageUrl)}
+                                        >
+                                            X
+                                        </Button>
+                                    </div>
                                 );
                             })}
                         </div>
-                        <Button type="submit">Submit</Button>
+                        {mode === 'add' && <Button type="submit">Add Inventory</Button>}
+                        {mode === 'add' && <Button type="button" onClick={() => router.push("/dashboard")}>Cancel</Button>}
+                        {mode === 'edit' && <Button type="submit">Save Changes</Button>}
+                        {mode === 'edit' && <Button type="button" onClick={() => router.push("/dashboard")}>Cancel</Button>}
                     </div>
                 </form>
             </Form>

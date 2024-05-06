@@ -9,7 +9,7 @@ const AddInventory = () => {
             </div>
             <div className='container mx-auto px-4 sm:px-0 bg-slate-700 p-4 flex flex-col gap-4 items-center justify-center'>
 
-                <InputForm />
+                <InputForm mode="add" />
             </div>
         </div>
     )

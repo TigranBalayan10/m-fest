@@ -15,8 +15,9 @@ import {
 } from "@/components/ui/avatar"
 import { Settings } from "lucide-react"
 import { CldImage } from "next-cloudinary"
-import AlertDelete from "../CustomUi/AlertDelete"
+import AlertDelete from "@/components/CustomUi/AlertDelete"
 import { useEffect, useState } from "react"
+import Link from "next/link"
 
 interface Car {
     id: string;
@@ -33,24 +34,24 @@ interface Car {
 
 }
 
-  
-  const DataTable =  () => {
+
+const DataTable = () => {
     const [carData, setCarData] = useState<Car[]>([]);
 
-  useEffect(() => {
-    async function getCarList() {
-      const response = await fetch('http://localhost:3000/api/inventory');
-      const data = await response.json();
-      setCarData(data.carData);
-    }
+    useEffect(() => {
+        async function getCarList() {
+            const response = await fetch('http://localhost:3000/api/inventory');
+            const data = await response.json();
+            setCarData(data.carData);
+        }
 
-    getCarList();
-  }, []);
+        getCarList();
+    }, []);
 
 
     return (
         <Card className='bg-slate-300 p-4 flex flex-col items-center'>
-            
+
             <Table>
                 <TableCaption>A list of your recently added cars for sale</TableCaption>
                 <TableHeader>
@@ -106,9 +107,11 @@ interface Car {
                                 </TableCell>
                                 <TableCell className="text-right">
                                     <Button variant="ghost" size="icon">
-                                        <Settings color="black" />
+                                        <Link href={`/dashboard/edit-inventory/${car.id}`}>
+                                            <Settings color="black" />
+                                        </Link>
                                     </Button>
-                                <AlertDelete title={car.title} carId={car.id} />
+                                    <AlertDelete title={car.title} carId={car.id} />
                                 </TableCell>
                             </TableRow>
                         )
