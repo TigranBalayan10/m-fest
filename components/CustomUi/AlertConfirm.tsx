@@ -38,7 +38,7 @@ const AlertConfirm = ({ title, description }: AlertConfirmProps) => {
                     {title === "Success" ? (
                         <AlertDialogAction onClick={() => router.push("/dashboard")}>OK</AlertDialogAction>
                     ) : (
-                        <AlertDialogAction className="text-red-500">Close</AlertDialogAction>
+                        <AlertDialogAction className="text-red-500" onClick={() => router.push("/dashboard")}>Close</AlertDialogAction>
                     )}
                 </AlertDialogFooter>
             </AlertDialogContent>

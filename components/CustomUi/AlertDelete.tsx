@@ -31,7 +31,7 @@ export default function AlertDelete({ title, carId }: AlertDeleteProps) {
         method: 'DELETE',
       });
       if (response.ok) {
-        router.refresh();
+        router.push("/dashboard");
       }
     } catch (error) {
       console.error('Failed to delete car:', error);

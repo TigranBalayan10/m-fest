@@ -30,7 +30,7 @@ const InputForm = ({ mode = 'add', initialData }: { mode?: 'add' | 'edit', initi
 
     const [showAlert, setShowAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState('');
-    const [alertTitle, setAlertTitle] = useState('');
+    const [alertTitle, setAlertTitle] = useState('Success');
 
     const form = useForm<z.infer<typeof CarFormSchema>>({
         resolver: zodResolver(CarFormSchema),
@@ -167,7 +167,7 @@ const InputForm = ({ mode = 'add', initialData }: { mode?: 'add' | 'edit', initi
                     </form>
                 </Form>
             </Card>
-            {showAlert && (setAlertTitle === 'Success' ? <AlertConfirm title={alertTitle} description={alertMessage} /> : <AlertConfirm title={alertTitle} description={alertMessage} />)}
+            {showAlert && (alertTitle ? <AlertConfirm title={alertTitle} description={alertMessage} /> : <AlertConfirm title={alertTitle} description={alertMessage} />)}
         </>
     )
 
