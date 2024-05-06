@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/card"
 
 import { z } from 'zod';
-import { v2 as cloudinary } from 'cloudinary';
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from 'next/navigation';
 import { Button } from '../ui/button';
@@ -42,7 +41,7 @@ const InputForm = ({ mode = 'add', initialData }: { mode?: 'add' | 'edit', initi
     })
 
     async function onSubmit(values: z.infer<typeof CarFormSchema>) {
-        console.log(values, "values")
+
         try {
             // Determine the API endpoint and the HTTP method based on the mode
             const url = mode === 'add' ? '/api/add-car' : `/api/update-inventory/${initialData?.id}`;
@@ -53,9 +52,8 @@ const InputForm = ({ mode = 'add', initialData }: { mode?: 'add' | 'edit', initi
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(values)
+                body: JSON.stringify({ values })
             })
-            console.log(response, "response")
             if (response.ok) {
                 alert(`Car ${mode === 'add' ? 'added' : 'updated'} successfully`);
                 router.push("/dashboard");

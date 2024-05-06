@@ -4,14 +4,12 @@ import prisma from "@/lib/prisma";
 export async function PUT(request: any, { params }: { params: any }) {
   const id = params.id;
   // Parse the body of the request
-  let carData = await request.json();
-  console.log({ id }, "id");
-  console.log({ carData }, "carData"); // Log the carData object
+  let res = await request.json();
+  const { title, make, description, price, milage, vin, year, exteriorInterior, imageUrls } = res.values;
 
   const updatedCar = await prisma.carList.update({
     where: { id: id },
-    data: { ...carData },
+    data: { title, make, description, price, milage, vin, year, exteriorInterior, imageUrls },
   });
-  console.log({ updatedCar }, "updatedCar");
   return NextResponse.json({ updatedCar });
 }
