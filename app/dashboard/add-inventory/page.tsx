@@ -8,7 +8,7 @@ const AddInventory = () => {
                 <h2 className='text-xl sm:text-2xl text-white'>Fill out the form below to add inventory</h2>
             </div>
             <div className='container mx-auto px-4 sm:px-0 bg-slate-700 p-4 flex flex-col gap-4 items-center justify-center'>
-
+            
                 <InputForm mode="add" />
             </div>
         </div>
