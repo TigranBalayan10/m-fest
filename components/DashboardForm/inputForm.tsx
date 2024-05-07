@@ -19,6 +19,7 @@ import { useRouter } from 'next/navigation';
 import { Button } from '../ui/button';
 import AlertConfirm from '@/components/CustomUi/AlertConfirm';
 import { useState } from 'react';
+import { FaSpinner } from 'react-icons/fa6';
 
 
 
@@ -46,6 +47,10 @@ const InputForm = ({ mode = 'add', initialData }: { mode?: 'add' | 'edit', initi
             imageUrls: []
         },
     })
+
+    const { reset } = form;
+
+    const { errors, isValid, isDirty, isSubmitting } = form.formState;
 
     async function onSubmit(values: z.infer<typeof CarFormSchema>) {
 
@@ -159,9 +164,21 @@ const InputForm = ({ mode = 'add', initialData }: { mode?: 'add' | 'edit', initi
                                     );
                                 })}
                             </div>
-                            {mode === 'add' && <Button type="submit">Add Inventory</Button>}
+                            {mode === 'add' && (
+                                <Button disabled={!isDirty} type="submit">
+                                    {isSubmitting ? 'Adding...' : 'Add Inventory'}
+                                    {isSubmitting && <FaSpinner className="animate-spin ml-2" />}
+                                </Button>
+                            )}
+                            {mode === 'add' && <Button type="button" onClick={() => reset()}>Reset</Button>}
                             {mode === 'add' && <Button type="button" onClick={() => router.push("/dashboard")}>Cancel</Button>}
-                            {mode === 'edit' && <Button type="submit">Save Changes</Button>}
+                            {mode === 'edit' && (
+                                <Button disabled={!isDirty} type="submit">
+                                    {isSubmitting ? 'Saving...' : 'Save Changes'}
+                                    {isSubmitting && <FaSpinner className="animate-spin ml-2" />}
+                                </Button>
+                            )}
+                            {mode === 'edit' && <Button type="button" onClick={() => reset()}>Reset</Button>}
                             {mode === 'edit' && <Button type="button" onClick={() => router.push("/dashboard")}>Cancel</Button>}
                         </div>
                     </form>
