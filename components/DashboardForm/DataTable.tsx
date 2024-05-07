@@ -18,6 +18,7 @@ import { CldImage } from "next-cloudinary"
 import AlertDelete from "@/components/CustomUi/AlertDelete"
 import { useEffect, useState } from "react"
 import Link from "next/link"
+import DataTableSkeleton from "@/components/DashboardForm/DataTableSkeleton"
 
 interface Car {
     id: string;
@@ -37,16 +38,20 @@ interface Car {
 
 const DataTable = () => {
     const [carData, setCarData] = useState<Car[]>([]);
+    const [loadingCarData, setLoadingCarData] = useState(true);
 
     useEffect(() => {
         async function getCarList() {
             const response = await fetch('http://localhost:3000/api/inventory');
             const data = await response.json();
             setCarData(data.carData);
+            setLoadingCarData(false);
         }
 
         getCarList();
     }, []);
+
+
 
 
     return (
@@ -69,56 +74,62 @@ const DataTable = () => {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {carData.map((car) => {
-                        const dateOptions: Intl.DateTimeFormatOptions = {
-                            year: 'numeric',
-                            month: '2-digit',
-                            day: '2-digit',
-                            hour: 'numeric',
-                            minute: '2-digit',
-                            hour12: true
-                        };
+                    {loadingCarData ? (
+                        <DataTableSkeleton/>
+                    ) : (
 
-                        const carWithDateString = {
-                            ...car,
-                            createdAt: new Intl.DateTimeFormat('en-US', dateOptions).format(new Date(car.createdAt)),
-                            updatedAt: new Intl.DateTimeFormat('en-US', dateOptions).format(new Date(car.updatedAt)),
-                        };
+                        carData.map((car) => {
+                            const dateOptions: Intl.DateTimeFormatOptions = {
+                                year: 'numeric',
+                                month: '2-digit',
+                                day: '2-digit',
+                                hour: 'numeric',
+                                minute: '2-digit',
+                                hour12: true
+                            };
 
-                        return (
-                            <TableRow key={car.id}>
-                                <TableCell>
-                                    <Avatar>
-                                        <CldImage src={car.imageUrls[0]} width="100" height="100" crop="fill" alt={car.title} />
-                                        <AvatarFallback>
-                                            {car.title.slice(0, 2)}
-                                        </AvatarFallback>
-                                    </Avatar>
-                                </TableCell>
-                                <TableCell>{car.title}</TableCell>
-                                <TableCell>{car.vin}</TableCell>
-                                <TableCell>{car.make}</TableCell>
-                                <TableCell>{car.milage}</TableCell>
-                                <TableCell>{car.year}</TableCell>
-                                <TableCell>{car.exteriorInterior}</TableCell>
-                                <TableCell>${car.price}</TableCell>
-                                <TableCell className="text-right">
-                                    {carWithDateString.createdAt}
-                                </TableCell>
-                                <TableCell className="text-right">
-                                    <Button variant="ghost" size="icon">
-                                        <Link href={`/dashboard/edit-inventory/${car.id}`}>
-                                            <Settings color="black" />
-                                        </Link>
-                                    </Button>
-                                    <AlertDelete title={car.title} carId={car.id} />
-                                </TableCell>
-                            </TableRow>
-                        )
-                    })}
+                            const carWithDateString = {
+                                ...car,
+                                createdAt: new Intl.DateTimeFormat('en-US', dateOptions).format(new Date(car.createdAt)),
+                                updatedAt: new Intl.DateTimeFormat('en-US', dateOptions).format(new Date(car.updatedAt)),
+                            };
+
+                            return (
+
+                                <TableRow key={car.id}>
+                                    <TableCell>
+                                        <Avatar>
+                                            <CldImage src={car.imageUrls[0]} width="100" height="100" crop="fill" alt={car.title} />
+                                            <AvatarFallback>
+                                                {car.title.slice(0, 2)}
+                                            </AvatarFallback>
+                                        </Avatar>
+                                    </TableCell>
+                                    <TableCell>{car.title}</TableCell>
+                                    <TableCell>{car.vin}</TableCell>
+                                    <TableCell>{car.make}</TableCell>
+                                    <TableCell>{car.milage}</TableCell>
+                                    <TableCell>{car.year}</TableCell>
+                                    <TableCell>{car.exteriorInterior}</TableCell>
+                                    <TableCell>${car.price}</TableCell>
+                                    <TableCell className="text-right">
+                                        {carWithDateString.createdAt}
+                                    </TableCell>
+                                    <TableCell className="text-right">
+                                        <Button variant="ghost" size="icon">
+                                            <Link href={`/dashboard/edit-inventory/${car.id}`}>
+                                                <Settings color="black" />
+                                            </Link>
+                                        </Button>
+                                        <AlertDelete title={car.title} carId={car.id} />
+                                    </TableCell>
+                                </TableRow>
+                            )
+                        })
+                    )}
                 </TableBody>
             </Table>
-        </Card>
+        </Card >
     )
 }
 
