@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import cloudinaryInstance from "@/lib/cloudinary";
+import cloudinary from "@/lib/cloudinary";
 
 export async function DELETE (request: any, {params}: {params: any}){
     const id = params.id;
@@ -17,7 +17,7 @@ export async function DELETE (request: any, {params}: {params: any}){
         // Delete each image from Cloudinary
     for (const imageUrl of imageUrls) {
         console.log(`Deleting image from Cloudinary: ${imageUrl}`);
-        await cloudinaryInstance.uploader?.destroy(imageUrl);
+        await cloudinary.uploader.destroy(imageUrl);
         console.log(`Deleted image from Cloudinary: ${imageUrl}`);
     }
     // Delete the car data
