@@ -14,7 +14,7 @@ model CarList {
     id               String   @id @default(cuid())
     title            String
     make             String
-    description      String? 
+    description      String 
     price            String
     milage           String
     vin              String

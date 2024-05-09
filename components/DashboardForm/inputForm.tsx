@@ -52,7 +52,7 @@ const InputForm = ({ mode = 'add', initialData }: { mode?: 'add' | 'edit', initi
 
     const { reset } = form;
 
-    const { errors, isValid, isDirty, isSubmitting } = form.formState;
+    const { isDirty, isSubmitting } = form.formState;
 
     async function onSubmit(values: z.infer<typeof CarFormSchema>) {
 

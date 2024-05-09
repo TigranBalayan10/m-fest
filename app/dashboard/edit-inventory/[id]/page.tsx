@@ -7,7 +7,8 @@ async function getCar(id: string) {
             id: id
         }
     })
-    return car || undefined
+    
+    return car 
 }
 
 const EditInventory = async ({ params }: { params: { id: string } }) => {
@@ -15,7 +16,7 @@ const EditInventory = async ({ params }: { params: { id: string } }) => {
     return (
 
             <div className='container mx-auto px-4 sm:px-0 p-4 flex flex-col gap-4 items-center justify-center'>
-                <InputForm mode="edit" initialData={car} />
+                <InputForm mode="edit" initialData={car || undefined}/>
             </div>
     )
 }
