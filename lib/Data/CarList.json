@@ -1,78 +1,78 @@
 [
-    {
-        "title": "BMW M4",
-        "href": "/carsforsale/bmw-m4",
-        "description": "Step into the cockpit and enjoy premium comfort and cutting-edge technology. Own the thrill - contact us to test drive the BMW M4 today.",
-        "image": "/bmw-m4_.jpg",
-        "price": "$49,900",
-        "mileage": "12,000",
-        "year": "2018",
-        "vin": "123456789",
-        "exteriorInterior": "Green/Black",
-        "imageCarousel": [
-            "/CarouselImages/m4 (1).jpg",
-            "/CarouselImages/m4 (2).jpg",
-            "/CarouselImages/m4 (3).jpg",
-            "/CarouselImages/m4 (4).jpg",
-            "/CarouselImages/m4 (5).jpg",
-            "/CarouselImages/m4 (6).jpg"
-        ]
-    },
-    {
-        "title": "BMW M5",
-        "href": "/carsforsale/bmw-m5",
-        "description": "The BMW M5 is a high-performance luxury sedan that offers a thrilling driving experience. Contact us to test drive the BMW M5 today.",
-        "image": "/bmw-m5.jpg",
-        "price": "$104,900",
-        "mileage": "8,000",
-        "year": "2019",
-        "vin": "987654321",
-        "exteriorInterior": "Green/Black",
-        "imageCarousel": [
-            "/CarouselImages/m5 (1).jpg",
-            "/CarouselImages/m5 (2).jpg",
-            "/CarouselImages/m5 (3).jpg",
-            "/CarouselImages/m5 (4).jpg",
-            "/CarouselImages/m5 (5).jpg",
-            "/CarouselImages/m5 (6).jpg"
-        ]
-    },
-    {
-        "title": "BMW M8",
-        "href": "/carsforsale/bmw-m8",
-        "description": "The BMW M8 is a high-performance luxury coupe that offers a thrilling driving experience. Contact us to test drive the BMW M8 today.",
-        "image": "/bmw-m8.jpg",
-        "price": "$133,900",
-        "mileage": "5,000",
-        "year": "2020",
-        "vin": "456789123",
-        "exteriorInterior": "Green/Black",
-        "imageCarousel": [
-            "/CarouselImages/m8 (1).jpg",
-            "/CarouselImages/m8 (2).jpg",
-            "/CarouselImages/m8 (3).jpg",
-            "/CarouselImages/m8 (4).jpg",
-            "/CarouselImages/m8 (5).jpg",
-            "/CarouselImages/m8 (6).jpg"
-        ]
-    },
-    {
-        "title": "BMW M4",
-        "href": "/carsforsale/bmw-m4",
-        "description": "Step into the cockpit and enjoy premium comfort and cutting-edge technology. Own the thrill - contact us to test drive the BMW M4 today.",
-        "image": "/bmw-m4.jpg",
-        "price": "$69,900",
-        "mileage": "2,000",
-        "year": "2023",
-        "vin": "789123456",
-        "exteriorInterior": "Green/Black",
-        "imageCarousel": [
-            "/CarouselImages/m4 (1).jpg",
-            "/CarouselImages/m4 (2).jpg",
-            "/CarouselImages/m4 (3).jpg",
-            "/CarouselImages/m4 (4).jpg",
-            "/CarouselImages/m4 (5).jpg",
-            "/CarouselImages/m4 (6).jpg"
-        ]
-    }
+  {
+    "title": "BMW M4",
+    "href": "/carsforsale/bmw-m4",
+    "description": "Step into the cockpit and enjoy premium comfort and cutting-edge technology. Own the thrill - contact us to test drive the BMW M4 today.",
+    "image": "/bmw-m4_.jpg",
+    "price": "$49,900",
+    "mileage": "12,000",
+    "year": "2018",
+    "vin": "123456789",
+    "exteriorInterior": "Green/Black",
+    "imageCarousel": [
+      "/CarouselImages/m4 (1).jpg",
+      "/CarouselImages/m4 (2).jpg",
+      "/CarouselImages/m4 (3).jpg",
+      "/CarouselImages/m4 (4).jpg",
+      "/CarouselImages/m4 (5).jpg",
+      "/CarouselImages/m4 (6).jpg"
+    ]
+  },
+  {
+    "title": "BMW M5",
+    "href": "/carsforsale/bmw-m5",
+    "description": "The BMW M5 is a high-performance luxury sedan that offers a thrilling driving experience. Contact us to test drive the BMW M5 today.",
+    "image": "/bmw-m5.jpg",
+    "price": "$104,900",
+    "mileage": "8,000",
+    "year": "2019",
+    "vin": "987654321",
+    "exteriorInterior": "Green/Black",
+    "imageCarousel": [
+      "/CarouselImages/m5 (1).jpg",
+      "/CarouselImages/m5 (2).jpg",
+      "/CarouselImages/m5 (3).jpg",
+      "/CarouselImages/m5 (4).jpg",
+      "/CarouselImages/m5 (5).jpg",
+      "/CarouselImages/m5 (6).jpg"
+    ]
+  },
+  {
+    "title": "BMW M8",
+    "href": "/carsforsale/bmw-m8",
+    "description": "The BMW M8 is a high-performance luxury coupe that offers a thrilling driving experience. Contact us to test drive the BMW M8 today.",
+    "image": "/bmw-m8.jpg",
+    "price": "$133,900",
+    "mileage": "5,000",
+    "year": "2020",
+    "vin": "456789123",
+    "exteriorInterior": "Green/Black",
+    "imageCarousel": [
+      "/CarouselImages/m8 (1).jpg",
+      "/CarouselImages/m8 (2).jpg",
+      "/CarouselImages/m8 (3).jpg",
+      "/CarouselImages/m8 (4).jpg",
+      "/CarouselImages/m8 (5).jpg",
+      "/CarouselImages/m8 (6).jpg"
+    ]
+  },
+  {
+    "title": "BMW M4",
+    "href": "/carsforsale/bmw-m4",
+    "description": "Step into the cockpit and enjoy premium comfort and cutting-edge technology. Own the thrill - contact us to test drive the BMW M4 today.",
+    "image": "/bmw-m4.jpg",
+    "price": "$69,900",
+    "mileage": "2,000",
+    "year": "2023",
+    "vin": "789123456",
+    "exteriorInterior": "Green/Black",
+    "imageCarousel": [
+      "/CarouselImages/m4 (1).jpg",
+      "/CarouselImages/m4 (2).jpg",
+      "/CarouselImages/m4 (3).jpg",
+      "/CarouselImages/m4 (4).jpg",
+      "/CarouselImages/m4 (5).jpg",
+      "/CarouselImages/m4 (6).jpg"
+    ]
+  }
 ]

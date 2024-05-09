@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   AlertDialog,
@@ -10,10 +10,10 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
-import { Button } from "@/components/ui/button"
-import { OctagonX } from "lucide-react"
-import { useRouter } from "next/navigation"
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { OctagonX } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface AlertDeleteProps {
   carId: string;
@@ -21,23 +21,20 @@ interface AlertDeleteProps {
 }
 
 export default function AlertDelete({ title, carId }: AlertDeleteProps) {
-
   const router = useRouter();
 
   const handleDelete = async () => {
-
-    try{
+    try {
       const response = await fetch(`/api/delete-inventory/${carId}`, {
-        method: 'DELETE',
+        method: "DELETE",
       });
       if (response.ok) {
         router.push("/dashboard");
       }
     } catch (error) {
-      console.error('Failed to delete car:', error);
+      console.error("Failed to delete car:", error);
     }
   };
-
 
   return (
     <AlertDialog>
@@ -48,18 +45,23 @@ export default function AlertDelete({ title, carId }: AlertDeleteProps) {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure you want to delete
+          <AlertDialogTitle>
+            Are you absolutely sure you want to delete
             <span className=" text-red-500"> {title} </span>
-            from your inventory?</AlertDialogTitle>
+            from your inventory?
+          </AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete car data from servers.
+            This action cannot be undone. This will permanently delete car data
+            from servers.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction className="bg-red-500" onClick={handleDelete}>DELETE</AlertDialogAction>
+          <AlertDialogAction className="bg-red-500" onClick={handleDelete}>
+            DELETE
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-  )
+  );
 }

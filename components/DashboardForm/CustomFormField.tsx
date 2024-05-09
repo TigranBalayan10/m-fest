@@ -1,15 +1,15 @@
-import React from 'react';
-import { Control } from 'react-hook-form';
+import React from "react";
+import { Control } from "react-hook-form";
 import {
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from '../ui/input';
-import { Textarea } from '../ui/textarea';
-import { z } from 'zod';
-import { CarListSchema } from '@/lib/zodSchema';
+} from "@/components/ui/form";
+import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
+import { z } from "zod";
+import { CarListSchema } from "@/lib/zodSchema";
 
 type FormData = z.infer<typeof CarListSchema>;
 
@@ -19,7 +19,11 @@ interface FormFieldProps {
   placeholder: string;
 }
 
-const CustomFormField: React.FC<FormFieldProps> = ({ control, name, placeholder }) => (
+const CustomFormField: React.FC<FormFieldProps> = ({
+  control,
+  name,
+  placeholder,
+}) => (
   <FormField
     control={control}
     name={name}
@@ -27,18 +31,11 @@ const CustomFormField: React.FC<FormFieldProps> = ({ control, name, placeholder 
       return (
         <FormItem>
           <FormControl>
-            {name === 'description' ?
-              <Textarea
-                {...field}
-                placeholder={placeholder}
-              />
-              :
-              <Input
-                {...field}
-                placeholder={placeholder}
-              />
-            }
-
+            {name === "description" ? (
+              <Textarea {...field} placeholder={placeholder} />
+            ) : (
+              <Input {...field} placeholder={placeholder} />
+            )}
           </FormControl>
           <FormMessage />
         </FormItem>

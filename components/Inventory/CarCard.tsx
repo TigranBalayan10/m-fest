@@ -1,12 +1,31 @@
 "use client";
 
 import React from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import { Separator } from "../ui/separator";
 import { CarList } from "@prisma/client";
-import { CldImage } from 'next-cloudinary';
+import { CldImage } from "next-cloudinary";
 
 interface CarCardProps {
   car: CarList;
@@ -15,22 +34,35 @@ interface CarCardProps {
 const CarCard: React.FC<CarCardProps> = ({ car }) => (
   <Card>
     <CardHeader>
-      <CardTitle>{car.year} {car.title}</CardTitle>
+      <CardTitle>
+        {car.year} {car.title}
+      </CardTitle>
       <CardDescription>{car.milage} mi.</CardDescription>
     </CardHeader>
     <CardContent>
       <Dialog>
         <DialogTrigger>
-          <CldImage src={car.imageUrls[0]} width="480" height="240" crop="fill" alt={car.title} />
+          <CldImage
+            src={car.imageUrls[0]}
+            width="480"
+            height="240"
+            crop="fill"
+            alt={car.title}
+          />
         </DialogTrigger>
         <DialogContent className="w-3/4 h-3/4 items-center  max-w-none bg-transparent border-none shadow-none">
           <DialogHeader>
-            <DialogTitle className="text-white text-center mb-5">{car.title}</DialogTitle>
+            <DialogTitle className="text-white text-center mb-5">
+              {car.title}
+            </DialogTitle>
             <DialogDescription className="w-3/4 mx-auto my-auto">
               <Carousel>
                 <CarouselContent>
                   {car.imageUrls.map((imageUrl, imageUrlIndex) => (
-                    <CarouselItem key={imageUrlIndex} className="flex items-center justify-center">
+                    <CarouselItem
+                      key={imageUrlIndex}
+                      className="flex items-center justify-center"
+                    >
                       <CldImage
                         src={imageUrl}
                         width="1366"

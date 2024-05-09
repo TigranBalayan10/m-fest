@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { z } from "zod";
 
@@ -14,9 +14,10 @@ export const CarListSchema = z.object({
   exteriorInterior: z
     .string()
     .min(1, { message: "Exterior/Interior is required" }),
-  imageUrls: z.array(z.string()).min(2, { message: "At least 2 Images are required" }),
+  imageUrls: z
+    .array(z.string())
+    .min(2, { message: "At least 2 Images are required" }),
 });
-
 
 export const ContactUsSchema = z.object({
   name: z.string().min(1, { message: "Name is required" }),

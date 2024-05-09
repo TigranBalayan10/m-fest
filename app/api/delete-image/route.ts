@@ -1,13 +1,12 @@
 // pages/api/deleteImage.js
 // import { cloudinaryInstance} from '@/lib/cloudinary';
 import { NextResponse } from "next/server";
-import cloudinary from '@/lib/cloudinary';
-
+import cloudinary from "@/lib/cloudinary";
 
 export async function POST(req: any, res: any) {
   if (req.method === "POST") {
     const { imageUrl } = await req.json();
-    console.log( imageUrl , "imageUrl Backend");
+    console.log(imageUrl, "imageUrl Backend");
     try {
       const response = await cloudinary.uploader.destroy(imageUrl);
       console.log({ response }, "response");
