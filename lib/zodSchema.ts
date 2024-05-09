@@ -16,3 +16,11 @@ export const CarListSchema = z.object({
     .min(1, { message: "Exterior/Interior is required" }),
   imageUrls: z.array(z.string()).min(2, { message: "At least 2 Images are required" }),
 });
+
+
+export const ContactUsSchema = z.object({
+  name: z.string().min(1, { message: "Name is required" }),
+  email: z.string().email({ message: "Invalid email" }),
+  phone: z.string().min(1, { message: "Phone is required" }),
+  message: z.string().min(1, { message: "Message is required" }),
+});
