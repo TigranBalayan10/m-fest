@@ -221,7 +221,7 @@ const InputForm = ({ mode = 'add', initialData }: { mode?: 'add' | 'edit', initi
                     </CardContent>
                 </Form>
             </Card>
-            {showAlert && (alertTitle ? <AlertConfirm title={alertTitle} description={alertMessage} /> : <AlertConfirm title={alertTitle} description={alertMessage} />)}
+            {showAlert && (alertTitle ? <AlertConfirm title={alertTitle} description={alertMessage} rerouteHref='/dashboard' /> : <AlertConfirm title={alertTitle} description={alertMessage} rerouteHref="/dashboard" />)}
         </>
     )
 
