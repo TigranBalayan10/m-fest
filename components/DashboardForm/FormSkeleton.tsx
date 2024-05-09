@@ -1,43 +1,60 @@
-import { Card, CardDescription, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
+import { Card, CardDescription, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
-
-
 
 const FormSkeleton = () => {
     return (
-        <div className='container mx-auto px-4 sm:px-0 bg-slate-700 p-4 flex items-center flex-col gap-4'>
-            <div className="p-5 text-center flex flex-col items-center gap-4">
-                <h1 className='text-2xl sm:text-4xl font-bold text-white'>
-                    <Skeleton className="h-[20px] w-[400px] rounded" />
-                </h1>
-                <h2 className='text-xl sm:text-2xl text-white'>
-                    <Skeleton className="h-[20px] w-[200px] rounded" />
-                </h2>
-            </div>
-            <Card className='bg-slate-300 p-4 flex flex-col items-center w-full sm:w-1/2'>
-                <CardHeader className='mb-3 items-center'>
+        <>
+            <Card>
+                <CardHeader>
                     <CardTitle>
-                        <Skeleton className="h-[20px] w-[200px] rounded" />
+                        <Skeleton className="h-[40px] w-[150px] rounded" />
                     </CardTitle>
                     <CardDescription>
-                        <Skeleton className="h-[20px] w-[200px] rounded" />
+                        <Skeleton className="h-[20px] w-[220px] rounded" />
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <div className="w-2/3 space-y-2">
-                        <Skeleton className="h-[20px] w-[200px] rounded" />
-                        <Skeleton className="h-[20px] w-[200px] rounded" />
-                        <Skeleton className="h-[20px] w-[200px] rounded" />
-                        <Skeleton className="h-[20px] w-[200px] rounded" />
-                        <Skeleton className="h-[20px] w-[200px] rounded" />
-                        <Skeleton className="h-[20px] w-[200px] rounded" />
-                        <Skeleton className="h-[20px] w-[200px] rounded" />
-                        <Skeleton className="h-[20px] w-[200px] rounded" />
+                    <div className="grid gap-4">
+                        <div className="grid gap-2">
+                            <Skeleton className="h-[30px] w-[400px] rounded" />
+                        </div>
+                        <div className="grid gap-2">
+                            <Skeleton className="h-[30px] w-[400px] rounded" />
+                        </div>
+                        <div className="grid gap-2">
+                            <Skeleton className="h-[30px] w-[400px] rounded" />
+                        </div>
+                        <div className="grid gap-2">
+                            <Skeleton className="h-[70px] w-[400px] rounded" />
+                        </div>
+                        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                            <div className="grid gap-2">
+                                <Skeleton className="h-[30px] w-[200px] rounded" />
+                            </div>
+                            <div className="grid gap-2">
+                                <Skeleton className="h-[30px] w-[200px] rounded" />
+                            </div>
+                            <div className="grid gap-2">
+                                <Skeleton className="h-[30px] w-[200px] rounded" />
+                            </div>
+                            <div className="grid gap-2">
+                                <Skeleton className="h-[30px] w-[200px] rounded" />
+                            </div>
+                        </div>
+                        <div>
+                            <div className="mb-2 block ">
+                                <Skeleton className="h-[30px] w-[200px] rounded" />
+                            </div>
+                        </div>
                     </div>
+                    <CardFooter className="flex justify-end gap-3 px-0 my-4">
+                        <Skeleton className="h-[30px] w-[100px] rounded" />
+                        <Skeleton className="h-[30px] w-[100px] rounded" />
+                        <Skeleton className="h-[30px] w-[100px] rounded" />
+                    </CardFooter>
                 </CardContent>
             </Card>
-        </div>
-
+        </>
     )
 }
 

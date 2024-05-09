@@ -10,6 +10,7 @@ import {
     Card,
     CardContent,
     CardDescription,
+    CardFooter,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
@@ -20,8 +21,8 @@ import { useRouter } from 'next/navigation';
 import { Button } from '../ui/button';
 import AlertConfirm from '@/components/CustomUi/AlertConfirm';
 import { useState } from 'react';
-import { FaSpinner } from 'react-icons/fa6';
-
+import { FaSpinner, FaUpload } from 'react-icons/fa6';
+import { IoCloseOutline } from "react-icons/io5";
 
 
 const CarFormSchema = CarListSchema;
@@ -97,7 +98,7 @@ const InputForm = ({ mode = 'add', initialData }: { mode?: 'add' | 'edit', initi
                 // Remove the image URL from the form
                 const imageUrls = form.getValues('imageUrls');
                 const newImageUrls = imageUrls.filter(url => url !== imageUrl);
-                form.setValue('imageUrls', newImageUrls);
+                form.setValue('imageUrls', newImageUrls, { shouldDirty: true });
             } else {
                 console.error('Failed to delete image from carData object');
             }
@@ -127,77 +128,95 @@ const InputForm = ({ mode = 'add', initialData }: { mode?: 'add' | 'edit', initi
                                 <div className="grid gap-2">
                                     <CustomFormField control={form.control} name="make" placeholder="Make" />
                                 </div>
-
+                                <div className="grid gap-2">
+                                    <CustomFormField control={form.control} name="vin" placeholder="VIN" />
+                                </div>
                                 <div className="grid gap-2">
                                     <CustomFormField control={form.control} name="description" placeholder="Description" />
                                 </div>
-                                <CustomFormField control={form.control} name="price" placeholder="Price" />
-
-                                <CustomFormField control={form.control} name="milage" placeholder="Milage" />
-                                <CustomFormField control={form.control} name="vin" placeholder="VIN" />
-                                <CustomFormField control={form.control} name="year" placeholder="Year" />
-                                <CustomFormField control={form.control} name="exteriorInterior" placeholder="Exterior/Interior" />
-                                <div className="flex flex-col gap-2">
-
-                                    <CldUploadWidget uploadPreset="n8ak9rol" onSuccess={(results) => {
-                                        if (results.info && typeof results.info === 'object') {
-                                            const publicId = results.info.public_id;
-                                            if (publicId) {
-                                                const prevImageUrls = form.getValues('imageUrls');
-                                                form.setValue('imageUrls', [...prevImageUrls, publicId]);
-                                                console.log(form.getValues('imageUrls'));
-                                            }
-                                        }
-                                    }}>
-                                        {({ open }) => {
-                                            return (
-                                                <Button type='button' variant="outline" onClick={() => open()}>
-                                                    Upload Images
-                                                </Button>
-                                            );
-                                        }}
-                                    </CldUploadWidget>
-                                    <div className="flex flex-wrap gap-2">
-                                        {form.watch('imageUrls').map((imageUrl: string, index: number) => {
-                                            return (
-                                                <div key={index} className="relative">
-                                                    <CldImage key={index} src={imageUrl} width="100" height="100" crop="fill" alt='' />
-                                                    <Button
-                                                        type='button'
-                                                        variant="destructive"
-                                                        size="badge"
-                                                        className="absolute top-0 right-0"
-                                                        
-                                                        
-                                                        onClick={() => {
-                                                            console.log(imageUrl, "imageUrl")
-                                                            handleRemoveImage(imageUrl)
-                                                        }}
-                                                    >
-                                                        X
-                                                    </Button>
-                                                </div>
-                                            );
-                                        })}
+                                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                                    <div className="grid gap-2">
+                                        <CustomFormField control={form.control} name="price" placeholder="Price" />
                                     </div>
-                                    {mode === 'add' && (
-                                        <Button disabled={!isDirty} type="submit">
-                                            {isSubmitting ? 'Adding...' : 'Add Inventory'}
-                                            {isSubmitting && <FaSpinner className="animate-spin ml-2" />}
-                                        </Button>
-                                    )}
-                                    {mode === 'add' && <Button type="button" onClick={() => reset()}>Reset</Button>}
-                                    {mode === 'add' && <Button type="button" onClick={() => router.push("/dashboard")}>Cancel</Button>}
-                                    {mode === 'edit' && (
-                                        <Button disabled={!isDirty} type="submit">
-                                            {isSubmitting ? 'Saving...' : 'Save Changes'}
-                                            {isSubmitting && <FaSpinner className="animate-spin ml-2" />}
-                                        </Button>
-                                    )}
-                                    {mode === 'edit' && <Button type="button" onClick={() => reset()}>Reset</Button>}
-                                    {mode === 'edit' && <Button type="button" onClick={() => router.push("/dashboard")}>Cancel</Button>}
+                                    <div className="grid gap-2">
+                                        <CustomFormField control={form.control} name="milage" placeholder="Milage" />
+                                    </div>
+                                    <div className="grid gap-2">
+                                        <CustomFormField control={form.control} name="exteriorInterior" placeholder="Exterior/Interior" />
+                                    </div>
+                                    <div className="grid gap-2">
+                                        <CustomFormField control={form.control} name="year" placeholder="Year" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <div className="mb-2 block ">
+                                        <CldUploadWidget uploadPreset="n8ak9rol" options={{
+                                            sources: ['local', 'url', 'unsplash'],
+                                            multiple: true,
+                                            maxFiles: 8
+                                        }} onSuccess={(results) => {
+                                            if (results.info && typeof results.info === 'object') {
+                                                const publicId = results.info.public_id;
+                                                if (publicId) {
+                                                    const prevImageUrls = form.getValues('imageUrls');
+                                                    form.setValue('imageUrls', [...prevImageUrls, publicId], { shouldDirty: true });
+                                                    console.log(form.getValues('imageUrls'));
+                                                }
+                                            }
+                                        }}>
+                                            {({ open }) => {
+                                                return (
+                                                    <Button type='button' variant="outline" onClick={() => open()}>
+                                                        <FaUpload className="mr-2" />
+                                                        Upload Images
+                                                    </Button>
+                                                );
+                                            }}
+                                        </CldUploadWidget>
+                                        <div className="flex flex-wrap gap-2">
+                                            {form.watch('imageUrls').map((imageUrl: string, index: number) => {
+                                                return (
+                                                    <div key={index} className="relative mt-2 ">
+                                                        <CldImage key={index} src={imageUrl} width="100" height="100" crop="fill" alt='' className='rounded shadow-zinc-800' />
+                                                        <Button
+                                                            type='button'
+                                                            variant="destructive"
+                                                            size="badge"
+                                                            className="absolute top-0 right-0"
+
+
+                                                            onClick={() => {
+                                                                console.log(imageUrl, "imageUrl")
+                                                                handleRemoveImage(imageUrl)
+                                                            }}
+                                                        >
+                                                            <IoCloseOutline />
+                                                        </Button>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                            <CardFooter className="flex justify-end gap-3 px-0 my-4">
+                                {mode === 'add' && (
+                                    <Button disabled={!isDirty} type="submit">
+                                        {isSubmitting ? 'Adding...' : 'Add Inventory'}
+                                        {isSubmitting && <FaSpinner className="animate-spin ml-2" />}
+                                    </Button>
+                                )}
+                                {mode === 'add' && <Button variant="destructive" type="button" onClick={() => reset()}>Reset</Button>}
+                                {mode === 'add' && <Button type="button" onClick={() => router.push("/dashboard")}>Cancel</Button>}
+                                {mode === 'edit' && (
+                                    <Button disabled={!isDirty} type="submit">
+                                        {isSubmitting ? 'Saving...' : 'Save Changes'}
+                                        {isSubmitting && <FaSpinner className="animate-spin ml-2" />}
+                                    </Button>
+                                )}
+                                {mode === 'edit' && <Button variant="destructive" type="button" onClick={() => reset()}>Reset</Button>}
+                                {mode === 'edit' && <Button type="button" onClick={() => router.push("/dashboard")}>Cancel</Button>}
+                            </CardFooter>
                         </form>
                     </CardContent>
                 </Form>

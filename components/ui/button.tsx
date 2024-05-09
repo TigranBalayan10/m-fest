@@ -24,7 +24,7 @@ const buttonVariants = cva(
         sm: "h-9 rounded-md px-3",
         lg: "h-11 rounded-md px-8",
         icon: "h-10 w-10",
-        badge: "h-6 px-2",
+        badge: "h-6 w-6 rounded-full flex items-center justify-center",
       },
     },
     defaultVariants: {
