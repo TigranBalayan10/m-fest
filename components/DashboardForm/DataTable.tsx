@@ -31,13 +31,16 @@ interface Car {
   updatedAt: string;
 }
 
+
+
 const DataTable = () => {
   const [carData, setCarData] = useState<Car[]>([]);
   const [loadingCarData, setLoadingCarData] = useState(true);
 
   const url = process.env.NODE_ENV === 'production'
-    ? "https://m-fest-179hiwk6r-tigran-balayans-projects.vercel.app/api/inventory"
-    : "http://localhost:3000/api/inventory";
+    ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/get-car-data`
+    : "http://localhost:3000/api/get-car-data";
+  console.log(url, "api url");
 
   useEffect(() => {
     async function getCarList() {
