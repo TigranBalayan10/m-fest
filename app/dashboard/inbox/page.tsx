@@ -24,14 +24,24 @@ const Inbox = () => {
     const [contactData, setContactData] = useState<Contact[]>([]);
     const [loadingContactData, setLoadingContactData] = useState(true);
     const url = process.env.NODE_ENV === 'production'
-        ? "m-fest-179hiwk6r-tigran-balayans-projects.vercel.app/api/get-contact-message"
+        ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/add-contact-message`
         : "http://localhost:3000/api/get-contact-message";
+    console.log(url, "api url");
     useEffect(() => {
         async function getContactList() {
-            const response = await fetch(url);
-            const data = await response.json();
-            setContactData(data.contactData);
-            setLoadingContactData(false);
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    console.error('Server response was not ok:', response);
+                    return;
+                }
+                const data = await response.json();
+                setContactData(data.contactData);
+                setLoadingContactData(false);
+            } catch (error) {
+                console.error('Failed to fetch car list:', error);
+            }
+
         }
 
         getContactList();
