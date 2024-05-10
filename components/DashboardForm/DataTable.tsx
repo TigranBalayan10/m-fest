@@ -35,16 +35,20 @@ const DataTable = () => {
   const [carData, setCarData] = useState<Car[]>([]);
   const [loadingCarData, setLoadingCarData] = useState(true);
 
-  const url = process.env.NODE_ENV === 'production' 
-  ? "https://m-fest-179hiwk6r-tigran-balayans-projects.vercel.app/api/inventory"
-  : "http://localhost:3000/api/inventory";
+  const url = process.env.NODE_ENV === 'production'
+    ? "https://m-fest-179hiwk6r-tigran-balayans-projects.vercel.app/api/inventory"
+    : "http://localhost:3000/api/inventory";
 
   useEffect(() => {
     async function getCarList() {
-      const response = await fetch(url);
-      const data = await response.json();
-      setCarData(data.carData);
-      setLoadingCarData(false);
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        setCarData(data.carData);
+        setLoadingCarData(false);
+      } catch (error) {
+        console.error('Failed to fetch car list:', error);
+      }
     }
 
     getCarList();
