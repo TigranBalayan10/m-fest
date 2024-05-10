@@ -24,7 +24,7 @@ const Inbox = () => {
     const [contactData, setContactData] = useState<Contact[]>([]);
     const [loadingContactData, setLoadingContactData] = useState(true);
     const url = process.env.NODE_ENV === 'production'
-        ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/add-contact-message`
+        ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/get-contact-message`
         : "http://localhost:3000/api/get-contact-message";
     console.log(url, "api url");
     useEffect(() => {
