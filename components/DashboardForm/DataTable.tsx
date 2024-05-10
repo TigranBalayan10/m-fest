@@ -36,7 +36,7 @@ const DataTable = () => {
   const [loadingCarData, setLoadingCarData] = useState(true);
 
   const url = process.env.NODE_ENV === 'production' 
-  ? "https://m-fest-6w9lmac3e-tigran-balayans-projects.vercel.app/api/inventory"
+  ? "https://m-fest-179hiwk6r-tigran-balayans-projects.vercel.app/api/inventory"
   : "http://localhost:3000/api/inventory";
 
   useEffect(() => {

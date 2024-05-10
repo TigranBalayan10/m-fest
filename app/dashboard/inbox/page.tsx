@@ -24,7 +24,7 @@ const Inbox = () => {
     const [contactData, setContactData] = useState<Contact[]>([]);
     const [loadingContactData, setLoadingContactData] = useState(true);
     const url = process.env.NODE_ENV === 'production'
-        ? "https://m-fest-6w9lmac3e-tigran-balayans-projects.vercel.app/api/get-contact-message"
+        ? "m-fest-179hiwk6r-tigran-balayans-projects.vercel.app/api/get-contact-message"
         : "http://localhost:3000/api/get-contact-message";
     useEffect(() => {
         async function getContactList() {
