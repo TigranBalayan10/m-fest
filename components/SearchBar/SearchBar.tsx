@@ -13,27 +13,27 @@ const SearchBar = () => {
 
   const yearsOptions = selectedModel
     ? [
-        {
-          value:
-            CarModels.find((car) => car.model_series === selectedModel)
-              ?.years || "",
-          label:
-            CarModels.find((car) => car.model_series === selectedModel)
-              ?.years || "",
-        },
-      ]
+      {
+        value:
+          CarModels.find((car) => car.model_series === selectedModel)
+            ?.years || "",
+        label:
+          CarModels.find((car) => car.model_series === selectedModel)
+            ?.years || "",
+      },
+    ]
     : [];
   const vehicleClassOptions = selectedYear
     ? [
-        {
-          value:
-            CarModels.find((car) => car.years === selectedYear)
-              ?.vehicle_class || "",
-          label:
-            CarModels.find((car) => car.years === selectedYear)
-              ?.vehicle_class || "",
-        },
-      ]
+      {
+        value:
+          CarModels.find((car) => car.years === selectedYear)
+            ?.vehicle_class || "",
+        label:
+          CarModels.find((car) => car.years === selectedYear)
+            ?.vehicle_class || "",
+      },
+    ]
     : [];
   return (
     <div className="mt-5 flex-grow">

@@ -10,7 +10,7 @@ const CarsForSale = async () => {
 
   return (
     <div className="mt-5 flex-grow">
-      <div className="flex flex-col sm:flex-row bg-teal-200 h-full container mx-auto justify-between p-4 gap-3">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 bg-teal-200 h-full container mx-auto p-4">
         {cars.map((car, index) => (
           <CarCard key={index} car={car} />
         ))}

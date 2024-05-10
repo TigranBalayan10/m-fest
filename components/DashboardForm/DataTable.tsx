@@ -37,20 +37,22 @@ const DataTable = () => {
   const [carData, setCarData] = useState<Car[]>([]);
   const [loadingCarData, setLoadingCarData] = useState(true);
 
-  const url = process.env.NODE_ENV === 'production'
-    ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/inventory`
-    : "http://localhost:3000/api/inventory";
-  console.log(url, "api url");
+
 
   useEffect(() => {
     async function getCarList() {
+      const url = process.env.NODE_ENV === 'production'
+        ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/inventory`
+        : "http://localhost:3000/api/inventory";
+      console.log(url, "api url");
       try {
-        const response = await fetch(url);
+        const response = await fetch(url, { next: { tags: ["inventory"] } });
         if (!response.ok) {
           console.error('Server response was not ok:', response);
           return;
         }
         const data = await response.json();
+        console.log(data, "data");
         setCarData(data.carData);
         setLoadingCarData(false);
       } catch (error) {

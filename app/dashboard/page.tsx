@@ -1,59 +1,13 @@
-// "use client"
-// import React from 'react';
-
-// import DataCard from '@/components/DashboardForm/DataCard';
-// import DataTable from '@/components/DashboardForm/DataTable';
-// import Link from 'next/link';
-
-// const Dashboard = () => {
-//     return (
-//         <div className='container bg-slate-700 p-4 flex flex-col gap-4'>
-//             <h1>Admin Dashboard</h1>
-//             <div className='flex flex-row justify-between flex-wrap'>
-//                 <div className='component w-full sm:w-1/2 md:w-1/4 p-2'>
-//                     <DataCard title="Cars for Sale" description="Active cars for sale" content="135 BMWs" />
-//                 </div>
-//                 <div className='component w-full sm:w-1/2 md:w-1/4 p-2'>
-//                     <Link href="/dashboard/add-inventory">
-//                         <DataCard title="Add Cars for sale" description="Click here to add inventory" content="First image will be cover image" />
-//                     </Link>
-//                 </div>
-//                 <div className='component w-full sm:w-1/2 md:w-1/4 p-2'>
-//                     <DataCard title="Cars for Sale" description="Active cars for sale" content="135 BMWs" />
-//                 </div>
-//                 <div className='component w-full sm:w-1/2 md:w-1/4 p-2'>
-//                     <DataCard title="Cars for Sale" description="Active cars for sale" content="135 BMWs" />
-//                 </div>
-//             </div>
-//             <div className='w-full p-2'>
-//                 <DataTable />
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default Dashboard;
-
 "use client";
 
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet";
 import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card";
-import {
-  TableHead,
-  TableRow,
-  TableHeader,
-  TableCell,
-  TableBody,
-  Table,
-} from "@/components/ui/table";
-import { FaPlus, FaInbox, FaBoxArchive, FaUsers } from "react-icons/fa6";
-import { IoMenuSharp } from "react-icons/io5";
+import { revalidateAll, revalidateInventory } from "@/lib/actions";
 import DataTable from "@/components/DashboardForm/DataTable";
 
 export default function Dashboard() {
   return (
+
     <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         <Card>
@@ -89,6 +43,12 @@ export default function Dashboard() {
           <DataTable />
         </Card>
       </div>
+      <form className="mt-6 flex justify-end" action={revalidateAll}>
+        <Button>Publish Changes</Button>
+      </form>
+      <form className="mt-6 flex justify-end" action={revalidateInventory}>
+        <Button>Publish Changes in Dashboard</Button>
+      </form>
     </>
   );
 }
