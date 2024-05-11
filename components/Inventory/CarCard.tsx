@@ -101,7 +101,7 @@ const CarCard: React.FC<CarCardProps> = ({ car }) => (
         <Link href="/contact-us">
           <Button variant="link" className="p-0">Contact seller about this car</Button>
         </Link>
-        <Link href={`/cars-for-sale/${car.id}`}>
+        <Link href={`/inventory/${car.id}`}>
           <Button size="sm" variant="outline" >More Info</Button>
         </Link>
       </div>

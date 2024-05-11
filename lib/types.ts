@@ -28,6 +28,7 @@ export interface Car {
   vin: string;
   make: string;
   milage: string;
+  description?: string;
   year: string;
   exteriorInterior: string;
   price: string;
