@@ -1,7 +1,6 @@
 "use client"
 
 import InboxData from "@/components/Inbox/InboxData";
-import GetNewMessagesButton from "@/components/Inbox/GetNewMessagesButton";
 import InboxSkeleton from "@/components/Inbox/InboxSkeleton";
 import { Message } from "@/lib/types";
 import useSWR from 'swr';
@@ -15,7 +14,7 @@ async function fetcher() {
 
 const Inbox = () => {
 
-    const { data, isLoading, error, isValidating } = useSWR('/api/get-contact-message', fetcher);
+    const { data, isLoading, error } = useSWR('/api/get-contact-message', fetcher);
 
 
     if (isLoading) {

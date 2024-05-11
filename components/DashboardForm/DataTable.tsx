@@ -1,4 +1,4 @@
-"use server"
+"use client"
 
 import {
   Table,
@@ -9,20 +9,26 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Card } from "@/components/ui/card";
-import prisma from "@/lib/prisma";
 import CarTableRow from "./CarTableRow";
+import { Car } from "@/lib/types";
+import DataTableSkeleton from "@/components/DashboardForm/DataTableSkeleton";
+import useSWR from "swr";
 
 
+async function fetcher() {
+  const response = await fetch('/api/inventory');
+  const data = await response.json();
+  return data;
 
-async function getCars() {
-  const cars = await prisma.carList.findMany({});
-  
-  return cars;
 }
 
 
-const DataTable = async () => {
-  const cars = await getCars();
+
+const DataTable =  () => {
+  const { data, error, isLoading } = useSWR('/api/inventory', fetcher);
+  if (isLoading) {
+    return <DataTableSkeleton />;
+  }
   return (
     <Card className="bg-slate-300 p-4 flex flex-col items-center">
       <Table>
@@ -42,7 +48,7 @@ const DataTable = async () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {cars.map((car, index) => (
+          {data?.carData?.map((car: Car, index: number) => (
             <CarTableRow key={index} car={car} />
           ))}
         </TableBody>

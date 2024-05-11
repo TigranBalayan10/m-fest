@@ -14,7 +14,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { OctagonX } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { revalidateAll } from "@/lib/actions";
 
 interface AlertDeleteProps {
   carId: string;
@@ -58,7 +57,7 @@ export default function AlertDelete({ title, carId }: AlertDeleteProps) {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <form className="flex justify-end" action={revalidateAll}>
+          <form className="flex justify-end">
             <AlertDialogAction className="bg-red-500" onClick={handleDelete}>
               DELETE
             </AlertDialogAction>
