@@ -26,6 +26,8 @@ import {
 import { Separator } from "../ui/separator";
 import { Car } from "@/lib/types";
 import { CldImage } from "next-cloudinary";
+import Link from "next/link";
+import { Button } from "../ui/button";
 
 interface CarCardProps {
   car: Car;
@@ -95,6 +97,14 @@ const CarCard: React.FC<CarCardProps> = ({ car }) => (
         <p className="text-sm">{car.exteriorInterior}</p>
       </div>
       <Separator className="my-1" />
+      <div className="flex justify-between mt-2">
+        <Link href="/contact-us">
+          <Button variant="link" className="p-0">Contact seller about this car</Button>
+        </Link>
+        <Link href="/more-info">
+          <Button size="sm" >More Info</Button>
+        </Link>
+      </div>
     </CardContent>
   </Card>
 );
