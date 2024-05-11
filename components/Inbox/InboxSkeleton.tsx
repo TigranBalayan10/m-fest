@@ -7,7 +7,7 @@ const InboxSkeleton = () => {
         <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-800">
           <Skeleton className="h-[20px] w-[100px] rounded" />
         </div>
-        {[...Array(4)].map((_, i) => (
+        {[...Array(2)].map((_, i) => (
           <div
             key={i}
             className="divide-y divide-gray-200 dark:divide-gray-800"

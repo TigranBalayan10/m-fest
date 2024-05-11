@@ -1,27 +1,39 @@
-"use server";
+"use client"
 
 import InboxData from "@/components/Inbox/InboxData";
 import GetNewMessagesButton from "@/components/Inbox/GetNewMessagesButton";
-import prisma from "@/lib/prisma";
+import InboxSkeleton from "@/components/Inbox/InboxSkeleton";
+import { Message } from "@/lib/types";
+import useSWR from 'swr';
 
-async function getMessages() {
-    const messages = await prisma.contact.findMany({});
-    return messages;
+async function fetcher() {
+    const response = await fetch('/api/get-contact-message');
+    const data = await response.json();
+    return data;
+
 }
 
-const Inbox = async () => {
-    const contactData = await getMessages();
+const Inbox = () => {
+
+    const { data, isLoading, error, isValidating } = useSWR('/api/get-contact-message', fetcher);
+
+
+    if (isLoading) {
+        return <InboxSkeleton />
+    }
+    if (error) {
+        return <div>Failed to load</div>
+    }
 
     return (
         <div className="w-full max-w-3xl mx-auto">
             <div className="bg-white rounded-lg shadow-md dark:bg-gray-950 dark:text-gray-50">
                 <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-800">
                     <h2 className="text-lg font-semibold">Inbox</h2>
-                    <GetNewMessagesButton />
                 </div>
                 <div className="divide-y divide-gray-200 dark:divide-gray-800">
                     <div className="group">
-                        {contactData.map((contact, index) =>
+                        {data?.contactData?.map((contact: Message, index: number) =>
                             <InboxData key={index} contact={contact} />
                         )}
                     </div>
