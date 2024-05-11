@@ -21,6 +21,7 @@ import AlertConfirm from "@/components/CustomUi/AlertConfirm";
 import { useState } from "react";
 import { FaSpinner, FaUpload } from "react-icons/fa6";
 import { IoCloseOutline } from "react-icons/io5";
+import { revalidateAll } from "@/lib/actions";
 
 const CarFormSchema = CarListSchema;
 
@@ -78,6 +79,7 @@ const InputForm = ({
         );
         setShowAlert(true);
         setAlertTitle("Success");
+        revalidateAll();
       } else {
         setAlertMessage(
           `Car could not be ${mode === "add" ? "added" : "updated"}`,

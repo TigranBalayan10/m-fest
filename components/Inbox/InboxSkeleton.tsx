@@ -30,9 +30,9 @@ const InboxSkeleton = () => {
                 </div>
               </div>
               <div className="px-6 py-4 text-sm">
-                <p>
+                <div>
                   <Skeleton className="h-[20px] w-[400px] rounded" />
-                </p>
+                </div>
                 <div className="mt-4 flex items-center justify-between text-gray-500 dark:text-gray-400">
                   <div>
                     <Skeleton className="h-[20px] w-[100px] rounded" />

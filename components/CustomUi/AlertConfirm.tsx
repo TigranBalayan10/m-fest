@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useRouter } from "next/navigation";
 
+
 interface AlertConfirmProps {
   title: string;
   description: string;
@@ -41,7 +42,9 @@ const AlertConfirm = ({
         </AlertDialogHeader>
         <AlertDialogFooter>
           {title === "Success" ? (
-            <AlertDialogAction onClick={() => router.push(rerouteHref)}>
+            <AlertDialogAction onClick={() => {
+              router.push(rerouteHref);
+            }}>
               OK
             </AlertDialogAction>
           ) : (

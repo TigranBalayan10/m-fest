@@ -1,102 +1,33 @@
-"use client";
+"use server";
 
-import { FaPhone, FaCalendar } from "react-icons/fa6";
-import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar";
-import {
-    CollapsibleTrigger,
-    CollapsibleContent,
-    Collapsible,
-} from "@/components/ui/collapsible";
-import { useEffect, useState } from "react";
-import { formatDate } from "@/lib/FormatDate";
+import InboxData from "@/components/Inbox/InboxData";
+import GetNewMessagesButton from "@/components/Inbox/GetNewMessagesButton";
+import prisma from "@/lib/prisma";
 
-interface Contact {
-    id: string;
-    name: string;
-    email: string;
-    message: string;
-    phone: string;
-    createdAt: string;
-    updatedAt: string;
+async function getMessages() {
+    const messages = await prisma.contact.findMany({});
+    return messages;
 }
 
-const Inbox = () => {
-    const [contactData, setContactData] = useState<Contact[]>([]);
-    const [loadingContactData, setLoadingContactData] = useState(true);
-    const url = process.env.NODE_ENV === 'production'
-        ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/get-contact-message`
-        : "http://localhost:3000/api/get-contact-message";
-    console.log(url, "api url");
-    useEffect(() => {
-        async function getContactList() {
-            try {
-                const response = await fetch(url);
-                if (!response.ok) {
-                    console.error('Server response was not ok:', response);
-                    return;
-                }
-                const data = await response.json();
-                setContactData(data.contactData);
-                setLoadingContactData(false);
-            } catch (error) {
-                console.error('Failed to fetch car list:', error);
-            }
-
-        }
-
-        getContactList();
-    }, []);
+const Inbox = async () => {
+    const contactData = await getMessages();
 
     return (
         <div className="w-full max-w-3xl mx-auto">
             <div className="bg-white rounded-lg shadow-md dark:bg-gray-950 dark:text-gray-50">
                 <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-800">
                     <h2 className="text-lg font-semibold">Inbox</h2>
+                    <GetNewMessagesButton />
                 </div>
                 <div className="divide-y divide-gray-200 dark:divide-gray-800">
-                    {contactData.map((contact, index) => {
-                        const nameParts = contact.name.split(" ");
-                        const initials = `${nameParts[0][0]}${nameParts.length > 1 ? nameParts[nameParts.length - 1][0] : ""}`;
-                        const formattedDate = formatDate(contact.createdAt);
-
-                        return (
-                            <Collapsible key={index} className="group">
-                                <CollapsibleTrigger className="w-full flex items-center justify-between px-6 py-4 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800">
-                                    <div className="flex items-center gap-4">
-                                        <Avatar>
-                                            <AvatarImage alt={contact.name} />
-                                            <AvatarFallback>{initials.toUpperCase()}</AvatarFallback>
-                                        </Avatar>
-                                        <div>
-                                            <div className="font-medium">{contact.name}</div>
-                                            <div className="text-sm text-gray-500 dark:text-gray-400">
-                                                {contact.email}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="text-sm text-gray-500 dark:text-gray-400">
-                                        {formattedDate}
-                                    </div>
-                                </CollapsibleTrigger>
-                                <CollapsibleContent className="px-6 py-4 text-sm">
-                                    <p>{contact.message}</p>
-                                    <div className="mt-4 flex items-center justify-between text-gray-500 dark:text-gray-400">
-                                        <div>
-                                            <FaPhone className="w-4 h-4 mr-2 mb-2" />
-                                            {contact.phone}
-                                        </div>
-                                        <div>
-                                            <FaCalendar className="w-4 h-4 mr-2 mb-2" />
-                                            {formattedDate}
-                                        </div>
-                                    </div>
-                                </CollapsibleContent>
-                            </Collapsible>
-                        );
-                    })}
+                    <div className="group">
+                        {contactData.map((contact, index) =>
+                            <InboxData key={index} contact={contact} />
+                        )}
+                    </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 

@@ -21,3 +21,27 @@ export interface carData {
   years: string;
   vehicle_class: string;
 }
+
+export interface Car {
+  id: string;
+  title: string;
+  vin: string;
+  make: string;
+  milage: string;
+  year: string;
+  exteriorInterior: string;
+  price: string;
+  imageUrls: string[];
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface Message {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+  createdAt: Date;
+  updatedAt: Date;
+}

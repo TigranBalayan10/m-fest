@@ -14,6 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { OctagonX } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { revalidateAll } from "@/lib/actions";
 
 interface AlertDeleteProps {
   carId: string;
@@ -29,7 +30,7 @@ export default function AlertDelete({ title, carId }: AlertDeleteProps) {
         method: "DELETE",
       });
       if (response.ok) {
-        router.push("/dashboard");
+        router.refresh();
       }
     } catch (error) {
       console.error("Failed to delete car:", error);
@@ -57,9 +58,11 @@ export default function AlertDelete({ title, carId }: AlertDeleteProps) {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction className="bg-red-500" onClick={handleDelete}>
-            DELETE
-          </AlertDialogAction>
+          <form className="flex justify-end" action={revalidateAll}>
+            <AlertDialogAction className="bg-red-500" onClick={handleDelete}>
+              DELETE
+            </AlertDialogAction>
+          </form>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
