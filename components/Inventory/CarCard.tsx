@@ -24,11 +24,11 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Separator } from "../ui/separator";
-import { CarList } from "@prisma/client";
+import { Car } from "@/lib/types";
 import { CldImage } from "next-cloudinary";
 
 interface CarCardProps {
-  car: CarList;
+  car: Car;
 }
 
 const CarCard: React.FC<CarCardProps> = ({ car }) => (
