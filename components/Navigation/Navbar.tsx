@@ -3,39 +3,46 @@
 import * as React from "react";
 import Link from "next/link";
 import { NavigationMenuItems } from "./NavigationMenuItems";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
+import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { FaBars } from "react-icons/fa6";
 
 const Navbar = () => {
   const pathname = usePathname();
-  console.log(pathname);
-  return pathname.startsWith("/dashboard") ? null : (
+
+  if (pathname.startsWith('/dashboard')) {
+    return null;
+  }
+
+  return (
     <nav className="bg-blue-200 p-4 shadow-xl sticky z-10">
-      <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
+      <div className="container pl-0 pr-0 flex justify-between">
         {/* Logo */}
-        <div className="items-center hidden md:flex">
+        <div className="flex items-center justify-between w-full">
           <Button variant="ghost">
             <Link href="/">
-              <Image
-                src="/M-Logo.svg"
-                width={50}
-                height={50}
-                alt="M-Fest Logo"
-              />
+              <Image src="/M-Logo.svg" width={50} height={50} alt="M-Fest Logo" />
             </Link>
           </Button>
+
+          {/* Mobile Menu Button */}
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button className="md:hidden" variant="ghost">
+                <FaBars size={20} />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left">
+                <NavigationMenuItems />
+            </SheetContent>
+          </Sheet>
         </div>
+
+        {/* Desktop Navigation */}
         <div className="hidden md:flex space-x-4">
           <NavigationMenuItems />
-        </div>
-        <div className="hidden md:flex space-x-1">
-          <Button>
-            <Link href="/signup">Sign Up</Link>
-          </Button>
-          <Button variant="secondary">
-            <Link href="/login">Login</Link>
-          </Button>
         </div>
       </div>
     </nav>

@@ -15,9 +15,7 @@ const CarCardSkeleton = () => {
                 <CardTitle>
                     <Skeleton className="h-10 w-48" />
                 </CardTitle>
-                <CardDescription>
                     <Skeleton className="h-7 w-56" />
-                </CardDescription>
             </CardHeader>
             <CardContent>
                 <Skeleton className=" h-56" />

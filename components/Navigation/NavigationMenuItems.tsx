@@ -20,8 +20,9 @@ const typedCarlist: CarList[] = Carlist;
 
 export function NavigationMenuItems() {
   return (
+    
     <NavigationMenu>
-      <NavigationMenuList>
+      <NavigationMenuList className="">
         <NavigationMenuItem>
           <Link href="/" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
@@ -30,25 +31,18 @@ export function NavigationMenuItems() {
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>New Arrivals</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid w-[200px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] bg-teal-200">
-              {typedCarlist.map((typedCarlist) => (
-                <ListItem
-                  key={typedCarlist.title}
-                  title={typedCarlist.title}
-                  href={typedCarlist.href}
-                >
-                  <Image
-                    src={typedCarlist.image}
-                    width={500}
-                    height={500}
-                    alt={typedCarlist.title}
-                  />
-                  {typedCarlist.description}
-                </ListItem>
-              ))}
-            </ul>
+            <div className="hidden md:block">
+              {/* Grid layout for tablets and desktops */}
+              <ul className="grid w-[200px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] bg-teal-200">
+                {typedCarlist.map((item, index) => (
+                  <ListItem key={index} title={item.title} href={item.href}>
+                    <Image src={item.image} width={500} height={500} alt={item.title} />
+                    {item.description}
+                  </ListItem>
+                ))}
+              </ul>
+            </div>
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
