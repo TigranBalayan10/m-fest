@@ -20,7 +20,7 @@ const typedCarlist: CarList[] = Carlist;
 
 export function NavigationMenuItems() {
   return (
-    
+
     <NavigationMenu>
       <NavigationMenuList className="">
         <NavigationMenuItem>
@@ -30,9 +30,13 @@ export function NavigationMenuItems() {
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuContent>
-            <div className="hidden md:block">
+        <div className="hidden md:block">
+          <NavigationMenuItem>
+            
+            <NavigationMenuTrigger className={navigationMenuTriggerStyle()}>
+              New Arrivals
+            </NavigationMenuTrigger>
+            <NavigationMenuContent>
               {/* Grid layout for tablets and desktops */}
               <ul className="grid w-[200px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] bg-teal-200">
                 {typedCarlist.map((item, index) => (
@@ -42,9 +46,9 @@ export function NavigationMenuItems() {
                   </ListItem>
                 ))}
               </ul>
-            </div>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+        </div>
         <NavigationMenuItem>
           <Link href="/about-us" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
