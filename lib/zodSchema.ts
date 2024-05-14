@@ -25,3 +25,14 @@ export const ContactUsSchema = z.object({
   phone: z.string().min(1, { message: "Phone is required" }),
   message: z.string().min(1, { message: "Message is required" }),
 });
+
+export const SearchSchema = z.object({
+  model: z.string().optional(),
+  make: z.string().optional(),
+  year: z.string().optional(),
+  milage: z.string().optional(),
+  priceRange: z.string().optional(),
+});
+
+export type SearchData = z.infer<typeof SearchSchema>;
+export type CarListData = z.infer<typeof CarListSchema>;

@@ -1,82 +1,68 @@
-"use client";
+"use client"
 
-import * as React from "react";
-import { Check, ChevronsUpDown } from "lucide-react";
-
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { Control } from "react-hook-form";
 import {
-  Command,
-  CommandEmpty,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { SearchData } from "@/lib/zodSchema";
 
-type SearchSelectProps = {
+type FormData = SearchData;
+
+interface SearchSelectProps {
+  control: Control<FormData>;
+  name: keyof FormData;
+  options: string[];
+  label: string;
   placeholder?: string;
-  options?: { value: string; label: string }[];
-  onChange?: (value: string) => void;
-};
+}
 
-export default function SearchSelect({
-  placeholder,
+const SearchSelect: React.FC<SearchSelectProps> = ({
+  control,
+  name,
+  label,
   options,
-  onChange,
-}: SearchSelectProps) {
-  const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
-
+  placeholder,
+}) => {
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className="md:w-[200px] w-auto justify-between"
-        >
-          {value
-            ? options?.find((option) => option.value === value)?.label
-            : placeholder || "Select an option"}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="md:w-[200px] w-auto p-0"  align="start">
-        <Command>
-          <CommandInput placeholder={placeholder} />
-          <CommandEmpty>No Options found</CommandEmpty>
-          <CommandList>
-            {options?.map((option) => (
-              <CommandItem
-                key={option.value}
-                value={option.value}
-                onSelect={(currentValue) => {
-                  const newValue = currentValue === value ? "" : currentValue;
-                  setValue(newValue);
-                  if (onChange) {
-                    onChange(newValue);
-                  }
-                  setOpen(false);
-                }}
-              >
-                <Check
-                  className={cn(
-                    "mr-2 h-4 w-4",
-                    value === option.value ? "opacity-100" : "opacity-0",
-                  )}
-                />
-                {option.label}
-              </CommandItem>
-            ))}
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
+
+    <FormField
+      control={control}
+      name={name}
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel className="text-slate-200">{label}</FormLabel>
+          <Select onValueChange={field.onChange} defaultValue={field.value?.toString()}>
+            <FormControl>
+              <SelectTrigger className="md:w-[200px] text-black">
+                <SelectValue placeholder={placeholder}>
+                  {field.value}
+                </SelectValue>
+              </SelectTrigger>
+            </FormControl>
+            <SelectContent>
+              {options?.map((option, index) => (
+                <SelectItem key={index} value={option}>
+                  {option}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
   );
 }
+
+export default SearchSelect
