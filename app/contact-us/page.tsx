@@ -67,8 +67,8 @@ export default function ContactUs() {
   }
 
   return (
-    <div className="flex items-center justify-center mt-14">
-      <Card className="mx-auto max-w-md shadow-md">
+    <div className="flex items-center justify-center mt-8">
+      <Card className="max-w-md shadow-md mx-4 bg-zinc-200">
         <CardHeader>
           <CardTitle className="text-center">Get in Touch</CardTitle>
           <CardDescription className="text-center text-gray-500 dark:text-gray-400">
