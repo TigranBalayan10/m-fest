@@ -3,8 +3,9 @@
 import * as React from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import Carlist from "@/lib/Data/CarList.json";
-import { CarList } from "@/lib/types";
+import { CarListData } from "@/lib/zodSchema";
+import { CldImage } from "next-cloudinary";
+import useSWR from "swr";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -16,9 +17,18 @@ import {
 } from "@/components/ui/navigation-menu";
 import Image from "next/image";
 
-const typedCarlist: CarList[] = Carlist;
+async function fetcher() {
+  const response = await fetch('/api/inventory');
+  const data = await response.json();
+  return data;
+
+}
 
 export function NavigationMenuItems() {
+
+  const { data, error, isLoading } = useSWR('/api/inventory', fetcher);
+  const firstFourCars = data?.carData?.slice(0, 4);
+
   return (
 
     <NavigationMenu>
@@ -38,10 +48,10 @@ export function NavigationMenuItems() {
             </NavigationMenuTrigger>
             <NavigationMenuContent>
               {/* Grid layout for tablets and desktops */}
-              <ul className="grid w-[200px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] bg-teal-200">
-                {typedCarlist.map((item, index) => (
-                  <ListItem key={index} title={item.title} href={item.href}>
-                    <Image src={item.image} width={500} height={500} alt={item.title} />
+              <ul className="grid w-[200px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] bg-stone-300">
+                {firstFourCars?.map((item: CarListData, index: number) => (
+                  <ListItem key={index} title={item.title} href={`/inventory/${item.id}`}>
+                    <CldImage src={item.imageUrls[0]} width="480" height="240" crop="fill" alt={item.title} />
                     {item.description}
                   </ListItem>
                 ))}
