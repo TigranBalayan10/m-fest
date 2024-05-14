@@ -1,0 +1,11 @@
+.inventory-page {
+    background-image: url("/bg-m.svg");
+    background-size: cover;
+    background-position: center;
+  }
+
+  @media (max-width: 600px) {
+    .inventory-page {
+      background-position: top;
+    }
+  }
