@@ -16,9 +16,7 @@ export async function DELETE(request: any, { params }: { params: any }) {
   const imageUrls = car?.imageUrls || [];
   // Delete each image from Cloudinary
   for (const imageUrl of imageUrls) {
-    console.log(`Deleting image from Cloudinary: ${imageUrl}`);
     await cloudinary.uploader.destroy(imageUrl);
-    console.log(`Deleted image from Cloudinary: ${imageUrl}`);
   }
   // Delete the car data
   const deletedCar = await prisma.carList.delete({
