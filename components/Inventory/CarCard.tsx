@@ -34,7 +34,7 @@ interface CarCardProps {
 }
 
 const CarCard: React.FC<CarCardProps> = ({ car }) => (
-  <Card>
+  <Card className="bg-zinc-200">
     <CardHeader>
       <CardTitle>
         {car.year} {car.title}
@@ -104,10 +104,10 @@ const CarCard: React.FC<CarCardProps> = ({ car }) => (
       <Separator className="my-1" />
       <div className="flex justify-between mt-2">
         <Link href="/contact-us">
-          <Button variant="link" className="p-0">Contact seller about this car</Button>
+          <Button variant="link" className="p-0">Contact about this car</Button>
         </Link>
         <Link href={`/inventory/${car.id}`}>
-          <Button size="sm" variant="outline" >More Info</Button>
+          <Button size="sm" variant="outline">More Info</Button>
         </Link>
       </div>
     </CardContent>

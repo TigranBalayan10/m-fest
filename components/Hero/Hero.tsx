@@ -28,7 +28,7 @@ const Hero = () => {
                 Explore our iconic models and start your BMW journey today!
               </p>
               <div className="flex md:justify-end justify-center mt-6">
-                <Link href="/carsforsale">
+                <Link href="/inventory">
                   <Button>Browse Inventory</Button>
                 </Link>
                 <Button variant="ghost" className="ml-2">
