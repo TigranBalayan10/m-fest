@@ -36,12 +36,10 @@ const SearchBar = () => {
     ]
     : [];
   return (
-    <div className="mt-5 flex-grow">
-      <div className="flex flex-col bg-teal-200 h-full container mx-auto justify-center p-4 gap-3">
-        <h1 className="text-2xl font-bold text-center">
-          Search for your next BMW
-        </h1>
-        <form className="flex flex-wrap justify-center gap-3">
+    <div className="my-5 flex-grow mx-5">
+      <div className="container mx-auto bg-slate-600 rounded-md shadow-lg px-4 md:px-0 p-5">
+        <h1 className="text-2xl font-bold text-center mb-6">Search for your next BMW</h1>
+        <form className="flex flex-col md:flex-row justify-center gap-3">
           <SearchSelect
             placeholder="Search for Model"
             options={CarModels.map((car) => ({

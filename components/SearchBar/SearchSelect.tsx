@@ -39,7 +39,7 @@ export default function SearchSelect({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between"
+          className="md:w-[200px] w-auto justify-between"
         >
           {value
             ? options?.find((option) => option.value === value)?.label
@@ -47,7 +47,7 @@ export default function SearchSelect({
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent className="md:w-[200px] w-auto p-0"  align="start">
         <Command>
           <CommandInput placeholder={placeholder} />
           <CommandEmpty>No Options found</CommandEmpty>

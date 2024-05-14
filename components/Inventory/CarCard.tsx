@@ -88,6 +88,11 @@ const CarCard: React.FC<CarCardProps> = ({ car }) => (
       </div>
       <Separator className="my-1" />
       <div className="flex justify-between mt-2">
+        <p className="text-sm">Make</p>
+        <p className="text-sm">{car.make}</p>
+      </div>
+      <Separator className="my-1" />
+      <div className="flex justify-between mt-2">
         <p className="text-sm">VIN</p>
         <p className="text-sm">{car.vin}</p>
       </div>
