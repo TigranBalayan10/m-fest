@@ -1,22 +1,13 @@
-"use client";
-
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet";
 import { FaPlus, FaInbox, FaBoxArchive, FaUsers } from "react-icons/fa6";
 import { IoMenuSharp } from "react-icons/io5";
-import { useClerk } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
+import { UserButton } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
 
 const DashboardNav = () => {
-  const { signOut } = useClerk();
-  const router = useRouter();
-
-  const handleSignOut = async () => {
-    await signOut();
-    // Optionally, you can redirect the user to a desired page after sign-out
-    router.push("/"); 
-  };
+  const { userId } = auth();
 
   return (
     <header className="bg-gray-900 text-white">
@@ -53,9 +44,7 @@ const DashboardNav = () => {
                 </Link>
               </li>
               <li>
-                <Button variant="ghost" onClick={handleSignOut} className="">
-                  Sign Out
-                </Button>
+                {userId && <UserButton afterSignOutUrl="/" />}
               </li>
             </ul>
           </nav>
@@ -112,10 +101,7 @@ const DashboardNav = () => {
                     </Link>
                   </li>
                   <li>
-                    <Button variant="ghost" onClick={handleSignOut}>
-                    
-                      Sign Out
-                    </Button>
+                    {userId && <UserButton afterSignOutUrl="/" />}
                   </li>
                 </ul>
               </nav>
