@@ -13,6 +13,7 @@
     "schema": "app/schema.prisma"
   },
   "dependencies": {
+    "@clerk/nextjs": "^5.0.11",
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@hookform/resolvers": "^3.3.4",

@@ -41,3 +41,4 @@ export const LoginSchema = z.object({
 
 export type SearchData = z.infer<typeof SearchSchema>;
 export type CarListData = z.infer<typeof CarListSchema>;
+export type LoginData = z.infer<typeof LoginSchema>;

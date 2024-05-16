@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card";
-import { revalidateAll } from "@/lib/actions";
 import DataTable from "@/components/DashboardForm/DataTable";
 
 export default function Dashboard() {
@@ -41,9 +40,6 @@ export default function Dashboard() {
           <DataTable />
         </Card>
       </div>
-      <form className="mt-6 flex justify-end" action={revalidateAll}>
-        <Button>Publish Changes</Button>
-      </form>
     </>
   );
 }

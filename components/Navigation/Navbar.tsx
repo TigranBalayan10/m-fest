@@ -12,7 +12,7 @@ import { FaBars } from "react-icons/fa6";
 const Navbar = () => {
   const pathname = usePathname();
 
-  if (pathname.startsWith('/dashboard') || pathname.startsWith('/admin-login')) {
+  if (pathname.startsWith('/dashboard') || pathname.startsWith('/sign-in')) {
     return null;
   }
 
