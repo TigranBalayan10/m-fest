@@ -30,7 +30,7 @@ const DataTable =  () => {
     return <DataTableSkeleton />;
   }
   return (
-    <Card className="bg-slate-300 p-4 flex flex-col items-center">
+    <div className="overflow-x-auto rounded-lg border shadow-sm">
       <Table>
         <TableCaption>A list of your recently added cars for sale</TableCaption>
         <TableHeader>
@@ -53,7 +53,7 @@ const DataTable =  () => {
           ))}
         </TableBody>
       </Table>
-    </Card>
+    </div>
   );
 };
 
