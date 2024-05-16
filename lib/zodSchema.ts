@@ -34,5 +34,10 @@ export const SearchSchema = z.object({
   priceRange: z.string().optional(),
 });
 
+export const LoginSchema = z.object({
+  username: z.string().min(1,{ message: "Username is required" }),
+  password: z.string().min(1, { message: "Password is required" }),
+});
+
 export type SearchData = z.infer<typeof SearchSchema>;
 export type CarListData = z.infer<typeof CarListSchema>;

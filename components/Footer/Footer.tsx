@@ -1,8 +1,16 @@
+"use client";
+
 import React from "react";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Footer = () => {
+  const pathname = usePathname();
+
+  if (pathname.startsWith('/dashboard') || pathname.startsWith('/admin-login')) {
+    return null;
+  }
   return (
     <footer className="bg-white rounded-lg shadow m-4 dark:bg-gray-800">
       <div className="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">

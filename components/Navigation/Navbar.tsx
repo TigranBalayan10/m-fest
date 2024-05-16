@@ -12,7 +12,7 @@ import { FaBars } from "react-icons/fa6";
 const Navbar = () => {
   const pathname = usePathname();
 
-  if (pathname.startsWith('/dashboard')) {
+  if (pathname.startsWith('/dashboard') || pathname.startsWith('/admin-login')) {
     return null;
   }
 
@@ -35,7 +35,7 @@ const Navbar = () => {
               </Button>
             </SheetTrigger>
             <SheetContent side="left">
-                <NavigationMenuItems />
+              <NavigationMenuItems />
             </SheetContent>
           </Sheet>
         </div>
