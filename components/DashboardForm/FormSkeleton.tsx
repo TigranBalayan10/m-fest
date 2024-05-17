@@ -10,7 +10,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const FormSkeleton = () => {
   return (
-    <>
       <Card>
         <CardHeader>
           <CardTitle>
@@ -61,7 +60,6 @@ const FormSkeleton = () => {
           </CardFooter>
         </CardContent>
       </Card>
-    </>
   );
 };
 

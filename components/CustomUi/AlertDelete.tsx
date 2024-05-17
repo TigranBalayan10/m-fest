@@ -12,7 +12,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { OctagonX } from "lucide-react";
+import { AiOutlineDelete } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 
 interface AlertDeleteProps {
@@ -39,27 +39,26 @@ export default function AlertDelete({ title, carId }: AlertDeleteProps) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="ghost" size="icon">
-          <OctagonX color="red" />
+        <Button variant="outline" size="icon">
+          <AiOutlineDelete className="h-6 w-6 text-amber-700"/>
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            Are you absolutely sure you want to delete
-            <span className=" text-red-500"> {title} </span>
-            from your inventory?
+            Are you absolutely sure you want to move
+            <span className=" text-amber-700"> {title} </span>
+            to your inventory archive?
           </AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete car data
-            from servers.
+            Car data will be archived. You can access your archive from the sidebar.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <form className="flex justify-end">
-            <AlertDialogAction className="bg-red-500" onClick={handleDelete}>
-              DELETE
+            <AlertDialogAction className="bg-amber-500" onClick={handleDelete}>
+              ARCHIVE
             </AlertDialogAction>
           </form>
         </AlertDialogFooter>

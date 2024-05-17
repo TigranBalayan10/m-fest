@@ -4,20 +4,20 @@ import { Card } from "../ui/card";
 
 const DataTableSkeleton = () => {
   return (
-    <div className="overflow-x-auto rounded-lg border shadow-sm">
+    <div className="overflow-x-auto rounded-lg border shadow-sm max-w-full">
       <Table>
         <TableCaption>A list of your recently added cars for sale</TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead className="w-[100px]">Image</TableHead>
+            <TableHead className="hidden md:table-cell">Model</TableHead>
+            <TableHead className="hidden md:table-cell">VIN</TableHead>
             <TableHead>Make</TableHead>
-            <TableHead>VIN</TableHead>
-            <TableHead>Description</TableHead>
-            <TableHead>Milage</TableHead>
-            <TableHead>Year</TableHead>
-            <TableHead>Exterior/Interior</TableHead>
-            <TableHead>Price</TableHead>
-            <TableHead className="text-right">Published Date</TableHead>
+            <TableHead className="hidden md:table-cell">Milage</TableHead>
+            <TableHead className="hidden md:table-cell">Year</TableHead>
+            <TableHead className="hidden md:table-cell">Exterior/Interior</TableHead>
+            <TableHead className="hidden md:table-cell">Price</TableHead>
+            <TableHead className="hidden md:table-cell text-right">Published Date</TableHead>
             <TableHead className="text-right">Edit/Delete</TableHead>
           </TableRow>
         </TableHeader>
