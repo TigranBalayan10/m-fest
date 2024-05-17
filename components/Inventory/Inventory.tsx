@@ -4,6 +4,9 @@ import CarCard from "./CarCard";
 import { Car } from "@/lib/types";
 import useSWR from "swr";
 import CarCardSkeleton from "./CarCardSkeleton";
+import { Separator } from "../ui/separator";
+import { Button } from "../ui/button";
+import Link from "next/link";
 
 async function fetcher() {
   const response = await fetch('/api/inventory');
@@ -32,13 +35,12 @@ const CarsForSale = () => {
 
   return (
     <div className="mt-5 flex-grow">
-      <h1 className="text-2xl font-bold text-center text-blue-700 mb-6">INVENTORY OF OUR CARS</h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 bg-slate-600 h-full container mx-auto p-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 bg-slate-600 h-full container mx-auto p-4 border-b-2">
         {data?.carData?.map((car: Car, index: number) => (
           <CarCard key={index} car={car} />
         ))}
-
       </div>
+
     </div>
   );
 };

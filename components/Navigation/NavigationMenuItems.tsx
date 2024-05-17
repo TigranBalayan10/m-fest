@@ -59,9 +59,16 @@ export function NavigationMenuItems() {
           </NavigationMenuItem>
         </div>
         <NavigationMenuItem>
-          <Link href="/about-us" legacyBehavior passHref>
+          <Link href="/inventory" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              About Us
+              Inventory
+            </NavigationMenuLink>
+          </Link>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <Link href="/financing" legacyBehavior passHref>
+            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+              Financing
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
@@ -69,6 +76,13 @@ export function NavigationMenuItems() {
           <Link href="/contact-us" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
               Contact Seller
+            </NavigationMenuLink>
+          </Link>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <Link href="/about-us" legacyBehavior passHref>
+            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+              About Us
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
