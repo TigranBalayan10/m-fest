@@ -4,10 +4,11 @@ import * as React from "react";
 import Link from "next/link";
 import { NavigationMenuItems } from "./NavigationMenuItems";
 import { Button } from "@/components/ui/button";
-import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet";
+import { SheetTrigger, SheetContent, Sheet, SheetClose } from "@/components/ui/sheet";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { FaBars } from "react-icons/fa6";
+import NavMobileItems from "@/components/Navigation/NavMobileItems";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -17,7 +18,7 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="bg-zinc-200 p-4 shadow-xl sticky z-10">
+    <nav className="bg-zinc-200 p-4 shadow-xl sticky z-10 top-0 ">
       <div className="container pl-0 pr-0 flex justify-between">
         {/* Logo */}
         <div className="flex items-center justify-between w-full">
@@ -28,16 +29,7 @@ const Navbar = () => {
           </Button>
 
           {/* Mobile Menu Button */}
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button className="md:hidden" variant="ghost">
-                <FaBars size={20} />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left">
-              <NavigationMenuItems />
-            </SheetContent>
-          </Sheet>
+          <NavMobileItems />
         </div>
 
         {/* Desktop Navigation */}
@@ -45,7 +37,7 @@ const Navbar = () => {
           <NavigationMenuItems />
         </div>
       </div>
-    </nav>
+    </nav >
   );
 };
 

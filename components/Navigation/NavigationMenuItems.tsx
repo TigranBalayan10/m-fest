@@ -15,7 +15,6 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import Image from "next/image";
 
 async function fetcher() {
   const response = await fetch('/api/inventory');
