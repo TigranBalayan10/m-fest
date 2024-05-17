@@ -4,9 +4,6 @@ import CarCard from "./CarCard";
 import { Car } from "@/lib/types";
 import useSWR from "swr";
 import CarCardSkeleton from "./CarCardSkeleton";
-import { Separator } from "../ui/separator";
-import { Button } from "../ui/button";
-import Link from "next/link";
 
 async function fetcher() {
   const response = await fetch('/api/inventory');

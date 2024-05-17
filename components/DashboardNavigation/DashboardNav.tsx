@@ -12,44 +12,7 @@ const DashboardNav = () => {
   return (
     <header className="bg-gray-900 text-white">
       <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
-        <div className="flex items-center gap-4">
-          <Link className="text-xl font-bold" href="/dashboard">
-            Dashboard
-          </Link>
-          <nav className="hidden md:flex">
-            <ul className="flex items-center gap-4">
-              <li>
-                <Link
-                  className="rounded-md px-3 py-2 transition-colors hover:bg-gray-800"
-                  href="dashboard/overview"
-                >
-                  Overview
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="rounded-md px-3 py-2 transition-colors hover:bg-gray-800"
-                  href="/dashboard/analytics"
-                >
-                  Analytics
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="flex items-center gap-2 rounded-md px-3 py-2 transition-colors hover:bg-gray-800"
-                  href="dashboard/add-inventory"
-                >
-                  <FaPlus />
-                  Add Car
-                </Link>
-              </li>
-              <li>
-                {userId && <UserButton afterSignOutUrl="/" />}
-              </li>
-            </ul>
-          </nav>
-        </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center justify-between md:justify-start md:space-x-4 w-full md:w-auto">
           <Sheet>
             <SheetTrigger asChild>
               <Button
@@ -61,7 +24,7 @@ const DashboardNav = () => {
                 <IoMenuSharp size="2em" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="left">
+            <SheetContent side="left" className="md:hidden">
               <nav>
                 <ul className="space-y-2">
                   <li>
@@ -100,13 +63,42 @@ const DashboardNav = () => {
                       Add Car
                     </Link>
                   </li>
-                  <li>
-                    {userId && <UserButton afterSignOutUrl="/" />}
-                  </li>
                 </ul>
               </nav>
             </SheetContent>
           </Sheet>
+          <nav className="hidden md:flex md:flex-grow">
+            <ul className="flex items-center gap-4">
+              <li>
+                <Link
+                  className="rounded-md px-3 py-2 transition-colors hover:bg-gray-800"
+                  href="dashboard/overview"
+                >
+                  Overview
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="rounded-md px-3 py-2 transition-colors hover:bg-gray-800"
+                  href="/dashboard/analytics"
+                >
+                  Analytics
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="flex items-center gap-2 rounded-md px-3 py-2 transition-colors hover:bg-gray-800"
+                  href="dashboard/add-inventory"
+                >
+                  <FaPlus />
+                  Add Car
+                </Link>
+              </li>
+            </ul>
+          </nav>
+          <div className="ml-auto md:ml-0">
+            {userId && <UserButton afterSignOutUrl="/" />}
+          </div>
         </div>
       </div>
     </header>
