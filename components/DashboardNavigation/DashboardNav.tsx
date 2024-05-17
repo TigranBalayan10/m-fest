@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { SheetTrigger, SheetContent, Sheet, SheetClose } from "@/components/ui/sheet";
-import { FaPlus, FaInbox, FaBoxArchive, FaUsers } from "react-icons/fa6";
+import { FaPlus, FaInbox, FaBoxArchive, FaUsers, FaChartLine, FaUncharted } from "react-icons/fa6";
 import { IoMenuSharp } from "react-icons/io5";
 import { UserButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
@@ -46,6 +46,28 @@ const DashboardNav = () => {
                       >
                         <FaBoxArchive />
                         Archive
+                      </Link>
+                    </SheetClose>
+                  </li>
+                  <li>
+                    <SheetClose asChild>
+                      <Link
+                        className="flex items-center gap-2 rounded-md px-3 py-2 text-gray-700 transition-colors hover:bg-gray-200"
+                        href="/dashboard/customers"
+                      >
+                        <FaUncharted />
+                        Overview
+                      </Link>
+                    </SheetClose>
+                  </li>
+                  <li>
+                    <SheetClose asChild>
+                      <Link
+                        className="flex items-center gap-2 rounded-md px-3 py-2 text-gray-700 transition-colors hover:bg-gray-200"
+                        href="/dashboard/customers"
+                      >
+                        <FaChartLine />
+                        Analytics
                       </Link>
                     </SheetClose>
                   </li>
@@ -112,7 +134,7 @@ const DashboardNav = () => {
               </li>
             </ul>
           </nav>
-          <div className="ml-auto md:ml-0">
+          <div className="ml-auto md:absolute md:right-10 md:w-10 md:h-10 md:top-4">
             {userId && <UserButton afterSignOutUrl="/" />}
           </div>
         </div>

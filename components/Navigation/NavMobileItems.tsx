@@ -11,7 +11,7 @@ const NavMobileItems = () => {
         <Sheet>
             <SheetTrigger asChild>
                 <Button className="top-4 right-4 z-50 lg:hidden bg-none" size="icon" variant="outline">
-                    <AiOutlineBars className="h-6 w-6" />
+                    <AiOutlineBars className="h-6 w-6 text-blue-700" />
                     <span className="sr-only">Toggle navigation menu</span>
                 </Button>
             </SheetTrigger>

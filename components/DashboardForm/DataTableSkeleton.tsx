@@ -1,6 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Card } from "../ui/card";
 
 const DataTableSkeleton = () => {
   return (
