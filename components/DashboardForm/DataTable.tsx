@@ -44,7 +44,7 @@ const DataTable = () => {
             <TableHead className="hidden md:table-cell">Exterior/Interior</TableHead>
             <TableHead className="hidden md:table-cell">Price</TableHead>
             <TableHead className="hidden md:table-cell text-right">Published Date</TableHead>
-            <TableHead className="text-right">Edit/Archive</TableHead>
+            <TableHead className="text-right">Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

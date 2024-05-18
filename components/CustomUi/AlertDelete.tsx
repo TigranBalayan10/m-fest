@@ -39,28 +39,25 @@ export default function AlertDelete({ title, carId }: AlertDeleteProps) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="outline" size="icon">
-          <AiOutlineDelete className="h-6 w-6 text-amber-700"/>
-        </Button>
+        <h2 className="text-red-500">Delete</h2>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            Are you absolutely sure you want to move
-            <span className=" text-amber-700"> {title} </span>
-            to your inventory archive?
+            Are you absolutely sure you want delete
+            <span className=" text-red-500"> {title} </span>
+            ?
           </AlertDialogTitle>
           <AlertDialogDescription>
-            Car data will be archived. You can access your archive from the sidebar.
+            This action cannot be undone. This will permanently delete the car
+            from the database.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <form className="flex justify-end">
-            <AlertDialogAction className="bg-amber-500" onClick={handleDelete}>
-              ARCHIVE
-            </AlertDialogAction>
-          </form>
+          <AlertDialogAction className="bg-red-500" onClick={handleDelete}>
+            DELETE
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
