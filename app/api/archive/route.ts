@@ -1,16 +1,17 @@
+"use server";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
 export async function GET() {
-  "use server";
-  const carData = await prisma.carList.findMany({
+  const archivedInventory = await prisma.carList.findMany({
     where: {
-      isArchive: false,
+      isArchive: true,
     },
   });
   if (process.env.NODE_ENV === "production") {
-    revalidatePath("/api/inventory");
+    revalidatePath("/api/archive");
   }
-  return NextResponse.json({ carData });
+  console.log(archivedInventory);
+  return NextResponse.json({ archivedInventory });
 }

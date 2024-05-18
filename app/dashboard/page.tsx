@@ -39,7 +39,7 @@ export default function Dashboard() {
       </div>
       <div className="mt-6">
         <Card>
-        <DataTable showArchived={false} />
+        <DataTable endpoint="/api/inventory"/>
         </Card>
       </div>
     </>

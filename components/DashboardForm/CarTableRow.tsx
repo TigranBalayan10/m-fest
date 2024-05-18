@@ -6,7 +6,6 @@ import {
 } from "@/components/ui/table";
 import { Button } from "../ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { AiOutlineTool } from "react-icons/ai";
 import { BsThreeDots } from "react-icons/bs";
 import { CldImage } from "next-cloudinary";
 import AlertDelete from "@/components/CustomUi/AlertDelete";

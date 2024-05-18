@@ -30,6 +30,8 @@ const CarsForSale = () => {
     )
   }
 
+  if (error) return <div>Error: {error.message}</div>
+
   return (
     <div className="mt-5 flex-grow">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 bg-slate-600 h-full container mx-auto p-4 border-b-2">

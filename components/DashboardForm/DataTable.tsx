@@ -15,27 +15,29 @@ import DataTableSkeleton from "@/components/DashboardForm/DataTableSkeleton";
 import useSWR from "swr";
 
 interface DataTableProps {
-  showArchived?: boolean;
+  endpoint?: string;
+  isArchive?: boolean;
 }
 
 
-async function fetcher() {
-  const response = await fetch('/api/inventory');
+async function fetcher(url: string) {
+  const response = await fetch(url);
   const data = await response.json();
-  return data;
+  return data.carData || data.archivedInventory;
 }
 
 
 
-const DataTable: React.FC<DataTableProps> = ({ showArchived }) => {
-  const { data, error, isLoading } = useSWR('/api/inventory', fetcher);
+const DataTable: React.FC<DataTableProps> = ({ endpoint }) => {
+  const { data: inventoryData, error, isLoading } = useSWR(endpoint, fetcher);
+
   if (isLoading) {
     return <DataTableSkeleton />;
   }
   if (error) return <div>Error: {error.message}</div>
-  const filteredData = data?.carData?.filter((item: Car) => item.isArchive === showArchived);
 
-  if (filteredData.length === 0) {
+
+  if (inventoryData?.length === 0) {
     return (
       <div className="overflow-x-auto rounded-lg border shadow-sm max-w-full">
         <div className="p-4">
@@ -63,7 +65,7 @@ const DataTable: React.FC<DataTableProps> = ({ showArchived }) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {filteredData.map((car: Car, index: number) => (
+          {inventoryData?.map((car: Car, index: number) => (
             <CarTableRow key={index} car={car} />
           ))}
         </TableBody>

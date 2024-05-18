@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card";
 const ArchivePage = () => {
     return (
         <Card>
-            <DataTable showArchived={true} />
+            <DataTable endpoint="/api/archive"/>
         </Card>
     )
 }

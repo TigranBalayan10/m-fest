@@ -4,6 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { CarListData } from "@/lib/zodSchema";
+import { Car } from "@/lib/types";
 import { CldImage } from "next-cloudinary";
 import useSWR from "swr";
 import {
