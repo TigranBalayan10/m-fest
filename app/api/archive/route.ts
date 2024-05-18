@@ -12,6 +12,6 @@ export async function GET() {
   if (process.env.NODE_ENV === "production") {
     revalidatePath("/api/archive");
   }
-  console.log(archivedInventory);
+  
   return NextResponse.json({ archivedInventory });
 }

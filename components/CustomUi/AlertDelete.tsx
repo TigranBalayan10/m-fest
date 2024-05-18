@@ -11,7 +11,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 interface AlertActionProps {
   itemId: string;
@@ -24,6 +24,7 @@ interface AlertActionProps {
 
 export default function AlertAction({ title, itemId, actionEndpoint, actionName, actionColor, httpMethod }: AlertActionProps) {
   const router = useRouter();
+  const pathname = usePathname();
 
   const handleAction = async () => {
     try {

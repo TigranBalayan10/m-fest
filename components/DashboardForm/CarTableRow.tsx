@@ -20,10 +20,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { usePathname } from "next/navigation";
 
 
-const CarTableRow = ({ car }: { car: CarDataType }) => (
-  <TableRow key={car.id}>
+const CarTableRow = ({ car }: { car: CarDataType }) => {
+  const pathname = usePathname();
+  return (<TableRow key={car.id}>
     <TableCell>
       <Avatar>
         <CldImage
@@ -55,11 +57,15 @@ const CarTableRow = ({ car }: { car: CarDataType }) => (
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          <DropdownMenuItem>
-            <Link href={`/dashboard/edit-inventory/${car.id}`}>
-              Edit
-            </Link>
-          </DropdownMenuItem>
+          {pathname === "/dashboard/archive" ? (
+            null) : (
+            <DropdownMenuItem>
+              <Link href={`/dashboard/edit-inventory/${car.id}`}>
+                Edit
+              </Link>
+            </DropdownMenuItem>
+          )}
+          <DropdownMenuSeparator />
           <DropdownMenuItem>
             <div onClick={(e) => e.stopPropagation()}>
               <AlertDelete title={car.title} itemId={car.id} actionEndpoint="delete-inventory"
@@ -69,15 +75,18 @@ const CarTableRow = ({ car }: { car: CarDataType }) => (
             </div>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
-            <div onClick={(e) => e.stopPropagation()}>
-              <AlertDelete title={car.title} itemId={car.id} actionEndpoint="archive-inventory"
-                actionName="Archive"
-                actionColor="text-amber-700"
-                httpMethod="PUT" />
-            </div>
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
+
+          {pathname === "/dashboard/archive" ? (
+            null) : (
+            <DropdownMenuItem>
+              <div onClick={(e) => e.stopPropagation()}>
+                <AlertDelete title={car.title} itemId={car.id} actionEndpoint="archive-inventory"
+                  actionName="Archive"
+                  actionColor="text-amber-700"
+                  httpMethod="PUT" />
+              </div>
+            </DropdownMenuItem>
+          )}
           <DropdownMenuItem>
             <Link href={`/dashboard/edit-inventory/${car.id}`}>
               Details
@@ -86,7 +95,7 @@ const CarTableRow = ({ car }: { car: CarDataType }) => (
         </DropdownMenuContent>
       </DropdownMenu>
     </TableCell>
-  </TableRow>
-);
+  </TableRow>)
+}
 
 export default CarTableRow;
