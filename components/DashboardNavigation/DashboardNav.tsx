@@ -101,7 +101,16 @@ const DashboardNav = () => {
                         href="/dashboard/add-inventory"
                       >
                         <FaPlus />
-                        Add Car
+                        Add Manually
+                      </Link>
+                    </SheetClose>
+                    <SheetClose asChild>
+                      <Link
+                        className="flex items-center gap-2 rounded-md px-3 py-2 transition-colors hover:bg-gray-800"
+                        href="/dashboard/add-by-vin"
+                      >
+                        <FaPlus />
+                        Add By Vin
                       </Link>
                     </SheetClose>
                   </li>
@@ -141,7 +150,16 @@ const DashboardNav = () => {
                   href="/dashboard/add-inventory"
                 >
                   <FaPlus />
-                  Add Car
+                  Add Manually
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="flex items-center gap-2 rounded-md px-3 py-2 transition-colors hover:bg-gray-800"
+                  href="/dashboard/add-by-vin"
+                >
+                  <FaPlus />
+                  Add By Vin
                 </Link>
               </li>
             </ul>

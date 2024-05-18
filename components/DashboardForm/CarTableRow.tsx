@@ -71,11 +71,13 @@ const CarTableRow = ({ car }: { car: CarDataType }) => {
               <AlertDelete title={car.title} itemId={car.id} actionEndpoint="delete-inventory"
                 actionName="Delete"
                 actionColor="text-red-500"
-                httpMethod="DELETE" />
+                httpMethod="DELETE" >
+                <h2 className="text-red-500">Delete</h2>
+              </AlertDelete>
             </div>
           </DropdownMenuItem>
-          <DropdownMenuSeparator />
 
+          <DropdownMenuSeparator />
           {pathname === "/dashboard/archive" ? (
             null) : (
             <DropdownMenuItem>
@@ -83,10 +85,13 @@ const CarTableRow = ({ car }: { car: CarDataType }) => {
                 <AlertDelete title={car.title} itemId={car.id} actionEndpoint="archive-inventory"
                   actionName="Archive"
                   actionColor="text-amber-700"
-                  httpMethod="PUT" />
+                  httpMethod="PUT" >
+                  <h2 className="text-amber-700">Archive</h2>
+                </AlertDelete>
               </div>
             </DropdownMenuItem>
           )}
+          <DropdownMenuSeparator />
           <DropdownMenuItem>
             <Link href={`/dashboard/edit-inventory/${car.id}`}>
               Details

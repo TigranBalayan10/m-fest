@@ -22,22 +22,24 @@ const ToolTip: React.FC<ToolTipProps> = ({ children, tooltipText, itemId, action
         <TooltipProvider>
             <Tooltip>
                 <TooltipTrigger asChild>
-                    <AlertDelete
-                        itemId={itemId}
-                        title={title}
-                        actionEndpoint={actionEndpoint}
-                        httpMethod={httpMethod}
-                        actionName="Delete"
-                        actionColor="text-red-500"
-                    >
-                        <Button variant="ghost" size="icon">{children}</Button>
-                    </AlertDelete>
+                    <Button variant="ghost" size="icon">
+                        <AlertDelete
+                            itemId={itemId}
+                            title={title}
+                            actionEndpoint={actionEndpoint}
+                            httpMethod={httpMethod}
+                            actionName="Delete"
+                            actionColor="text-red-500"
+                        >
+                            {children}
+                        </AlertDelete>
+                    </Button>
                 </TooltipTrigger>
                 <TooltipContent>
                     <Tooltip>{tooltipText}</Tooltip>
                 </TooltipContent>
             </Tooltip>
-        </TooltipProvider>
+        </TooltipProvider >
     )
 }
 
