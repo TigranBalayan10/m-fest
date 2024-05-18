@@ -11,52 +11,53 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
-import { AiOutlineDelete } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 
-interface AlertDeleteProps {
-  carId: string;
+interface AlertActionProps {
+  itemId: string;
   title: string;
+  actionEndpoint: string;
+  actionName: string;
+  actionColor: string;
+  httpMethod: string;
 }
 
-export default function AlertDelete({ title, carId }: AlertDeleteProps) {
+export default function AlertAction({ title, itemId, actionEndpoint, actionName, actionColor, httpMethod }: AlertActionProps) {
   const router = useRouter();
 
-  const handleDelete = async () => {
+  const handleAction = async () => {
     try {
-      const response = await fetch(`/api/delete-inventory/${carId}`, {
-        method: "DELETE",
+      const response = await fetch(`/api/${actionEndpoint}/${itemId}`, {
+        method: httpMethod,
       });
       if (response.ok) {
         router.refresh();
       }
     } catch (error) {
-      console.error("Failed to delete car:", error);
+      console.error(`Failed to ${actionName} item:`, error);
     }
   };
 
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <h2 className="text-red-500">Delete</h2>
+        <h2 className={actionColor}>{actionName}</h2>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            Are you absolutely sure you want delete
-            <span className=" text-red-500"> {title} </span>
+            Are you absolutely sure you want {actionName.toLowerCase()}
+            <span className={actionColor}> {title} </span>
             ?
           </AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete the car
-            from the database.
+            This action cannot be undone. This will permanently {actionName.toLowerCase()} the item.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction className="bg-red-500" onClick={handleDelete}>
-            DELETE
+          <AlertDialogAction className={actionColor} onClick={handleAction}>
+            {actionName.toUpperCase()}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

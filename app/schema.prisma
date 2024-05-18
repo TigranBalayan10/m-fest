@@ -21,6 +21,7 @@ model CarList {
     year             String
     exteriorInterior String
     imageUrls        String[]
+    isArchive        Boolean  @default(false)
     createdAt        DateTime @default(now()) @map(name: "created_at")
     updatedAt        DateTime @updatedAt @map(name: "updated_at")
 }

@@ -26,6 +26,15 @@ async function fetcher() {
 
 const DataTable = () => {
   const { data, error, isLoading } = useSWR('/api/inventory', fetcher);
+  if (data?.carData?.length === 0) {
+    return (
+      <div className="overflow-x-auto rounded-lg border shadow-sm max-w-full">
+        <div className="p-4">
+          <h2 className="text-gray-800 font-semibold">No car data found</h2>
+        </div>
+      </div>
+    );
+  }
   if (isLoading) {
     return <DataTableSkeleton />;
   }

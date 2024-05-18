@@ -70,7 +70,18 @@ const CarTableRow = ({ car }: { car: CarDataType }) => (
           <DropdownMenuSeparator />
           <DropdownMenuItem>
             <div onClick={(e) => e.stopPropagation()}>
-              <AlertDelete title={car.title} carId={car.id} />
+              <AlertDelete title={car.title} itemId={car.id} actionEndpoint="delete-inventory"
+                actionName="Delete"
+                actionColor="text-red-500"
+                httpMethod="DELETE" />
+            </div>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <div onClick={(e) => e.stopPropagation()}>
+              <AlertDelete title={car.title} itemId={car.id} actionEndpoint="archive-inventory"
+                actionName="Archive"
+                actionColor="text-amber-700"
+                httpMethod="PUT" />
             </div>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
