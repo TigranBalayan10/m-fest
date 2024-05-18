@@ -48,12 +48,6 @@ const CarTableRow = ({ car }: { car: CarDataType }) => (
       {formatDate(car.createdAt)}
     </TableCell>
     <TableCell className="text-right">
-      {/* <Button variant="outline" size="icon">
-        <Link href={`/dashboard/edit-inventory/${car.id}`}>
-          <AiOutlineTool className="h-6 w-6" />
-        </Link>
-      </Button>
-      <AlertDelete title={car.title} carId={car.id} /> */}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline" size="icon">
@@ -67,7 +61,6 @@ const CarTableRow = ({ car }: { car: CarDataType }) => (
               Edit
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuSeparator />
           <DropdownMenuItem>
             <div onClick={(e) => e.stopPropagation()}>
               <AlertDelete title={car.title} itemId={car.id} actionEndpoint="delete-inventory"
@@ -76,6 +69,7 @@ const CarTableRow = ({ car }: { car: CarDataType }) => (
                 httpMethod="DELETE" />
             </div>
           </DropdownMenuItem>
+          <DropdownMenuSeparator />
           <DropdownMenuItem>
             <div onClick={(e) => e.stopPropagation()}>
               <AlertDelete title={car.title} itemId={car.id} actionEndpoint="archive-inventory"

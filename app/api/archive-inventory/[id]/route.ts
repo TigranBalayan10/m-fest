@@ -11,6 +11,5 @@ export async function PUT(request: any, { params }: { params: any }) {
       isArchive: true,
     },
   });
-  console.log(archivedCar);
   return NextResponse.json(archivedCar);
 }

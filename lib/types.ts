@@ -33,6 +33,7 @@ export interface Car {
   exteriorInterior: string;
   price: string;
   imageUrls: string[];
+  isArchive: boolean;
   createdAt: Date;
   updatedAt: Date;
 }

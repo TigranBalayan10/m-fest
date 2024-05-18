@@ -2,6 +2,7 @@ import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card";
 import DataTable from "@/components/DashboardForm/DataTable";
 import { auth } from "@clerk/nextjs/server";
 
+
 export default function Dashboard() {
   auth().protect();
   return (
@@ -38,7 +39,7 @@ export default function Dashboard() {
       </div>
       <div className="mt-6">
         <Card>
-          <DataTable />
+        <DataTable showArchived={false} />
         </Card>
       </div>
     </>
