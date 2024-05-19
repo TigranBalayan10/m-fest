@@ -1,9 +1,12 @@
-// lib/fetcher.ts
-const externalFetcher = async (url: string) => {
-    const options: RequestInit = {
+// lib/ExternalFetcher.ts
+import * as dotenv from 'dotenv';
+
+dotenv.config();
+export const externalFetcher = async (url: string) => {
+      const options: RequestInit = {
       method: 'GET',
       headers: {
-        'X-RapidAPI-Key': process.env.NEXT_PUBLIC_RAPID_API_KEY as string,
+        'X-RapidAPI-Key': process.env.NEXT_PUBLIC_RAPIDAPI_KEY as string,
         'X-RapidAPI-Host': 'car-api2.p.rapidapi.com',
       },
     };
@@ -15,4 +18,3 @@ const externalFetcher = async (url: string) => {
     return response.json();
   };
   
-  export default externalFetcher;

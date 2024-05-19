@@ -35,10 +35,18 @@ export const SearchSchema = z.object({
 });
 
 export const LoginSchema = z.object({
-  username: z.string().min(1,{ message: "Username is required" }),
+  username: z.string().min(1, { message: "Username is required" }),
   password: z.string().min(1, { message: "Password is required" }),
+});
+
+export const VinSchema = z.object({
+  vin: z
+    .string()
+    .min(17, { message: "VIN must be at least 17 characters" })
+    .max(17, { message: "VIN must be at most 17 characters" }),
 });
 
 export type SearchData = z.infer<typeof SearchSchema>;
 export type CarListData = z.infer<typeof CarListSchema>;
 export type LoginData = z.infer<typeof LoginSchema>;
+export type VinNumber = z.infer<typeof VinSchema>;
