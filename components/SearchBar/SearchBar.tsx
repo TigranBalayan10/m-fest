@@ -25,7 +25,7 @@ const SearchBar = () => {
   const selectData = data?.carData;
 
   const yearOptions = selectData?.map((car: CarListData) => car.year);
-  const titleOptions = selectData?.map((car: CarListData) => car.title);
+  const modelOptions = selectData?.map((car: CarListData) => car.model);
   const makeOptions = selectData?.map((car: CarListData) => car.make);
   const milageOptions = CarMilages.map((milage) => milage.label);
 
@@ -62,7 +62,7 @@ const SearchBar = () => {
               <SearchSelect
                 control={form.control}
                 name="model"
-                options={titleOptions}
+                options={modelOptions}
                 label="Model"
                 placeholder="Select Model"
               />

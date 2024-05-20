@@ -6,7 +6,7 @@ export async function PUT(request: any, { params }: { params: any }) {
   // Parse the body of the request
   let res = await request.json();
   const {
-    title,
+    model,
     make,
     description,
     price,
@@ -20,7 +20,7 @@ export async function PUT(request: any, { params }: { params: any }) {
   const updatedCar = await prisma.carList.update({
     where: { id: id },
     data: {
-      title,
+      model,
       make,
       description,
       price,

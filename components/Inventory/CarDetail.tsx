@@ -4,9 +4,17 @@ import { CldImage } from "next-cloudinary";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { FaArrowUpRightFromSquare, FaArrowLeftLong } from "react-icons/fa6";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import ToolTip from "../CustomUi/ToolTip";
+import { Separator } from "../ui/separator";
 
 interface CarDetailProps {
   car: Car;
@@ -18,87 +26,122 @@ const CarDetail: React.FC<CarDetailProps> = ({ car }) => {
   const pathname = usePathname();
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <Link href="/inventory">
-        <Button variant="link" className="text-blue-600 hover:text-blue-800 p-0"><FaArrowLeftLong className="mr-1" />Back to Inventory</Button>
-      </Link>
-      <h1 className="text-3xl font-bold text-gray-800 mb-2">Car Details</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="relative">
-          <CldImage
-            src={selectedImage}
-            width="800"
-            height="600"
-            crop="fill"
-            alt={car.title}
-          />
-          <div className="grid grid-cols-5 gap-2 mt-4">
-            {car.imageUrls.map((imageUrl, index) => (
-              <Button key={index} size="xl" className="border border-gray-300 rounded-md overflow-hidden bg-transparent focus:bg-slate-900 p-1" onClick={() => setSelectedImage(imageUrl)}>
-                <CldImage
-                  src={imageUrl}
-                  width="480"
-                  height="300"
-                  crop="fill"
-                  alt={`Thumbnail ${index + 2}`}
-                />
-              </Button>
-            ))}
+    <>
+      {pathname === (`/dashboard/inventory/${car.id}`) ? (
+        null) : (
+        <Link href="/inventory">
+          <Button variant="link" className="text-blue-600 hover:text-blue-800 p-0"><FaArrowLeftLong className="mr-1" />Back to Inventory</Button>
+        </Link>
+      )}
+      <CardHeader>
+        <CardTitle>Car Details</CardTitle>
+        <CardDescription>
+          Detailed information about the car
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="p-0">
+        <div className="md:grid md:grid-cols-3 gap-2">
+          <div className="md:col-span-2">
+            <div className="flex flex-col">
+              <CldImage
+                src={selectedImage}
+                width="1000"
+                height="600"
+                crop="fill"
+                alt={car.model}
+              />
+              <div className="flex justify-start">
+                <div className="grid grid-cols-4  sm:grid-cols-8 sm:m-0 gap-1 mt-4">
+                  {car.imageUrls.map((imageUrl, index) => (
+                    <Button key={index} size="xl" className="border p-1 border-gray-300 rounded-md overflow-hidden bg-transparent focus:bg-slate-900 aspect-square" onClick={() => setSelectedImage(imageUrl)}>
+                      <CldImage
+                        src={imageUrl}
+                        width="480"
+                        height="300"
+                        crop="fill"
+                        alt={`Thumbnail ${index + 2}`}
+                        className="w-full h-full object-cover"
+                      />
+                    </Button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="grid w-full">
+            <div>
+              <h1 className="text-3xl font-bold">{car.year} {car.model}</h1>
+              <p className=" text-gray-500">
+                {car.description}
+              </p>
+              <Link className="mt-2 inline-flex items-center text-blue-600 hover:text-blue-800 font-medium" href="#">
+                See CarFax Report
+                <FaArrowUpRightFromSquare className="ml-2 w-4 h-4" />
+              </Link>
+            </div>
+            <div className="flex max-w-96 flex-col mx-3 mt-2 gap-1">
+              <Separator className="my-2 bg-black"  />
+              <div className="flex justify-between">
+                <h3 className="text-sm font-medium text-gray-500">Make</h3>
+                <p className="text-sm font-semibold">{car.make}</p>
+              </div>
+              <Separator className="my-2 bg-black"  />
+              <div className="flex justify-between">
+                <h3 className="text-sm font-medium text-gray-500">Model</h3>
+                <p className="text-sm font-semibold">{car.model}</p>
+              </div>
+              <Separator className="my-2 bg-black"  />
+              <div className="flex justify-between">
+                <h3 className="text-sm font-medium text-gray-500">Year</h3>
+                <p className="text-sm font-semibold">{car.year}</p>
+              </div>
+              <Separator className="my-2 bg-black"  />
+              <div className="flex justify-between">
+                <h3 className="text-sm font-medium text-gray-500">Mileage</h3>
+                <p className="text-sm font-semibold">{car.milage},mi</p>
+              </div>
+              <Separator className="my-2 bg-black"  />
+              <div className="flex justify-between">
+                <h3 className="text-sm font-medium text-gray-500">Mileage</h3>
+                <p className="text-sm font-semibold">{car.drivetrain}</p>
+              </div>
+              <Separator className="my-2 bg-black"  />
+              <div className="flex justify-between">
+                <h3 className="text-sm font-medium text-gray-500">Mileage</h3>
+                <p className="text-sm font-semibold">{car.transmission}</p>
+              </div>
+              <Separator className="my-2 bg-black"  />
+              <div className="flex justify-between">
+                <h3 className="text-sm font-medium text-gray-500">Mileage</h3>
+                <p className="text-sm font-semibold">{car.engine}</p>
+              </div>
+              <Separator className="my-2 bg-black"  />
+              <div className="flex justify-between">
+                <h3 className="text-sm font-medium text-gray-500">Price</h3>
+                <p className="text-sm font-bold">${car.price}</p>
+              </div>
+            </div>
+            {pathname === (`/dashboard/inventory/${car.id}`) ? (
+              <div className="flex  gap-16 ml-2 items-center">
+                <Link href={`/dashboard/edit-inventory/${car.id}`}>
+                  <Button size="lg">Edit Car</Button>
+                </Link>
+                <ToolTip tooltipText="Delete Inventory"
+                  itemId={car.id} actionEndpoint="delete-inventory" httpMethod="DELETE" title={car.make}
+                >
+                  <Button size="lg">Delete Car</Button>
+                </ToolTip>
+              </div>
+            )
+              : (
+                <Link href="/contact-us" >
+                  <Button size="lg" className="w-full mt-2">Contact Seller</Button>
+                </Link>
+              )}
           </div>
         </div>
-        <div className="grid">
-          <div>
-            <h1 className="text-3xl font-bold">{car.year} {car.title}</h1>
-            <p className=" text-gray-500">
-              {car.description}
-            </p>
-            <Link className="mt-2 inline-flex items-center text-blue-600 hover:text-blue-800 font-medium" href="#">
-              See CarFax Report
-              <FaArrowUpRightFromSquare className="ml-2 w-4 h-4" />
-            </Link>
-          </div>
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <h3 className="text-sm font-medium text-gray-500">Make</h3>
-              <p className="text-lg font-semibold">{car.title}</p>
-            </div>
-            <div>
-              <h3 className="text-sm font-medium text-gray-500">Model</h3>
-              <p className="text-lg font-semibold">{car.make}</p>
-            </div>
-            <div>
-              <h3 className="text-sm font-medium text-gray-500">Year</h3>
-              <p className="text-lg font-semibold">{car.year}</p>
-            </div>
-            <div>
-              <h3 className="text-sm font-medium text-gray-500">Mileage</h3>
-              <p className="text-lg font-semibold">{car.milage},mi</p>
-            </div>
-            <div className="col-span-2">
-              <h3 className="text-sm font-medium text-gray-500">Price</h3>
-              <p className="text-2xl font-bold">${car.price}</p>
-            </div>
-          </div>
-          {pathname === (`/dashboard/inventory/${car.id}`) ? (
-            <div className="flex  gap-16 ml-2 items-center">
-              <Link href={`/dashboard/edit-inventory/${car.id}`}>
-                <Button size="lg">Edit Car</Button>
-              </Link>
-              <ToolTip tooltipText="Delete Inventory"
-                itemId={car.id} actionEndpoint="delete-inventory" httpMethod="DELETE" title={car.title}
-              >
-                <Button size="lg">Delete Car</Button>
-              </ToolTip>
-            </div>
-          )
-            : (
-              <Link href="/contact-us" >
-                <Button size="lg" className="w-full mt-2">Contact Seller</Button>
-              </Link>
-            )}
-        </div>
-      </div>
-    </div>
+      </CardContent >
+    </>
   );
 }
 

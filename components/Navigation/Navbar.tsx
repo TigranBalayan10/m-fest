@@ -4,10 +4,8 @@ import * as React from "react";
 import Link from "next/link";
 import { NavigationMenuItems } from "./NavigationMenuItems";
 import { Button } from "@/components/ui/button";
-import { SheetTrigger, SheetContent, Sheet, SheetClose } from "@/components/ui/sheet";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { FaBars } from "react-icons/fa6";
 import NavMobileItems from "@/components/Navigation/NavMobileItems";
 
 const Navbar = () => {

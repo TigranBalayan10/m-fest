@@ -50,8 +50,8 @@ export function NavigationMenuItems() {
               {/* Grid layout for tablets and desktops */}
               <ul className="grid w-[200px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] bg-stone-300">
                 {firstFourCars?.map((item: CarListData, index: number) => (
-                  <ListItem key={index} title={item.title} href={`/inventory/${item.id}`}>
-                    <CldImage src={item.imageUrls[0]} width="480" height="240" crop="fill" alt={item.title} />
+                  <ListItem key={index} title={item.make} href={`/inventory/${item.id}`}>
+                    <CldImage src={item.imageUrls[0]} width="480" height="240" crop="fill" alt={item.make} />
                     {item.description}
                   </ListItem>
                 ))}

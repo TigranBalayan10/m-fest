@@ -40,16 +40,16 @@ const AddByVin = () => {
             ) : data ? (
                 <>
                     {(() => {
-                        const { make: title, year, specs, trims } = data;
+                        const { make, year, specs, trims, trim: model } = data;
                         const { body_class: description, transmission_speeds, transmission_style, drive_type: drivetrain } = specs;
                         const firstTrim = trims[0];
-                        const { description: engine, name: make } = firstTrim;
-                        
-                        
-                        
+                        const { description: engine } = firstTrim;
+
+
+
 
                         const initialData: CarListData = {
-                            title,
+                            model,
                             make,
                             description,
                             price: "",

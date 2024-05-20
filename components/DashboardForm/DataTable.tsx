@@ -8,7 +8,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Card } from "@/components/ui/card";
 import CarTableRow from "./CarTableRow";
 import { Car } from "@/lib/types";
 import DataTableSkeleton from "@/components/DashboardForm/DataTableSkeleton";

@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma";
 export async function POST(request: Request) {
   const res = await request.json();
   const {
-    title,
+    model,
     make,
     description,
     price,
@@ -19,7 +19,7 @@ export async function POST(request: Request) {
   } = res.values;
   const result = await prisma.carList.create({
     data: {
-      title,
+      model,
       make,
       description,
       price,

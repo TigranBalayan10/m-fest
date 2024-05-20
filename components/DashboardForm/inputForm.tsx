@@ -41,7 +41,7 @@ const InputForm = ({
   const form = useForm<z.infer<typeof CarFormSchema>>({
     resolver: zodResolver(CarFormSchema),
     defaultValues: initialData || {
-      title: "",
+      model: "",
       make: "",
       description: "",
       price: "",
@@ -139,15 +139,15 @@ const InputForm = ({
                 <div className="grid gap-2">
                   <CustomFormField
                     control={form.control}
-                    name="title"
-                    placeholder="Title"
+                    name="make"
+                    placeholder="Make"
                   />
                 </div>
                 <div className="grid gap-2">
                   <CustomFormField
                     control={form.control}
-                    name="make"
-                    placeholder="Make"
+                    name="model"
+                    placeholder="Model"
                   />
                 </div>
                 <div className="grid gap-2">

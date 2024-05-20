@@ -37,7 +37,7 @@ const CarCard: React.FC<CarCardProps> = ({ car }) => (
   <Card className="bg-zinc-200">
     <CardHeader>
       <CardTitle>
-        {car.year} {car.title}
+        {car.year} {car.make} {car.model}
       </CardTitle>
       <CardDescription>{car.milage} mi.</CardDescription>
     </CardHeader>
@@ -49,13 +49,13 @@ const CarCard: React.FC<CarCardProps> = ({ car }) => (
             width="480"
             height="240"
             crop="fill"
-            alt={car.title}
+            alt={car.make + " " + car.model}
           />
         </DialogTrigger>
         <DialogContent className="w-3/4 h-3/4 items-center  max-w-none bg-transparent border-none shadow-none">
           <DialogHeader>
             <DialogTitle className="text-white text-center mb-5">
-              {car.title}
+              {car.make} {car.model} {car.year}
             </DialogTitle>
             <DialogDescription className="w-3/4 mx-auto my-auto">
               <Carousel>
@@ -89,7 +89,7 @@ const CarCard: React.FC<CarCardProps> = ({ car }) => (
       <Separator className="my-1" />
       <div className="flex justify-between mt-2">
         <p className="text-sm">Make</p>
-        <p className="text-sm">{car.make}</p>
+        <p className="text-sm">{car.model}</p>
       </div>
       <Separator className="my-1" />
       <div className="flex justify-between mt-2">

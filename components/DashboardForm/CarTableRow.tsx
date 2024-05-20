@@ -10,7 +10,7 @@ import { BsThreeDots } from "react-icons/bs";
 import { CldImage } from "next-cloudinary";
 import AlertDelete from "@/components/CustomUi/AlertDelete";
 import Link from "next/link";
-import { Car as CarDataType } from "@/lib/types";
+import { Car } from "@/lib/types";
 import { formatDate } from "@/lib/FormatDate";
 import {
   DropdownMenu,
@@ -23,7 +23,7 @@ import {
 import { usePathname } from "next/navigation";
 
 
-const CarTableRow = ({ car }: { car: CarDataType }) => {
+const CarTableRow = ({ car }: { car: Car }) => {
   const pathname = usePathname();
   return (<TableRow key={car.id}>
     <TableCell>
@@ -33,14 +33,14 @@ const CarTableRow = ({ car }: { car: CarDataType }) => {
           width="100"
           height="100"
           crop="fill"
-          alt={car.title}
+          alt={car.make + " " + car.model}
         />
-        <AvatarFallback>{car.title.slice(0, 2)}</AvatarFallback>
+        <AvatarFallback>{car.make.slice(0, 2)}</AvatarFallback>
       </Avatar>
     </TableCell>
-    <TableCell className="hidden md:table-cell">{car.title}</TableCell>
+    <TableCell className="hidden md:table-cell">{car.make}</TableCell>
     <TableCell className="hidden md:table-cell">{car.vin}</TableCell>
-    <TableCell>{car.make}</TableCell>
+    <TableCell>{car.model}</TableCell>
     <TableCell className="hidden md:table-cell">{car.milage}</TableCell>
     <TableCell className="hidden md:table-cell">{car.year}</TableCell>
     <TableCell className="hidden md:table-cell">{car.exteriorInterior}</TableCell>
@@ -68,7 +68,7 @@ const CarTableRow = ({ car }: { car: CarDataType }) => {
           <DropdownMenuSeparator />
           <DropdownMenuItem>
             <div onClick={(e) => e.stopPropagation()}>
-              <AlertDelete title={car.title} itemId={car.id} actionEndpoint="delete-inventory"
+              <AlertDelete title={car.model} itemId={car.id} actionEndpoint="delete-inventory"
                 actionName="Delete"
                 actionColor="text-red-500"
                 httpMethod="DELETE" >
@@ -82,7 +82,7 @@ const CarTableRow = ({ car }: { car: CarDataType }) => {
             null) : (
             <DropdownMenuItem>
               <div onClick={(e) => e.stopPropagation()}>
-                <AlertDelete title={car.title} itemId={car.id} actionEndpoint="archive-inventory"
+                <AlertDelete title={car.model} itemId={car.id} actionEndpoint="archive-inventory"
                   actionName="Archive"
                   actionColor="text-amber-700"
                   httpMethod="PUT" >

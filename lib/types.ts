@@ -24,10 +24,13 @@ export interface carData {
 
 export interface Car {
   id: string;
-  title: string;
+  model: string;
   vin: string;
   make: string;
   milage: string;
+  drivetrain: string;
+  transmission: string;
+  engine: string;
   description?: string;
   year: string;
   exteriorInterior: string;

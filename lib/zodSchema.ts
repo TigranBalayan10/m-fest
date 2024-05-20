@@ -4,7 +4,7 @@ import { z } from "zod";
 
 export const CarListSchema = z.object({
   id: z.string().optional(),
-  title: z.string().min(1, { message: "Title is required" }),
+  model: z.string().min(1, { message: "Title is required" }),
   make: z.string().min(1, { message: "Make is required" }),
   description: z.string().min(1, { message: "Description is required" }),
   price: z.string().min(1, { message: "Price is required" }),
@@ -19,7 +19,7 @@ export const CarListSchema = z.object({
     .min(1, { message: "Exterior/Interior is required" }),
   imageUrls: z
     .array(z.string())
-    .min(2, { message: "At least 2 Images are required" }),
+    .min(2, { message: "At least 2 Images are required" })
 });
 
 export const ContactUsSchema = z.object({

@@ -24,7 +24,7 @@ const InventoryDetails = ({ params }: { params: { id: string } }) => {
 
 
     return (
-        <Card className="inventory-page mx-4 md:py-5 sm:mx-auto mt-5 shadow-lg bg-stone-200 px-4 py-7 sm:px-6 lg:px-8 h-auto overflow-auto">
+        <Card className="inventory-page mx-4 md:py-3 sm:mx-auto mt-5 shadow-lg bg-stone-200 px-3 py-7 sm:px-6 lg:px-4 h-auto overflow-auto">
             <CarDetail car={car} />
         </Card>
     )
