@@ -93,7 +93,7 @@ const CarTableRow = ({ car }: { car: CarDataType }) => {
           )}
           <DropdownMenuSeparator />
           <DropdownMenuItem>
-            <Link href={`/dashboard/edit-inventory/${car.id}`}>
+            <Link href={`/dashboard/inventory/${car.id}`}>
               Details
             </Link>
           </DropdownMenuItem>

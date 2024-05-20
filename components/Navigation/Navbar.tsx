@@ -18,7 +18,7 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="bg-zinc-200 p-4 shadow-xl sticky z-10 top-0 ">
+    <nav className="bg-gradient-to-b from-zinc-200 via-zinc-200 to-zinc-100/50 p-4 shadow-xl sticky z-10 top-0">
       <div className="container pl-0 pr-0 flex justify-between">
         {/* Logo */}
         <div className="flex items-center justify-between w-full">

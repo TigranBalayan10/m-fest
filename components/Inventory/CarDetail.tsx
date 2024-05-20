@@ -5,6 +5,8 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 import { FaArrowUpRightFromSquare, FaArrowLeftLong } from "react-icons/fa6";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
+import ToolTip from "../CustomUi/ToolTip";
 
 interface CarDetailProps {
   car: Car;
@@ -13,6 +15,7 @@ interface CarDetailProps {
 const CarDetail: React.FC<CarDetailProps> = ({ car }) => {
 
   const [selectedImage, setSelectedImage] = useState(car.imageUrls[0]);
+  const pathname = usePathname();
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -76,9 +79,23 @@ const CarDetail: React.FC<CarDetailProps> = ({ car }) => {
               <p className="text-2xl font-bold">${car.price}</p>
             </div>
           </div>
-          <Link href="/contact-us" >
-            <Button size="lg" className="w-full mt-2">Contact Seller</Button>
-          </Link>
+          {pathname === (`/dashboard/inventory/${car.id}`) ? (
+            <div className="flex  gap-16 ml-2 items-center">
+              <Link href={`/dashboard/edit-inventory/${car.id}`}>
+                <Button size="lg">Edit Car</Button>
+              </Link>
+              <ToolTip tooltipText="Delete Inventory"
+                itemId={car.id} actionEndpoint="delete-inventory" httpMethod="DELETE" title={car.title}
+              >
+                <Button size="lg">Delete Car</Button>
+              </ToolTip>
+            </div>
+          )
+            : (
+              <Link href="/contact-us" >
+                <Button size="lg" className="w-full mt-2">Contact Seller</Button>
+              </Link>
+            )}
         </div>
       </div>
     </div>

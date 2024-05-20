@@ -10,6 +10,9 @@ export const CarListSchema = z.object({
   price: z.string().min(1, { message: "Price is required" }),
   milage: z.string().min(1, { message: "Milage is required" }),
   vin: z.string().min(1, { message: "VIN is required" }),
+  drivetrain: z.string().min(1, { message: "Drivetrain is required" }),
+  transmission: z.string().min(1, { message: "Transmission is required" }),
+  engine: z.string().min(1, { message: "Engine is required" }),
   year: z.string().min(1, { message: "Year is required" }),
   exteriorInterior: z
     .string()

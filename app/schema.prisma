@@ -14,10 +14,13 @@ model CarList {
     id               String   @id @default(cuid())
     title            String
     make             String
-    description      String 
+    description      String
     price            String
     milage           String
     vin              String
+    drivetrain       String
+    transmission     String
+    engine           String
     year             String
     exteriorInterior String
     imageUrls        String[]

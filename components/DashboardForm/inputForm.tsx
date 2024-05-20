@@ -47,6 +47,9 @@ const InputForm = ({
       price: "",
       milage: "",
       vin: "",
+      drivetrain: "",
+      transmission: "",
+      engine: "",
       year: "",
       exteriorInterior: "",
       imageUrls: [],
@@ -157,6 +160,13 @@ const InputForm = ({
                 <div className="grid gap-2">
                   <CustomFormField
                     control={form.control}
+                    name="engine"
+                    placeholder="Engine"
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <CustomFormField
+                    control={form.control}
                     name="description"
                     placeholder="Description"
                   />
@@ -188,6 +198,20 @@ const InputForm = ({
                       control={form.control}
                       name="year"
                       placeholder="Year"
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <CustomFormField
+                      control={form.control}
+                      name="drivetrain"
+                      placeholder="Drivetrain"
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <CustomFormField
+                      control={form.control}
+                      name="transmission"
+                      placeholder="Transmission"
                     />
                   </div>
                 </div>
