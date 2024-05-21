@@ -46,11 +46,11 @@ const InputForm = ({
       description: "",
       price: "",
       milage: "",
+      year: "",
       vin: "",
       drivetrain: "",
       transmission: "",
       engine: "",
-      year: "",
       exteriorInterior: "",
       imageUrls: [],
     },
@@ -61,6 +61,12 @@ const InputForm = ({
   const { isDirty, isSubmitting } = form.formState;
 
   async function onSubmit(values: z.infer<typeof CarFormSchema>) {
+    const carFormData = {
+      ...values,
+      price: Number(values.price),
+      milage: Number(values.milage),
+      year: Number(values.year),
+    };
     try {
       // Determine the API endpoint and the HTTP method based on the mode
       const url =
@@ -74,7 +80,7 @@ const InputForm = ({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ values }),
+        body: JSON.stringify({ values: carFormData }),
       });
       if (response.ok) {
         setAlertMessage(
@@ -283,6 +289,11 @@ const InputForm = ({
                           );
                         })}
                     </div>
+                    {form.formState.errors.imageUrls && (
+                      <p className="text-destructive text-xs font-medium mt-1">
+                        {form.formState.errors.imageUrls.message}
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>

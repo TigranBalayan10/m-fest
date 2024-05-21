@@ -34,7 +34,7 @@ const CustomFormField: React.FC<FormFieldProps> = ({
             {name === "description" ? (
               <Textarea {...field} placeholder={placeholder} />
             ) : (
-              <Input {...field} placeholder={placeholder} />
+              <Input {...field} placeholder={placeholder}  />
             )}
           </FormControl>
           <FormMessage />
