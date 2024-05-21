@@ -15,13 +15,13 @@ model CarList {
     make             String
     model            String
     description      String
-    price            String
-    milage           String
+    price            Int
+    milage           Int
     vin              String
     drivetrain       String
     transmission     String
     engine           String
-    year             String
+    year             Int
     exteriorInterior String
     imageUrls        String[]
     isArchive        Boolean  @default(false)

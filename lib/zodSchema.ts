@@ -23,9 +23,9 @@ export const CarListSchema = z.object({
 });
 
 export const ContactUsSchema = z.object({
-  name: z.string().min(1, { message: "Name is required" }),
-  email: z.string().email({ message: "Invalid email" }),
-  phone: z.string().min(1, { message: "Phone is required" }),
+  name: z.string().trim().min(2, { message: "Name must be 2 or more characters long" }),
+  email: z.string().trim().toLowerCase().email({ message: "Invalid email" }),
+  phone: z.string().regex(/^[0-9]+$/, { message: "Invalid phone number" }).length(10, { message: "Phone number must be 10 digits" }).transform(val => `${val.slice(0, 3)}-${val.slice(3, 6)}-${val.slice(6, 10)}`),
   message: z.string().min(1, { message: "Message is required" }),
 });
 
