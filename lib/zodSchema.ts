@@ -76,7 +76,24 @@ export const VinSchema = z.object({
     .max(17, { message: "VIN must be at most 17 characters" }),
 });
 
+const VinDecodedTrimSchema = z.object({
+  id: z.number(),
+  make_model_id: z.number(),
+});
+
+export const VinDecodedSchema = z
+  .object({
+    year: z.number(),
+    make: z.string().trim().toUpperCase(),
+    model: z.string().trim().optional(),
+    trim: z.string().trim(),
+  })
+  .extend({
+    trims: z.array(VinDecodedTrimSchema),
+  });
+
 export type SearchData = z.infer<typeof SearchSchema>;
 export type CarListData = z.infer<typeof CarListSchema>;
 export type LoginData = z.infer<typeof LoginSchema>;
 export type VinNumber = z.infer<typeof VinSchema>;
+export type VinDecodedData = z.infer<typeof VinDecodedSchema>;
