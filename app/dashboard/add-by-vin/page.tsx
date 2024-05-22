@@ -8,42 +8,62 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { FaSpinner } from "react-icons/fa6"
 import InputField from "@/components/CustomUi/InputField"
 import useVinData from "@/lib/fetchVinDecodeData"
+import { Button } from "@/components/ui/button";
 
 
 
 const AddByVin = () => {
 
-    const vin = "WBSAE0C0XLCD77497"
-    const { decodeData, engineData, milageData, error } = useVinData(vin);
+    const form = useForm<VinNumber>({
+        resolver: zodResolver(VinSchema),
+        defaultValues: {
+            vin: ""
+        }
+    })
 
-    if (error) {
-        // Handle the error
-        return <div>Error: {error.message}</div>;
+    function onSubmit(value: VinNumber) {
+        console.log(value)
     }
 
-    if (!decodeData || !engineData || !milageData) {
-        // Handle loading state
-        return <div>Loading...</div>;
-    }
+    // const vin = "WBSAE0C0XLCD77497"
+    // const { decodeData, engineData, milageData, error } = useVinData(vin);
 
-    const engineInfo = engineData.data[0];
 
+
+    // if (error) {
+    //     // Handle the error
+    //     return <div>Error: {error.message}</div>;
+    // }
+
+    // if (!decodeData || !engineData || !milageData) {
+    //     // Handle loading state
+    //     return <div>Loading...</div>;
+    // }
+    // const engineInfo = engineData.data[0];
     return (
-        <>
-            <h1>Add By Vin</h1>
-            <h2> Data for VIN : {vin}</h2>
-            <p>Year: {decodeData.year}</p>
-            <p>Make: {decodeData.make}</p>
-            <p>Model: {decodeData.model}</p>
-            <p>Trim: {decodeData.trim}</p>
-
-            <h2>Engine Data:</h2>
-            <h2>Engine Data:</h2>
-            <p>Engine Type: {engineInfo.engine_type || "N/A"}</p>
-            <p>Fuel Type: {engineInfo.fuel_type || "N/A"}</p>
-            <p>Cylinders: {engineInfo.cylinders || "N/A"}</p>
-            <p>Size: {engineInfo.size || "N/A"}</p>
-        </>
+        <div className="flex justify-center">
+            <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col space-y-3">
+                    <div className="flex space-x-3 items-start">
+                        <div className="w-full">
+                            <InputField
+                                control={form.control}
+                                name="vin"
+                                placeholder="VIN"
+                                label="VIN Number"
+                            />
+                        </div>
+                        <Button type="submit" className="mt-8">
+                            {form.formState.isSubmitting ? (
+                                <FaSpinner className="animate-spin" />
+                            ) : (
+                                "Search"
+                            )}
+                        </Button>
+                    </div>
+                </form>
+            </Form>
+        </div>
     );
 }
 
