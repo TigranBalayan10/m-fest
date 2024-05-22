@@ -1,5 +1,6 @@
 import InputForm from "@/components/DashboardForm/inputForm";
 import prisma from "@/lib/prisma";
+import { CarListSchema } from "@/lib/zodSchema";
 
 async function getCar(id: string) {
   const car = await prisma.carList.findUnique({

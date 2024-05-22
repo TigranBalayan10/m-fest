@@ -79,6 +79,7 @@ export const VinSchema = z.object({
 const VinDecodedTrimSchema = z.object({
   id: z.number(),
   make_model_id: z.number(),
+  name: z.string().trim(),
 });
 
 export const VinDecodedSchema = z

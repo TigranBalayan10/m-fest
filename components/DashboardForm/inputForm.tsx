@@ -22,6 +22,7 @@ import { useState } from "react";
 import { FaSpinner, FaUpload } from "react-icons/fa6";
 import { IoCloseOutline } from "react-icons/io5";
 import { revalidateAll } from "@/lib/actions";
+import { Car } from "@/lib/types";
 
 const CarFormSchema = CarListSchema;
 
@@ -29,8 +30,22 @@ const InputForm = ({
   mode = "add",
   initialData,
 }: {
-  mode?: "add" | "edit";
-  initialData?: z.infer<typeof CarFormSchema>;
+  mode?: "add" | "edit" | "addByVin";
+  initialData?: {
+    id?: string;
+    make: string;
+    model: string;
+    description?: string;
+    price: number;
+    milage: number;
+    vin: string;
+    drivetrain: string;
+    transmission: string;
+    engine: string;
+    year: number;
+    exteriorInterior: string;
+    imageUrls: string[];
+  };
 }) => {
   const router = useRouter();
 
@@ -38,9 +53,13 @@ const InputForm = ({
   const [alertMessage, setAlertMessage] = useState("");
   const [alertTitle, setAlertTitle] = useState("Success");
 
-  const form = useForm<z.infer<typeof CarFormSchema>>({
-    resolver: zodResolver(CarFormSchema),
-    defaultValues: initialData || {
+  const defaultValues = mode === "edit" || mode === "addByVin" ? {
+    ...initialData,
+    price: initialData?.price?.toString() || "",
+    milage: initialData?.milage?.toString() || "",
+    year: initialData?.year?.toString() || "",
+  }
+    : {
       model: "",
       make: "",
       description: "",
@@ -53,7 +72,11 @@ const InputForm = ({
       engine: "",
       exteriorInterior: "",
       imageUrls: [],
-    },
+    };
+
+  const form = useForm<z.infer<typeof CarFormSchema>>({
+    resolver: zodResolver(CarFormSchema),
+    defaultValues: defaultValues
   });
 
   const { reset } = form;
@@ -70,10 +93,10 @@ const InputForm = ({
     try {
       // Determine the API endpoint and the HTTP method based on the mode
       const url =
-        mode === "add"
-          ? "/api/add-car"
-          : `/api/update-inventory/${initialData?.id}`;
-      const method = mode === "add" ? "POST" : "PUT";
+        mode === "edit"
+          ? `/api/update-inventory/${initialData?.id}`
+          : "/api/add-car";
+      const method = mode === "edit" ? "PUT" : "POST";
 
       const response = await fetch(url, {
         method,
@@ -84,14 +107,14 @@ const InputForm = ({
       });
       if (response.ok) {
         setAlertMessage(
-          `Car ${mode === "add" ? "added" : "updated"} successfully`,
+          `Car ${mode === "edit" ? "updated" : "added"} successfully`,
         );
         setShowAlert(true);
         setAlertTitle("Success");
         revalidateAll();
       } else {
         setAlertMessage(
-          `Car could not be ${mode === "add" ? "added" : "updated"}`,
+          `Car ${mode === "edit" ? "updated" : "added"} successfully`,
         );
         setShowAlert(true);
         setAlertTitle("Error");
@@ -130,12 +153,14 @@ const InputForm = ({
       <Card>
         <CardHeader>
           <CardTitle>
-            {mode === "add" ? "Add Inventory" : "Edit Inventory"}
+            {mode === "add" ? "Add Inventory" : mode === "addByVin" ? "Add Inventory by VIN" : "Edit Inventory"}
           </CardTitle>
           <CardDescription>
             {mode === "add"
               ? "Fill out the form below to add inventory"
-              : "Edit the form below to edit inventory"}
+              : mode === "addByVin"
+                ? "Fill out the form below to add inventory by VIN"
+                : "Edit the form below to edit inventory"}
           </CardDescription>
         </CardHeader>
         <Form {...form}>
@@ -298,15 +323,13 @@ const InputForm = ({
                 </div>
               </div>
               <CardFooter className="flex justify-end gap-3 px-0 my-4">
-                {mode === "add" && (
+                {(mode === "add" || mode === "addByVin") && (
                   <Button disabled={!isDirty} type="submit">
                     {isSubmitting ? "Adding..." : "Add Inventory"}
-                    {isSubmitting && (
-                      <FaSpinner className="animate-spin ml-2" />
-                    )}
+                    {isSubmitting && <FaSpinner className="animate-spin ml-2" />}
                   </Button>
                 )}
-                {mode === "add" && (
+                {(mode === "add" || mode === "addByVin") && (
                   <Button
                     variant="destructive"
                     type="button"
@@ -315,7 +338,7 @@ const InputForm = ({
                     Reset
                   </Button>
                 )}
-                {mode === "add" && (
+                {(mode === "add" || mode === "addByVin") && (
                   <Button
                     type="button"
                     onClick={() => router.push("/dashboard")}

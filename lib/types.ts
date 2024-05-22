@@ -23,22 +23,22 @@ export interface carData {
 }
 
 export interface Car {
-  id: string;
-  model: string;
-  vin: string;
+  id?: string;
   make: string;
-  milage: string;
+  model: string;
+  description: string;
+  price: number;
+  milage: number;
+  vin: string;
   drivetrain: string;
   transmission: string;
   engine: string;
-  description?: string;
-  year: string;
+  year: number;
   exteriorInterior: string;
-  price: string;
   imageUrls: string[];
-  isArchive: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  isArchive?: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface Message {
