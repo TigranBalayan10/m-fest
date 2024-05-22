@@ -92,6 +92,49 @@ export const VinDecodedSchema = z
     trims: z.array(VinDecodedTrimSchema),
   });
 
+const EngineDataSchema = z.object({
+  id: z.number(),
+  make_model_trim_id: z.number(),
+  engine_type: z.string(),
+  fuel_type: z.string(),
+  cylinders: z.string(),
+  size: z.string(),
+  horsepower_hp: z.number(),
+  horsepower_rpm: z.number(),
+  torque_ft_lbs: z.number(),
+  torque_rpm: z.number(),
+  valves: z.number(),
+  valve_timing: z.string(),
+  cam_type: z.string(),
+  drive_type: z.string(),
+  transmission: z.string(),
+});
+
+export const EngineResponseSchema = z.object({}).extend({
+  data: z.array(EngineDataSchema),
+});
+
+const milageDataSchema = z.object({
+  id: z.number(),
+  make_model_trim_id: z.number(),
+  fuel_tank_capacity: z.string().nullable(),
+  combined_mpg: z.number().nullable(),
+  epa_city_mpg: z.number().nullable(),
+  epa_highway_mpg: z.number().nullable(),
+  range_city: z.number().nullable(),
+  range_highway: z.number().nullable(),
+  battery_capacity_electric: z.nullable(z.string()),
+  epa_time_to_charge_hr_240v_electric: z.nullable(z.string()),
+  epa_kwh_100_mi_electric: z.nullable(z.string()),
+  range_electric: z.nullable(z.string()),
+  epa_highway_mpg_electric: z.nullable(z.string()),
+  epa_city_mpg_electric: z.nullable(z.string()),
+  epa_combined_mpg_electric: z.nullable(z.string()),
+});
+export const MilageResponseSchema = z.object({}).extend({
+  data: z.array(milageDataSchema),
+});
+
 export type SearchData = z.infer<typeof SearchSchema>;
 export type CarListData = z.infer<typeof CarListSchema>;
 export type LoginData = z.infer<typeof LoginSchema>;
