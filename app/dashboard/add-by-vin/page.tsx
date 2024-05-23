@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FaSpinner } from "react-icons/fa6"
 import InputField from "@/components/CustomUi/InputField"
-import useVinData from "@/lib/fetchVinDecodeData"
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
@@ -15,53 +14,46 @@ import { useState } from "react";
 const AddByVin = () => {
     const [initialCarData, setInitialCarData] = useState<Car | null>(null);
     const [showVinForm, setShowVinForm] = useState<boolean>(true);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     const form = useForm<VinNumber>({
         resolver: zodResolver(VinSchema),
         defaultValues: { vin: "" },
     });
 
-    const { decodeData, engineData, milageData, error } = useVinData(form.watch("vin"));
 
-    
     async function onSubmit(value: VinNumber) {
+        try {
+            const vin = value.vin;
+            console.log("VIN: ", vin);
+            const response = await fetch(`/api/add-car-by-vin`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ vin }),
+            });
 
-
-
-        const model = decodeData?.make
-        const make = `${decodeData?.model} ${decodeData?.trims[0]?.name}`
-        const year = decodeData?.year
-        const engine = `${engineData?.size}L ${engineData?.cylinders} ${engineData?.engine_type}, ${engineData?.horsepower_hp}hp ${engineData?.torque_ft_lbs}ft-lbs`
-        const drivetrain = engineData?.drive_type
-        const transmission = engineData?.transmission
-
-        const initialCarData: Car = {
-            vin: value.vin,
-            model: make || "",
-            make: model || "",
-            description: "",
-            price: 0,
-            milage: 0,
-            year: year || 0,
-            engine: engine,
-            drivetrain: drivetrain || "",
-            transmission: transmission || "",
-            exteriorInterior: "",
-            imageUrls: [],
+            if (response.ok) {
+                const initialCarData = await response.json();
+                setInitialCarData(initialCarData);
+                setShowVinForm(false);
+            } else {
+                const errorData = await response.json();
+                if (errorData.error) {
+                    throw new Error(errorData.error);
+                } else {
+                    throw new Error("An unexpected error occurred");
+                }
+            }
+        } catch (error: any) {
+            console.error("Error fetching data: ", error);
+            // Display the error to the user or handle it in a specific way
+            // For example, you can set an error state and display it in the UI
+            setErrorMessage(error.message);
         }
-
-        setInitialCarData(initialCarData)
-        setShowVinForm(false);
     }
 
-    console.log(milageData)
-
-    // const vin = "WBSAE0C0XLCD77497"
-
-
-
-
-    // const engineInfo = engineData.data[0];
     return (
         <div className="container mx-auto px-4 sm:px-0 p-4 flex flex-col gap-4 items-center justify-center">
             {showVinForm && (
