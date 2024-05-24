@@ -13,7 +13,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import { z } from "zod";
+import { set, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
@@ -42,6 +42,7 @@ const InputForm = ({
     drivetrain: string;
     transmission: string;
     engine: string;
+    mpg: string;
     year: number;
     exteriorInterior: string;
     imageUrls: string[];
@@ -70,6 +71,7 @@ const InputForm = ({
       drivetrain: "",
       transmission: "",
       engine: "",
+      mpg: "",
       exteriorInterior: "",
       imageUrls: [],
     };
@@ -118,6 +120,7 @@ const InputForm = ({
         );
         setShowAlert(true);
         setAlertTitle("Error");
+        setAlertMessage("Failed to add car");
       }
     } catch (error) {
       console.error(error);
@@ -191,13 +194,6 @@ const InputForm = ({
                 <div className="grid gap-2">
                   <CustomFormField
                     control={form.control}
-                    name="engine"
-                    placeholder="Engine"
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <CustomFormField
-                    control={form.control}
                     name="description"
                     placeholder="Description"
                   />
@@ -243,6 +239,20 @@ const InputForm = ({
                       control={form.control}
                       name="transmission"
                       placeholder="Transmission"
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <CustomFormField
+                      control={form.control}
+                      name="engine"
+                      placeholder="Engine"
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <CustomFormField
+                      control={form.control}
+                      name="mpg"
+                      placeholder="MPG"
                     />
                   </div>
                 </div>

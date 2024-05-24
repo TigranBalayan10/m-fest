@@ -24,7 +24,7 @@ const ToolTip: React.FC<ToolTipProps> = ({ children, tooltipText, itemId, action
                 <TooltipTrigger asChild>
                     <Button variant="ghost" size="icon">
                         <AlertDelete
-                            itemId={itemId}
+                            itemId={itemId || ""}
                             title={title}
                             actionEndpoint={actionEndpoint}
                             httpMethod={httpMethod}

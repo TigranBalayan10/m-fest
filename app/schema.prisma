@@ -12,6 +12,7 @@ datasource db {
 
 model CarList {
     id               String   @id @default(cuid())
+    stockNumber      Int      @default(autoincrement())
     make             String
     model            String
     description      String
@@ -21,6 +22,7 @@ model CarList {
     drivetrain       String
     transmission     String
     engine           String
+    mpg              String
     year             Int
     exteriorInterior String
     imageUrls        String[]

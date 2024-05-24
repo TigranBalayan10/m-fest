@@ -52,6 +52,7 @@ export async function POST(request: NextRequest) {
         engine: "No info please enter manually",
         drivetrain: "No info please enter manually",
         transmission: "No info please enter manually",
+        mpg: "No info please enter manually",
         exteriorInterior: "No info please enter manually",
         imageUrls: [],
       };
@@ -115,6 +116,7 @@ export async function POST(request: NextRequest) {
       engine: engine,
       drivetrain: drivetrain,
       transmission: transmission,
+      mpg: "",
       exteriorInterior: "",
       imageUrls: [],
     };

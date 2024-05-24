@@ -102,23 +102,28 @@ const CarDetail: React.FC<CarDetailProps> = ({ car }) => {
               </div>
               <Separator className="my-2 bg-black"  />
               <div className="flex justify-between">
-                <h3 className="text-sm font-medium text-gray-500">Mileage</h3>
+                <h3 className="text-sm font-medium text-gray-500">Drivetrain</h3>
                 <p className="text-sm font-semibold">{car.drivetrain}</p>
               </div>
               <Separator className="my-2 bg-black"  />
               <div className="flex justify-between">
-                <h3 className="text-sm font-medium text-gray-500">Mileage</h3>
+                <h3 className="text-sm font-medium text-gray-500">Transmission</h3>
                 <p className="text-sm font-semibold">{car.transmission}</p>
               </div>
               <Separator className="my-2 bg-black"  />
               <div className="flex justify-between">
-                <h3 className="text-sm font-medium text-gray-500">Mileage</h3>
+                <h3 className="text-sm font-medium text-gray-500">Engine</h3>
                 <p className="text-sm font-semibold">{car.engine}</p>
               </div>
               <Separator className="my-2 bg-black"  />
               <div className="flex justify-between">
                 <h3 className="text-sm font-medium text-gray-500">Price</h3>
                 <p className="text-sm font-bold">${car.price}</p>
+              </div>
+              <Separator className="my-2 bg-black"  />
+              <div className="flex justify-between">
+                <h3 className="text-sm font-medium text-gray-500">MPG</h3>
+                <p className="text-sm font-bold">${car.mpg}</p>
               </div>
             </div>
             {pathname === (`/dashboard/inventory/${car.id}`) ? (
@@ -127,7 +132,7 @@ const CarDetail: React.FC<CarDetailProps> = ({ car }) => {
                   <Button size="lg">Edit Car</Button>
                 </Link>
                 <ToolTip tooltipText="Delete Inventory"
-                  itemId={car.id} actionEndpoint="delete-inventory" httpMethod="DELETE" title={car.make}
+                  itemId={car.id || ""} actionEndpoint="delete-inventory" httpMethod="DELETE" title={car.make}
                 >
                   <Button size="lg">Delete Car</Button>
                 </ToolTip>

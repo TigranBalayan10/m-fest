@@ -24,6 +24,7 @@ export interface carData {
 
 export interface Car {
   id?: string;
+  stockNumber?: number;
   make: string;
   model: string;
   description: string;
@@ -33,6 +34,7 @@ export interface Car {
   drivetrain: string;
   transmission: string;
   engine: string;
+  mpg: string;
   year: number;
   exteriorInterior: string;
   imageUrls: string[];

@@ -46,7 +46,7 @@ const CarTableRow = ({ car }: { car: Car }) => {
     <TableCell className="hidden md:table-cell">{car.exteriorInterior}</TableCell>
     <TableCell className="hidden md:table-cell">${car.price}</TableCell>
     <TableCell className="hidden md:table-cell text-right">
-      {formatDate(car.createdAt)}
+      {formatDate(car.createdAt || "N/A")}
     </TableCell>
     <TableCell className="text-right">
       <DropdownMenu>
@@ -68,7 +68,7 @@ const CarTableRow = ({ car }: { car: Car }) => {
           <DropdownMenuSeparator />
           <DropdownMenuItem>
             <div onClick={(e) => e.stopPropagation()}>
-              <AlertDelete title={car.model} itemId={car.id} actionEndpoint="delete-inventory"
+              <AlertDelete title={car.model} itemId={car.id || ""} actionEndpoint="delete-inventory"
                 actionName="Delete"
                 actionColor="text-red-500"
                 httpMethod="DELETE" >
@@ -82,7 +82,7 @@ const CarTableRow = ({ car }: { car: Car }) => {
             null) : (
             <DropdownMenuItem>
               <div onClick={(e) => e.stopPropagation()}>
-                <AlertDelete title={car.model} itemId={car.id} actionEndpoint="archive-inventory"
+                <AlertDelete title={car.model} itemId={car.id || ""} actionEndpoint="archive-inventory"
                   actionName="Archive"
                   actionColor="text-amber-700"
                   httpMethod="PUT" >
