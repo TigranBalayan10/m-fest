@@ -23,10 +23,23 @@ export async function fetchFromRapidAPI<T extends z.ZodTypeAny>(
 
     return NextResponse.json(responseData);
   } catch (error) {
-    console.error(`Error fetching data from RapidAPI (${endpoint}):`, error);
-    return NextResponse.json(
-      { error: `Failed to fetch data from RapidAPI (${endpoint})` },
-      { status: 500 }
-    );
+    if (axios.isAxiosError(error) && error.response) {
+      // Handle error response with data.message
+      const errorData = error.response.data;
+      console.log(
+        `Error fetching data from RapidAPI (${endpoint}):`,
+        errorData
+      );
+      return NextResponse.json(
+        { error: errorData.message },
+        { status: errorData.code }
+      );
+    } else {
+      // Handle other errors
+      return NextResponse.json(
+        { error: `Failed to fetch data from RapidAPI (${endpoint})` },
+        { status: 500 }
+      );
+    }
   }
 }

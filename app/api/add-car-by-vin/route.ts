@@ -15,10 +15,9 @@ export async function POST(request: NextRequest) {
     // Fetch data from the endpoint that requires the VIN number
     const decodeResponse = await fetchFromRapidAPI(`vin/${vin}`, {});
     if (!decodeResponse.ok) {
-      const errorText = await decodeResponse.text();
-      throw new Error(
-        `HTTP error! status: ${decodeResponse.status}, message: ${errorText}`
-      );
+      const errorData = await decodeResponse.json();
+      console.error("Error fetching data: ", errorData);
+      return NextResponse.json(errorData, { status: 400 });
     }
 
     const responseDecodeData = await decodeResponse.json();
@@ -37,6 +36,28 @@ export async function POST(request: NextRequest) {
           : null,
     };
 
+    if (!decodeData.trimDetails) {
+      const model = decodeData.make;
+      const make = `${decodeData.model}`;
+      const year = decodeData.year;
+
+      const initialCarData: Car = {
+        vin: vin,
+        model: make || "",
+        make: model || "",
+        description: "",
+        price: 0,
+        milage: 0,
+        year: year || 0,
+        engine: "No info please enter manually",
+        drivetrain: "No info please enter manually",
+        transmission: "No info please enter manually",
+        exteriorInterior: "No info please enter manually",
+        imageUrls: [],
+      };
+
+      return NextResponse.json(initialCarData, { status: 200 });
+    }
     const trimId = decodeData.trimDetails?.id;
 
     // Fetch data from other endpoints using the trimId
@@ -50,6 +71,7 @@ export async function POST(request: NextRequest) {
         `HTTP error! status: ${decodeResponse.status}, message: ${errorText}`
       );
     }
+
     const responseEngineData = await engineResponse.json();
     const engineDataArray = responseEngineData.data.map(
       (engine: EngineData) => ({

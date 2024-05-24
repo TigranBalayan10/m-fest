@@ -9,11 +9,13 @@ import { FaSpinner } from "react-icons/fa6"
 import InputField from "@/components/CustomUi/InputField"
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import AlertError from "@/components/CustomUi/AlertError";
 
 
 const AddByVin = () => {
     const [initialCarData, setInitialCarData] = useState<Car | null>(null);
     const [showVinForm, setShowVinForm] = useState<boolean>(true);
+    const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     const form = useForm<VinNumber>({
@@ -26,6 +28,7 @@ const AddByVin = () => {
         try {
             const vin = value.vin;
             console.log("VIN: ", vin);
+
             const response = await fetch(`/api/add-car-by-vin`, {
                 method: "POST",
                 headers: {
@@ -40,17 +43,19 @@ const AddByVin = () => {
                 setShowVinForm(false);
             } else {
                 const errorData = await response.json();
+                console.log("Error fetching data: ", errorData);
                 if (errorData.error) {
-                    throw new Error(errorData.error);
+                    setErrorMessage(errorData.error);
+                    setShowErrorMessage(true);
                 } else {
-                    throw new Error("An unexpected error occurred");
+                    setErrorMessage("An unexpected error occurred");
+                    setShowErrorMessage(true);
                 }
             }
         } catch (error: any) {
             console.error("Error fetching data: ", error);
-            // Display the error to the user or handle it in a specific way
-            // For example, you can set an error state and display it in the UI
             setErrorMessage(error.message);
+            setShowErrorMessage(true);
         }
     }
 
@@ -70,7 +75,10 @@ const AddByVin = () => {
                             </div>
                             <Button type="submit" className="mt-8">
                                 {form.formState.isSubmitting ? (
-                                    <FaSpinner className="animate-spin" />
+                                    <>
+                                        <FaSpinner className="animate-spin inline-block mr-2" />
+                                        Searching...
+                                    </>
                                 ) : (
                                     "Search"
                                 )}
@@ -79,9 +87,14 @@ const AddByVin = () => {
                     </form>
                 </Form>
             )}
-            {initialCarData && (
+            {initialCarData ? (
                 <InputForm mode="addByVin" initialData={initialCarData} />
-            )}
+            ) : errorMessage && showErrorMessage ? (
+                <AlertError
+                    title={`${errorMessage}`}
+                    description="Cannot find the car with the provided VIN number. Please try again or add the car manually."
+                />
+            ) : null}
         </div>
     );
 }
