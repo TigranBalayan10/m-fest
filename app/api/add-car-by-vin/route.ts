@@ -1,4 +1,8 @@
-import { EngineResponseSchema, VinDecodedSchema } from "@/lib/zodSchema";
+import {
+  EngineResponseSchema,
+  VinDecodedSchema,
+  MilageResponseSchema,
+} from "@/lib/zodSchema";
 import { NextRequest, NextResponse } from "next/server";
 import { Car } from "@/lib/types";
 import { z } from "zod";
@@ -6,6 +10,7 @@ import { fetchFromRapidAPI } from "@/lib/fetchFromRapidApi";
 
 type DecodeData = z.infer<typeof VinDecodedSchema>;
 type EngineData = z.infer<typeof EngineResponseSchema>["data"][0];
+type MilageData = z.infer<typeof MilageResponseSchema>["data"][0];
 
 export async function POST(request: NextRequest) {
   try {
@@ -96,6 +101,40 @@ export async function POST(request: NextRequest) {
 
     const engineData = engineDataArray[0];
 
+    const milageResponse = await fetchFromRapidAPI(
+      `mileages?verbose=yes&make_model_trim_id=${trimId}&direction=asc&sort=id`,
+      {}
+    );
+    if (!decodeResponse.ok) {
+      const errorText = await decodeResponse.text();
+      throw new Error(
+        `HTTP error! status: ${decodeResponse.status}, message: ${errorText}`
+      );
+    }
+    const responseMilageData = await milageResponse.json();
+    const milageDataArray = responseMilageData.data.map(
+      (milage: MilageData) => ({
+        id: milage.id,
+        make_model_trim_id: milage.make_model_trim_id,
+        fuel_tank_capacity: milage.fuel_tank_capacity,
+        combined_mpg: milage.combined_mpg,
+        epa_city_mpg: milage.epa_city_mpg,
+        epa_highway_mpg: milage.epa_highway_mpg,
+        range_city: milage.range_city,
+        range_highway: milage.range_highway,
+        battery_capacity_electric: milage.battery_capacity_electric,
+        epa_time_to_charge_hr_240v_electric:
+          milage.epa_time_to_charge_hr_240v_electric,
+        epa_kwh_100_mi_electric: milage.epa_kwh_100_mi_electric,
+        range_electric: milage.range_electric,
+        epa_highway_mpg_electric: milage.epa_highway_mpg_electric,
+        epa_city_mpg_electric: milage.epa_city_mpg_electric,
+        epa_combined_mpg_electric: milage.epa_combined_mpg_electric,
+      })
+    );
+
+    const milageData = milageDataArray[0];
+
     const model = decodeData.make;
     const make = `${decodeData.trimDetails?.name} ${decodeData.model}`;
     const year = decodeData.year;
@@ -104,6 +143,9 @@ export async function POST(request: NextRequest) {
       "";
     const drivetrain = engineData.drive_type || "";
     const transmission = engineData.transmission || "";
+    const mpg =
+      `${milageData.epa_city_mpg} / ${milageData.epa_highway_mpg} mpg. Combined ${milageData.combined_mpg} mpg` ||
+      "";
 
     const initialCarData: Car = {
       vin: vin,
@@ -116,7 +158,7 @@ export async function POST(request: NextRequest) {
       engine: engine,
       drivetrain: drivetrain,
       transmission: transmission,
-      mpg: "",
+      mpg: mpg,
       exteriorInterior: "",
       imageUrls: [],
     };
