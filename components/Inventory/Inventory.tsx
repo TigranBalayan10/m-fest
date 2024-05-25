@@ -21,7 +21,7 @@ const CarsForSale = () => {
   if (isLoading) {
     return (
       <div className="mt-5 flex-grow">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 bg-slate-600 h-full container mx-auto p-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 card-bg h-full container mx-auto p-4">
           {Array.from({ length: 3 }, (_, index) => (
             <CarCardSkeleton key={index} />
           ))}
@@ -34,7 +34,7 @@ const CarsForSale = () => {
 
   return (
     <div className="mt-5 flex-grow">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 bg-slate-600 h-full container mx-auto p-4 border-b-2">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 bg-slate-900 h-full container mx-auto p-4">
         {data?.carData?.map((car: Car, index: number) => (
           <CarCard key={index} car={car} />
         ))}

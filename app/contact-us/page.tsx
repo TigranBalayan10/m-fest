@@ -68,10 +68,10 @@ export default function ContactUs() {
 
   return (
     <div className="flex items-center justify-center mt-8">
-      <Card className="max-w-md shadow-md mx-4 bg-zinc-200">
+      <Card className="max-w-md shadow-md mx-4 card-bg border-none text-white">
         <CardHeader>
           <CardTitle className="text-center">Get in Touch</CardTitle>
-          <CardDescription className="text-center text-gray-500 dark:text-gray-400">
+          <CardDescription className="text-center text-gray-400 dark:text-gray-400">
             We'd love to hear from you! Fill out the form below to send us a
             message.
           </CardDescription>

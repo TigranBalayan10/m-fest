@@ -54,7 +54,7 @@ const SearchBar = () => {
 
   return (
     <div className="my-5 flex-grow mx-5">
-      <div className="container mx-auto bg-slate-600 rounded-md shadow-lg px-4 md:px-0 p-5">
+      <div className="container mx-auto card-bg rounded-md shadow-lg px-4 md:px-0 p-5">
         <h1 className="text-2xl font-semibold text-center text-blue-400 mb-6">Search for your next BMW</h1>
         <Form {...form}>
           <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-center gap-5">

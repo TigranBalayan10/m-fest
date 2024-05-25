@@ -6,7 +6,7 @@ import Link from "next/link";
 const Hero = () => {
   return (
     <div className="my-5 flex-grow mx-5">
-      <div className="container mx-auto bg-slate-600 rounded-md shadow-lg pl-0 pr-0 px-4 md:px-0">
+      <div className="container mx-auto card-bg rounded-md shadow-lg pl-0 pr-0 px-4 md:px-0">
         <div className="md:flex">
           <div className="relative md:w-1/2">
             <video
@@ -31,7 +31,7 @@ const Hero = () => {
                 <Link href="/inventory">
                   <Button>Browse Inventory</Button>
                 </Link>
-                <Button variant="ghost" className="ml-2">
+                <Button variant="ghost" className="ml-2 text-slate-400">
                   Learn More
                 </Button>
               </div>
