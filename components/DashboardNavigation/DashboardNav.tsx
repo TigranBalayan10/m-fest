@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { SheetTrigger, SheetContent, Sheet, SheetClose } from "@/components/ui/sheet";
-import { FaPlus, FaInbox, FaBoxArchive, FaUsers, FaChartLine, FaUncharted } from "react-icons/fa6";
+import { FaPlus, FaInbox, FaBoxArchive, FaUsers, FaChartLine, FaUncharted, FaCar } from "react-icons/fa6";
 import { IoMenuSharp } from "react-icons/io5";
 import { UserButton } from "@clerk/nextjs";
 import Image from "next/image";
@@ -36,6 +36,17 @@ const DashboardNav = () => {
                       >
                         <Image src="/M-Logo.svg" width={50} height={50} alt="M-Fest Logo" />
                         <span className="font-semibold text-sm">M-Fest Motorsport</span>
+                      </Link>
+                    </SheetClose>
+                  </li>
+                  <li>
+                    <SheetClose asChild>
+                      <Link
+                        className="flex items-center gap-2 rounded-md px-3 py-2 text-gray-700 transition-colors hover:bg-gray-200"
+                        href="/dashboard/inventory"
+                      >
+                        <FaCar />
+                        Inventory
                       </Link>
                     </SheetClose>
                   </li>

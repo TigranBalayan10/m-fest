@@ -15,6 +15,7 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 import ToolTip from "../CustomUi/ToolTip";
 import { Separator } from "../ui/separator";
+import AlertDelete from "../CustomUi/AlertDelete";
 
 interface CarDetailProps {
   car: Car;
@@ -80,67 +81,81 @@ const CarDetail: React.FC<CarDetailProps> = ({ car }) => {
               </Link>
             </div>
             <div className="flex max-w-96 flex-col mx-3 mt-2 gap-1">
-              <Separator className="my-2 bg-black"  />
+              <Separator className="my-2 bg-black" />
               <div className="flex justify-between">
                 <h3 className="text-sm font-medium text-gray-500">Make</h3>
                 <p className="text-sm font-semibold">{car.make}</p>
               </div>
-              <Separator className="my-2 bg-black"  />
+              <Separator className="my-2 bg-black" />
               <div className="flex justify-between">
                 <h3 className="text-sm font-medium text-gray-500">Model</h3>
                 <p className="text-sm font-semibold">{car.model}</p>
               </div>
-              <Separator className="my-2 bg-black"  />
+              <Separator className="my-2 bg-black" />
               <div className="flex justify-between">
                 <h3 className="text-sm font-medium text-gray-500">Year</h3>
                 <p className="text-sm font-semibold">{car.year}</p>
               </div>
-              <Separator className="my-2 bg-black"  />
+              <Separator className="my-2 bg-black" />
               <div className="flex justify-between">
                 <h3 className="text-sm font-medium text-gray-500">Mileage</h3>
                 <p className="text-sm font-semibold">{car.milage},mi</p>
               </div>
-              <Separator className="my-2 bg-black"  />
+              <Separator className="my-2 bg-black" />
               <div className="flex justify-between">
                 <h3 className="text-sm font-medium text-gray-500">Drivetrain</h3>
                 <p className="text-sm font-semibold">{car.drivetrain}</p>
               </div>
-              <Separator className="my-2 bg-black"  />
+              <Separator className="my-2 bg-black" />
               <div className="flex justify-between">
                 <h3 className="text-sm font-medium text-gray-500">Transmission</h3>
                 <p className="text-sm font-semibold">{car.transmission}</p>
               </div>
-              <Separator className="my-2 bg-black"  />
+              <Separator className="my-2 bg-black" />
               <div className="flex justify-between">
                 <h3 className="text-sm font-medium text-gray-500">Engine</h3>
                 <p className="text-sm font-semibold">{car.engine}</p>
               </div>
-              <Separator className="my-2 bg-black"  />
+              <Separator className="my-2 bg-black" />
               <div className="flex justify-between">
                 <h3 className="text-sm font-medium text-gray-500">Price</h3>
                 <p className="text-sm font-bold">${car.price}</p>
               </div>
-              <Separator className="my-2 bg-black"  />
+              <Separator className="my-2 bg-black" />
               <div className="flex justify-between">
                 <h3 className="text-sm font-medium text-gray-500">MPG</h3>
                 <p className="text-sm font-bold">${car.mpg}</p>
               </div>
             </div>
             {pathname === (`/dashboard/inventory/${car.id}`) ? (
-              <div className="flex  gap-16 ml-2 items-center">
+              <div className="flex flex-col md:flex-row gap-2 ml-2 items-center mt-4">
                 <Link href={`/dashboard/edit-inventory/${car.id}`}>
-                  <Button size="lg">Edit Car</Button>
+                  <Button variant="outline" className="w-full md:w-auto">Edit Car</Button>
                 </Link>
-                <ToolTip tooltipText="Delete Inventory"
-                  itemId={car.id || ""} actionEndpoint="delete-inventory" httpMethod="DELETE" title={car.make}
-                >
-                  <Button size="lg">Delete Car</Button>
-                </ToolTip>
+                <AlertDelete
+                  itemId={car.id || ""}
+                  title={car.model}
+                  actionEndpoint="inventory"
+                  actionName="Delete"
+                  actionColor="destructive hover:bg-destructive/90 w-full md:w-auto"
+                  httpMethod="DELETE"
+                />
+                <AlertDelete
+                  itemId={car.id || ""}
+                  title={car.model}
+                  actionEndpoint="archive-inventory"
+                  actionName="Archive"
+                  actionColor="amber-600 hover:bg-amber-500"
+                  httpMethod="PUT"
+                />
+                <Link href={`/dashboard/${car.id}`}>
+                  <Button variant="outline" className="w-full md:w-auto">Cancel</Button>
+                </Link>
               </div>
             )
               : (
                 <Link href="/contact-us" >
-                  <Button size="lg" className="w-full mt-2">Contact Seller</Button>
+                  <Button className="mt-2">Contact Seller</Button>
                 </Link>
               )}
           </div>

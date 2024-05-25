@@ -56,45 +56,48 @@ const CarTableRow = ({ car }: { car: Car }) => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
+        <DropdownMenuSeparator />
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           {pathname === "/dashboard/archive" ? (
             null) : (
             <DropdownMenuItem>
               <Link href={`/dashboard/edit-inventory/${car.id}`}>
-                Edit
+                <Button variant="link" className="text-primary">
+                  Edit
+                </Button>
               </Link>
             </DropdownMenuItem>
           )}
-          <DropdownMenuSeparator />
           <DropdownMenuItem>
             <div onClick={(e) => e.stopPropagation()}>
               <AlertDelete title={car.model} itemId={car.id || ""} actionEndpoint="delete-inventory"
                 actionName="Delete"
-                actionColor="text-red-500"
-                httpMethod="DELETE" >
-                <h2 className="text-red-500">Delete</h2>
-              </AlertDelete>
+                actionColor="destructive hover:bg-destructive/90"
+                httpMethod="DELETE"
+                link="link"
+              />
             </div>
           </DropdownMenuItem>
-
-          <DropdownMenuSeparator />
           {pathname === "/dashboard/archive" ? (
             null) : (
             <DropdownMenuItem>
               <div onClick={(e) => e.stopPropagation()}>
-                <AlertDelete title={car.model} itemId={car.id || ""} actionEndpoint="archive-inventory"
+                <AlertDelete title={car.model}
+                  itemId={car.id || ""}
+                  actionEndpoint="archive-inventory"
                   actionName="Archive"
-                  actionColor="text-amber-700"
-                  httpMethod="PUT" >
-                  <h2 className="text-amber-700">Archive</h2>
-                </AlertDelete>
+                  actionColor="amber-600 hover:bg-amber-500"
+                  httpMethod="PUT"
+                  link="link"
+                />
               </div>
             </DropdownMenuItem>
           )}
-          <DropdownMenuSeparator />
           <DropdownMenuItem>
             <Link href={`/dashboard/inventory/${car.id}`}>
-              Details
+              <Button variant="link" className="text-primary">
+                Details
+              </Button>
             </Link>
           </DropdownMenuItem>
         </DropdownMenuContent>
