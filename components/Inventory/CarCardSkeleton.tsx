@@ -10,7 +10,7 @@ import { Separator } from "../ui/separator";
 
 const CarCardSkeleton = () => {
     return (
-        <Card>
+        <Card className="card-bg">
             <CardHeader>
                 <CardTitle>
                     <Skeleton className="h-10 w-48" />

@@ -35,10 +35,15 @@ const CarsForSale = () => {
   return (
     <div className="mt-5 flex-grow">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 bg-slate-900 h-full container mx-auto p-4">
-        {data?.carData?.map((car: Car, index: number) => (
-          <CarCard key={index} car={car} />
-        ))}
+        {data?.carData?.length > 0 ? (
+          data?.carData?.map((car: Car, index: number) => (
+            <CarCard key={index} car={car} />
+          ))
+        ) : (
+          <div className="text-gray-300 font-sans font-thin text-center text-lg">No cars found</div>
+        )}
       </div>
+
 
     </div>
   );

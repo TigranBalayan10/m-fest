@@ -38,9 +38,9 @@ export default function AlertAction({ title, itemId, actionEndpoint, actionName,
         method: httpMethod,
       });
       if (response.ok) {
-        if (httpMethod === "DELETE" && pathname === "/dashboard/inventory" || pathname === "/dashboard") {
+        if (httpMethod === "DELETE" && pathname === `/dashboard/inventory/${itemId}` || pathname === "/dashboard") {
           router.push("/dashboard");
-        } else{
+        } else {
           router.push("/dashboard/inventory");
         }
       }
@@ -56,13 +56,13 @@ export default function AlertAction({ title, itemId, actionEndpoint, actionName,
         {link === "link" && actionName === "Delete" ? <Button variant="link" className="text-red-500"> {actionName}</Button> : null}
         {link === "link" && actionName === "Archive" ? <Button variant="link" className="text-amber-500"> {actionName}</Button> : null}
         {!link && actionName === "Delete" ? <Button variant="destructive"> {actionName}</Button> : null}
-        {!link && actionName === "Archive" ? <Button className={`bg-${actionColor} w-full md:w-auto`}> {actionName}</Button> : null}
+        {!link && actionName === "Archive" ? <Button className={`${actionColor}`}> {actionName}</Button> : null}
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
             Are you absolutely sure you want {actionName?.toLowerCase()}
-            <span className={`text-${actionColor}`}> {title} </span>
+            <span > {title} </span>
             ?
           </AlertDialogTitle>
           <AlertDialogDescription>
@@ -71,7 +71,7 @@ export default function AlertAction({ title, itemId, actionEndpoint, actionName,
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction className={`bg-${actionColor}`} onClick={handleAction}>
+          <AlertDialogAction className={`${actionColor}`} onClick={handleAction}>
             {isLoading ? <FaSpinner className="animate-spin" /> : actionName}
           </AlertDialogAction>
         </AlertDialogFooter>

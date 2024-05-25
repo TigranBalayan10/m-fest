@@ -144,7 +144,7 @@ export async function POST(request: NextRequest) {
     const drivetrain = engineData.drive_type || "";
     const transmission = engineData.transmission || "";
     const mpg =
-      `${milageData.epa_city_mpg} / ${milageData.epa_highway_mpg} mpg. Combined ${milageData.combined_mpg} mpg` ||
+      `City ${milageData.epa_city_mpg}/Highway ${milageData.epa_highway_mpg} mpg. Combined ${milageData.combined_mpg} mpg` ||
       "";
 
     const initialCarData: Car = {

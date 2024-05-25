@@ -41,8 +41,8 @@ const CarDetail: React.FC<CarDetailProps> = ({ car }) => {
         </CardDescription>
       </CardHeader>
       <CardContent className="p-0">
-        <div className="md:grid md:grid-cols-3 gap-2">
-          <div className="md:col-span-2">
+        <div className="md:grid md:grid-cols-3 gap-6">
+          <div className="md:col-span-2 ">
             <div className="flex flex-col">
               <CldImage
                 src={selectedImage}
@@ -51,7 +51,7 @@ const CarDetail: React.FC<CarDetailProps> = ({ car }) => {
                 crop="fill"
                 alt={car.model}
               />
-              <div className="flex justify-start">
+              <div className="flex justify-start mt-2">
                 <div className="grid grid-cols-4  sm:grid-cols-8 sm:m-0 gap-1 mt-4">
                   {car.imageUrls.map((imageUrl, index) => (
                     <Button key={index} size="xl" className="border p-1 border-gray-300 rounded-md overflow-hidden bg-transparent focus:bg-slate-900 aspect-square" onClick={() => setSelectedImage(imageUrl)}>
@@ -69,7 +69,7 @@ const CarDetail: React.FC<CarDetailProps> = ({ car }) => {
               </div>
             </div>
           </div>
-          <div className="grid w-full">
+          <div className="flex flex-col gap-9 w-full">
             <div>
               <h1 className="text-3xl font-bold">{car.year} {car.model}</h1>
               <p className=" text-gray-500">
@@ -80,7 +80,11 @@ const CarDetail: React.FC<CarDetailProps> = ({ car }) => {
                 <FaArrowUpRightFromSquare className="ml-2 w-4 h-4" />
               </Link>
             </div>
-            <div className="flex max-w-96 flex-col mx-3 mt-2 gap-1">
+            <div className="flex flex-col mx-3 mt-2 gap-1">
+              <div className="flex justify-between">
+                <h3 className="text-sm font-medium text-gray-500">Stock Number</h3>
+                <p className="text-sm font-semibold">{car.stockNumber}</p>
+              </div>
               <Separator className="my-2 bg-black" />
               <div className="flex justify-between">
                 <h3 className="text-sm font-medium text-gray-500">Make</h3>
@@ -99,12 +103,12 @@ const CarDetail: React.FC<CarDetailProps> = ({ car }) => {
               <Separator className="my-2 bg-black" />
               <div className="flex justify-between">
                 <h3 className="text-sm font-medium text-gray-500">Mileage</h3>
-                <p className="text-sm font-semibold">{car.milage},mi</p>
+                <p className="text-sm font-semibold">{car.milage.toLocaleString()} miles</p>
               </div>
               <Separator className="my-2 bg-black" />
               <div className="flex justify-between">
                 <h3 className="text-sm font-medium text-gray-500">Drivetrain</h3>
-                <p className="text-sm font-semibold">{car.drivetrain}</p>
+                <p className="text-sm font-semibold">{car.drivetrain.split(' ').map(word => word.charAt(0).toUpperCase()).join('')}</p>
               </div>
               <Separator className="my-2 bg-black" />
               <div className="flex justify-between">
@@ -119,12 +123,12 @@ const CarDetail: React.FC<CarDetailProps> = ({ car }) => {
               <Separator className="my-2 bg-black" />
               <div className="flex justify-between">
                 <h3 className="text-sm font-medium text-gray-500">Price</h3>
-                <p className="text-sm font-bold">${car.price}</p>
+                <p className="text-sm font-bold">{car.price.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</p>
               </div>
               <Separator className="my-2 bg-black" />
               <div className="flex justify-between">
                 <h3 className="text-sm font-medium text-gray-500">MPG</h3>
-                <p className="text-sm font-bold">${car.mpg}</p>
+                <p className="text-sm font-bold">{car.mpg}</p>
               </div>
             </div>
             {pathname === (`/dashboard/inventory/${car.id}`) ? (
@@ -137,7 +141,7 @@ const CarDetail: React.FC<CarDetailProps> = ({ car }) => {
                   title={car.model}
                   actionEndpoint="inventory"
                   actionName="Delete"
-                  actionColor="destructive hover:bg-destructive/90 w-full md:w-auto"
+                  actionColor="bg-destructive hover:bg-destructive/90 w-full md:w-auto"
                   httpMethod="DELETE"
                 />
                 <AlertDelete
@@ -145,7 +149,7 @@ const CarDetail: React.FC<CarDetailProps> = ({ car }) => {
                   title={car.model}
                   actionEndpoint="archive-inventory"
                   actionName="Archive"
-                  actionColor="amber-600 hover:bg-amber-500"
+                  actionColor="bg-amber-600 hover:bg-amber-500"
                   httpMethod="PUT"
                 />
                 <Link href={`/dashboard/${car.id}`}>
@@ -154,9 +158,11 @@ const CarDetail: React.FC<CarDetailProps> = ({ car }) => {
               </div>
             )
               : (
-                <Link href="/contact-us" >
-                  <Button className="mt-2">Contact Seller</Button>
-                </Link>
+                <div>
+                  <Link href="/contact-us" >
+                    <Button className="mt-2 w-full">Contact Seller</Button>
+                  </Link>
+                </div>
               )}
           </div>
         </div>

@@ -26,7 +26,7 @@ const DataTableSkeleton = () => {
             .map((_, rowIndex) => (
               <TableRow key={rowIndex}>
                 <TableCell>
-                  <Skeleton className="h-12 w-12 rounded-full" />
+                  <Skeleton className="h-12 w-12 rounded-full bg-slate-200" />
                 </TableCell>
                 {Array(9)
                   .fill(0)
@@ -35,7 +35,7 @@ const DataTableSkeleton = () => {
                       key={cellIndex}
                       className={cellIndex >= 7 ? "text-right" : ""}
                     >
-                      <Skeleton className="h-7 w-25" />
+                      <Skeleton className="h-7 w-25 bg-slate-200" />
                     </TableCell>
                   ))}
               </TableRow>
