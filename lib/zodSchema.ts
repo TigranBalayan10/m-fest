@@ -1,6 +1,7 @@
 "use client";
 
 import { nullable, z } from "zod";
+import { Customer, Contact } from "@prisma/client";
 
 export const CarListSchema = z.object({
   id: z.string().optional(),
@@ -40,6 +41,33 @@ export const CarListSchema = z.object({
     .array(z.string())
     .min(5, { message: "At least 5 Images are required" }),
 });
+
+// Customer schema
+const CustomerSchema: z.ZodSchema<Customer> = z.lazy(() =>
+  z.object({
+    id: z.string().cuid(),
+    name: z.string(),
+    email: z.string().email(),
+    phone: z.string(),
+    contacts: z.array(ContactSchema).optional(),
+    createdAt: z.date(),
+    updatedAt: z.date(),
+  })
+);
+
+// Contact schema
+const ContactSchema: z.ZodType<Contact> = z.lazy(() =>
+  z.object({
+    id: z.string().cuid(),
+    message: z.string(),
+    isNew: z.boolean(),
+    isArchive: z.boolean(),
+    customerId: z.string(),
+    customer: CustomerSchema,
+    createdAt: z.date(),
+    updatedAt: z.date(),
+  })
+);
 
 export const ContactUsSchema = z.object({
   name: z

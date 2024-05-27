@@ -1,6 +1,7 @@
 "use client"
 
 import InboxData from "@/components/Inbox/InboxData";
+import InboxList from "@/components/Inbox/InboxList";
 import InboxSkeleton from "@/components/Inbox/InboxSkeleton";
 import { Message } from "@/lib/types";
 import useSWR from 'swr';
@@ -32,9 +33,10 @@ const Inbox = () => {
                 </div>
                 <div className="divide-y divide-gray-200">
                     <div className="group">
-                        {data?.contactData?.map((contact: Message, index: number) =>
+                        {/* {data?.contactData?.map((contact: Message, index: number) =>
                             <InboxData key={index} contact={contact} />
-                        )}
+                        )} */}
+                        <InboxList />
                     </div>
                 </div>
             </div>

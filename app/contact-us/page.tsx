@@ -44,6 +44,7 @@ export default function ContactUs() {
   const { errors, isValid, isDirty, isSubmitting } = form.formState;
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log("values", values);
     try {
       const response = await fetch("/api/add-contact-message", {
         method: "POST",
@@ -56,7 +57,7 @@ export default function ContactUs() {
         setAlertMessage("Your message has been sent successfully!");
         setShowAlert(true);
         setAlertTitle("Success");
-      } else {
+      } else  {
         setAlertMessage("An error occurred, please try again later");
         setShowAlert(true);
         setAlertTitle("Error");
