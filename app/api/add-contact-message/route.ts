@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { ContactUsSchema } from "@/lib/zodSchema";
 
 export async function POST(request: Request) {
   const res = await request.json();

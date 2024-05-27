@@ -43,7 +43,7 @@ export const CarListSchema = z.object({
 });
 
 // Customer schema
-const CustomerSchema: z.ZodSchema<Customer> = z.lazy(() =>
+export const CustomerSchema: z.ZodSchema<Customer> = z.lazy(() =>
   z.object({
     id: z.string().cuid(),
     name: z.string(),
@@ -56,7 +56,7 @@ const CustomerSchema: z.ZodSchema<Customer> = z.lazy(() =>
 );
 
 // Contact schema
-const ContactSchema: z.ZodType<Contact> = z.lazy(() =>
+export const ContactSchema: z.ZodType<Contact> = z.lazy(() =>
   z.object({
     id: z.string().cuid(),
     message: z.string(),
@@ -170,3 +170,4 @@ export type CarListData = z.infer<typeof CarListSchema>;
 export type LoginData = z.infer<typeof LoginSchema>;
 export type VinNumber = z.infer<typeof VinSchema>;
 export type VinDecodedData = z.infer<typeof VinDecodedSchema>;
+export type ContactData = z.infer<typeof ContactUsSchema>;

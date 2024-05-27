@@ -3,7 +3,7 @@ export interface Customer {
   name: string;
   email: string;
   phone: string;
-  contacts: Contact[];
+  contacts: Contact;
   createdAt: Date;
   updatedAt: Date;
 }
