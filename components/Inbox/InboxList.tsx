@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
-import { FaCheck, FaRegTrashCan, FaBoxArchive, FaFilter, FaListOl } from "react-icons/fa6";
+import { FaCheck, FaRegTrashCan, FaBoxArchive, FaCircleDot } from "react-icons/fa6";
 import MessageFull from "./MessageFull";
 import { fetcher } from "@/lib/swrFetcher";
 import { Contact } from "@/lib/Types/ContactUsTypes";
@@ -27,10 +27,28 @@ export default function InboxList() {
 
     const onSubmit = async (data: z.infer<typeof MarkedReadSchema>) => {
         console.log(data)
+        try {
+            const response = await fetch('/api/update-message', {
+                method: 'PUT',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            console.log(response, "response")
+            if (response.ok) {
+                form.reset()
+                console.log('Marked as read')
+            } else {
+                console.log('Failed to mark as read')
+            }
+        } catch (error) {
+            console.error('Error:', error)
+        }
     }
     const { data, isLoading, error } = useSWR('/api/get-all-messages', fetcher);
     const allMessages: Contact[] = data?.contactData;
-    const newMessages = data?.newMessages;
+    const newMessages: Contact[] = data?.newMessages;
     const archivedMessages = data?.archivedMessages;
 
 
@@ -80,6 +98,7 @@ export default function InboxList() {
                                         </p>
                                         <MessageFull nameFull={message.customer.name} date={formatDate(message.createdAt)}
                                             message={message.message} phone={message.customer.phone} />
+                                        {message.isNew && <FaCircleDot className="text-blue-500" />}
                                     </div>
                                 </div>
                             </div>
