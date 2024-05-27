@@ -69,6 +69,10 @@ export const ContactSchema: z.ZodType<Contact> = z.lazy(() =>
   })
 );
 
+export const MarkedReadSchema = z.object({
+  ids: z.array(z.string()),
+});
+
 export const ContactUsSchema = z.object({
   name: z
     .string()
