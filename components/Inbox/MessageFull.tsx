@@ -16,13 +16,17 @@ interface MessageFullProps {
     date: string;
     phone: string;
     message: string;
+    onView: () => Promise<void>
 }
 
-const MessageFull: React.FC<MessageFullProps> = ({ nameFull, date, message, phone }) => {
+const MessageFull: React.FC<MessageFullProps> = ({ nameFull, date, message, phone, onView }) => {
+    const handleView = async () => {
+        await onView();
+    }
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant="link" className="text-blue-500 p-0">
+                <Button variant="link" className="text-blue-500 p-0" onClick={handleView}>
                     View Full
                 </Button>
             </DialogTrigger>

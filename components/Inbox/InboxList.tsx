@@ -1,8 +1,8 @@
 "use client";
 
 import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
 import { FaCheck, FaRegTrashCan, FaBoxArchive, FaCircleDot } from "react-icons/fa6";
+import { RxDotFilled } from "react-icons/rx";
 import MessageFull from "./MessageFull";
 import { fetcher } from "@/lib/swrFetcher";
 import { Contact } from "@/lib/Types/ContactUsTypes";
@@ -47,6 +47,26 @@ export default function InboxList() {
             console.error('Error:', error)
         }
     }
+
+    const handleViewMessage = async (messageId: string) => {
+        try {
+          const response = await fetch('/api/update-message', {
+            method: 'PUT',
+            body: JSON.stringify({ ids: [messageId], isNew: false }),
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+          if (response.ok) {
+            mutate();
+            console.log('Message marked as viewed');
+          } else {
+            console.log('Failed to mark message as viewed');
+          }
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      };
 
     const onClickDelete = async (event: React.MouseEvent) => {
         event.preventDefault()
@@ -93,8 +113,6 @@ export default function InboxList() {
     }
 
     const allMessages: Contact[] = data?.contactData;
-    const newMessages: Contact[] = data?.newMessages;
-    const archivedMessages: Contact[] = data?.archivedMessages;
 
 
     if (isLoading) {
@@ -103,6 +121,11 @@ export default function InboxList() {
     if (error) {
         return <div>Failed to load</div>
     }
+
+    if (allMessages.length === 0 || allMessages.every(message => message.isArchive)) {
+        return <div className="text-gray-400 p-4 text-center">No Messages</div>;
+    }
+
 
 
 
@@ -142,9 +165,11 @@ export default function InboxList() {
                                             <p className="text-sm text-gray-500 line-clamp-2 mr-4">
                                                 {message.message}
                                             </p>
-                                            <MessageFull nameFull={message.customer.name} date={formatDate(message.createdAt)}
-                                                message={message.message} phone={message.customer.phone} />
-                                            {message.isNew && <FaCircleDot className="text-blue-500 w-3 h-3" />}
+                                            <div className="flex items-center">
+                                                <MessageFull nameFull={message.customer.name} date={formatDate(message.createdAt)}
+                                                    message={message.message} phone={message.customer.phone} onView={() => handleViewMessage(message.id)} />
+                                                {message.isNew && <RxDotFilled className="text-blue-500 w-7 h-7" />}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
