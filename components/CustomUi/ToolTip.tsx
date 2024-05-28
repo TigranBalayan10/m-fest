@@ -9,15 +9,16 @@ import AlertDelete from "@/components/CustomUi/AlertDelete"
 import React from "react";
 
 interface ToolTipProps {
-    children: React.ReactNode;
+    children?: React.ReactNode;
     tooltipText: string;
     itemId: string;
     actionEndpoint: string;
     httpMethod: string;
     title: string;
+    getEndpoint?: string;
 }
 
-const ToolTip: React.FC<ToolTipProps> = ({ children, tooltipText, itemId, actionEndpoint, httpMethod, title }) => {
+const ToolTip: React.FC<ToolTipProps> = ({ children, tooltipText, itemId, actionEndpoint, httpMethod, title, getEndpoint }) => {
     return (
         <TooltipProvider>
             <Tooltip>
@@ -29,10 +30,9 @@ const ToolTip: React.FC<ToolTipProps> = ({ children, tooltipText, itemId, action
                             actionEndpoint={actionEndpoint}
                             httpMethod={httpMethod}
                             actionName="Delete"
-                            actionColor="text-red-500"
-                        >
-                            {children}
-                        </AlertDelete>
+                            actionColor="bg-red-500 hover:bg-red-500/90"
+                            getEndpoint={getEndpoint || ""}
+                       />
                     </Button>
                 </TooltipTrigger>
                 <TooltipContent>
