@@ -16,7 +16,7 @@ const CustomersList = ({ customer }: { customer: Customer }) => {
                         <AvatarFallback>{getInitials(customer.name)}</AvatarFallback>
                     </Avatar>
                     <div className="grid gap-0.5">
-                        <p className="font-medium">{customer.name}</p>
+                        <p className="font-medium hidden md:table-cell">{customer.name}</p>
                     </div>
                 </div>
             </TableCell>

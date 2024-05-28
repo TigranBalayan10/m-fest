@@ -28,19 +28,19 @@ export default function CustomerList() {
   console.log(allCustomers);
 
   return (
-    <div className="flex flex-col gap-6 p-4 md:p-6">
+    <div className="flex flex-col gap-5 p-4 md:p-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Customers</h1>
+        <h1 className="text-2xl font-bold mr-2">Customers</h1>
         <div className="relative w-full max-w-md">
           <IoIosSearch className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
           <Input
-            className="w-full rounded-md border border-gray-300 bg-white px-10 py-2 text-sm shadow-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+            className="md:w-full w-fit rounded-md border border-gray-300 bg-white px-10 py-2 text-sm shadow-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
             placeholder="Search customers..."
             type="search"
           />
         </div>
       </div>
-      <div className="overflow-hidden rounded-lg border border-gray-200">
+      <div className="rounded-lg border border-gray-200">
         <Table>
           <TableHeader>
             <TableRow>

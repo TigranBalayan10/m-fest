@@ -1,6 +1,7 @@
 import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card";
 import DataTable from "@/components/DashboardForm/DataTable";
 import { auth } from "@clerk/nextjs/server";
+import CustomersDataCard from "@/components/DashboardCards/CustomersDatacard";
 
 
 export default function Dashboard() {
@@ -9,15 +10,7 @@ export default function Dashboard() {
 
     <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-        <Card>
-          <CardHeader className="flex items-center justify-between">
-            <CardTitle>Total Revenue</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">$45,231.89</div>
-            <p className="text-sm text-gray-500">+20.1% from last month</p>
-          </CardContent>
-        </Card>
+        <CustomersDataCard />
         <Card>
           <CardHeader className="flex items-center justify-between">
             <CardTitle>Subscriptions</CardTitle>
@@ -39,7 +32,7 @@ export default function Dashboard() {
       </div>
       <div className="mt-6">
         <Card>
-        <DataTable endpoint="/api/inventory"/>
+          <DataTable endpoint="/api/inventory" />
         </Card>
       </div>
     </>
