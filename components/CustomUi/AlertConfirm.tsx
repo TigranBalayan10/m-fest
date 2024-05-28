@@ -16,7 +16,7 @@ import { useRouter } from "next/navigation";
 interface AlertConfirmProps {
   title: string;
   description: string;
-  rerouteHref: string;
+  rerouteHref?: string;
 }
 
 const AlertConfirm = ({
@@ -29,7 +29,7 @@ const AlertConfirm = ({
     <AlertDialog defaultOpen>
       <AlertDialogContent>
         <AlertDialogHeader>
-          {title === "Success" ? (
+          {title.includes("Success") || title === "Success" ? (
             <AlertDialogTitle className="text-green-500">
               {title}
             </AlertDialogTitle>
@@ -41,17 +41,20 @@ const AlertConfirm = ({
           <AlertDialogDescription>{description}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          {title === "Success" ? (
-            <AlertDialogAction onClick={() => {
-              router.push(rerouteHref);
+          {title.includes("Success") || title === "Success" ? (
+            <AlertDialogAction className="bg-green-700 hover:bg-green-700/80" onClick={() => {
+              if (rerouteHref) {
+                router.push(rerouteHref);
+              }
             }}>
               OK
             </AlertDialogAction>
           ) : (
-            <AlertDialogAction
-              className="text-red-500"
-              onClick={() => router.push(rerouteHref)}
-            >
+            <AlertDialogAction className="text-red-500" onClick={() => {
+              if (rerouteHref) {
+                router.push(rerouteHref);
+              }
+            }}>
               Close
             </AlertDialogAction>
           )}

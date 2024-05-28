@@ -1,12 +1,13 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { revalidatePath } from "next/cache";
 
 export async function GET() {
-  "use server";
   const contactData = await prisma.contact.findMany({
     include: {
       customer: true,
+    },
+    orderBy: {
+      createdAt: "asc",
     },
   });
 
@@ -17,6 +18,9 @@ export async function GET() {
     include: {
       customer: true,
     },
+    orderBy: {
+      createdAt: "asc",
+    },
   });
 
   const archivedMessages = await prisma.contact.findMany({
@@ -26,9 +30,10 @@ export async function GET() {
     include: {
       customer: true,
     },
+    orderBy: {
+      createdAt: "asc",
+    },
   });
-
-  revalidatePath("/get-all-messages");
   return NextResponse.json({ contactData, newMessages, archivedMessages });
 }
 

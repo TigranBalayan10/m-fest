@@ -10,22 +10,35 @@ export async function PUT(request: any) {
     // Update the message data
     const markedAsRead = await prisma.contact.updateMany({
       where: {
-        id: {
-          in: ids,
-        },
+        id: { in: ids },
       },
       data: {
         isNew: false,
       },
     });
+
     console.log(markedAsRead, "markedAsRead");
-    return NextResponse.json(markedAsRead);
+
+    // Fetch the updated messages in the desired order
+    const updatedMessages = await prisma.contact.findMany({
+      where: {
+        id: { in: ids },
+      },
+      orderBy: {
+        createdAt: "asc", // Order by createdAt in ascending order
+      },
+    });
+
+    return NextResponse.json(updatedMessages);
   } catch (error) {
     // If an error occurred, send a response with the error message
     if (error instanceof Error) {
-      return NextResponse.json({ error: error.message });
+      return NextResponse.json({ error: error.message }, { status: 500 });
     } else {
-      return NextResponse.json({ error: "An unknown error occurred" });
+      return NextResponse.json(
+        { error: "An unknown error occurred" },
+        { status: 500 }
+      );
     }
   }
 }
