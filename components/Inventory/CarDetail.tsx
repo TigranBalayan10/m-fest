@@ -132,27 +132,11 @@ const CarDetail: React.FC<CarDetailProps> = ({ car }) => {
               </div>
             </div>
             {pathname === (`/dashboard/inventory/${car.id}`) ? (
-              <div className="flex flex-col md:flex-row gap-2 ml-2 items-center mt-4">
+              <div className="flex flex-col md:flex-row gap-1 ml-2 items-center mt-4">
                 <Link href={`/dashboard/edit-inventory/${car.id}`}>
                   <Button variant="outline" className="w-full md:w-auto">Edit Car</Button>
                 </Link>
-                <AlertDelete
-                  itemId={car.id || ""}
-                  title={car.model}
-                  actionEndpoint="inventory"
-                  actionName="Delete"
-                  actionColor="bg-destructive hover:bg-destructive/90 w-full md:w-auto"
-                  httpMethod="DELETE"
-                />
-                <AlertDelete
-                  itemId={car.id || ""}
-                  title={car.model}
-                  actionEndpoint="archive-inventory"
-                  actionName="Archive"
-                  actionColor="bg-amber-600 hover:bg-amber-500"
-                  httpMethod="PUT"
-                />
-                <Link href={`/dashboard/${car.id}`}>
+                <Link href="/dashboard/inventory">
                   <Button variant="outline" className="w-full md:w-auto">Cancel</Button>
                 </Link>
               </div>

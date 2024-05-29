@@ -2,6 +2,7 @@
 
 import CarDetail from "@/components/Inventory/CarDetail";
 import { Card } from "@/components/ui/card";
+import { FaSpinner } from "react-icons/fa6";
 import useSWR from "swr";
 
 
@@ -19,7 +20,12 @@ const InventoryDetails = ({ params }: { params: { id: string } }) => {
     const car = data?.getCarById;
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return (
+            <div className="text-white">
+                <FaSpinner className="animate-spin inline-block mr-2" />
+                Loading...
+            </div>
+        );
     }
 
 

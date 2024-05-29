@@ -63,9 +63,7 @@ export default function AlertAction({ title, itemId, actionEndpoint, actionName,
       <AlertDialogTrigger>
         {link === "link" && httpMethod === "DELETE" ? <Button variant="link" className="text-red-500"> {actionName}</Button> : null}
         {link === "link" && httpMethod === "PUT" ? <Button variant="link" className="text-amber-500"> {actionName}</Button> : null}
-        {!link && httpMethod === "DELETE" && pathname === "/dashboard" || pathname === "/dashboard/inventory" ? <Button variant="destructive"> {actionName}</Button> : null}
-        {!link && httpMethod === "PUT" ? <Button className={`${actionColor}`}> {actionName}</Button> : null}
-        {pathname === "/dashboard/customers" && httpMethod === "DELETE" ? <Button variant="destructive" size="icon">
+        {!link && pathname === "/dashboard/customers" && httpMethod === "DELETE" ? <Button variant="destructive" size="icon">
         <AiFillDelete />
         </Button> : null}
       </AlertDialogTrigger>
