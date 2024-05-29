@@ -15,9 +15,9 @@ import { FaSpinner } from "react-icons/fa6";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { useRouter, usePathname } from "next/navigation";
-import useSWR from "swr";
-import { fetcher } from "@/lib/swrFetcher";
 import { AiFillDelete } from "react-icons/ai";
+import { revalidateCustomers, revalidateInventory } from "@/lib/actions";
+import useSWR, { useSWRConfig } from 'swr';
 
 interface AlertActionProps {
   itemId: string;
@@ -35,8 +35,8 @@ export default function AlertAction({ title, itemId, actionEndpoint, actionName,
   const router = useRouter();
   const pathname = usePathname();
   const [isLoading, setIsLoading] = useState(false);
+  const { mutate  } = useSWRConfig();
 
-  const { mutate } = useSWR(`/api/${getEndpoint}`, fetcher);
 
   const handleAction = async () => {
     setIsLoading(true);
@@ -45,12 +45,15 @@ export default function AlertAction({ title, itemId, actionEndpoint, actionName,
         method: httpMethod,
       });
       if (response.ok) {
-        if (httpMethod === "DELETE" && pathname === `/dashboard/inventory/${itemId}` || pathname === "/dashboard") {
-          router.push("/dashboard");
+        if (httpMethod === "DELETE" && pathname === "/dashboard/inventory" || pathname === "/dashboard") {
+          console.log("Deleted item successfully");
+          mutate("/api/inventory");
+          console.log("revalidated inventory");
         } else {
-          mutate();
+          console.log("Updated item successfully");
+          revalidateCustomers();
+          console.log("revalidated customers");
         }
-
       }
     } catch (error) {
       console.error(`Failed to ${actionName} item:`, error);

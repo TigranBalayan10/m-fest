@@ -17,6 +17,8 @@ import { MarkedReadSchema } from "@/lib/zodSchema";
 import { Form } from "../ui/form";
 import CheckboxForm from "../CustomUi/CheckboxForm";
 import AlertConfirm from "../CustomUi/AlertConfirm";
+import useSWRMutation from 'swr/mutation'
+
 
 export default function InboxList() {
     const [isOpen, setIsOpen] = useState(false);
@@ -25,7 +27,9 @@ export default function InboxList() {
     const [confirm, setConfirm] = useState("");
     const [alertDescription, setAlertDescription] = useState("");
     const [errorAlert, setErrorAlert] = useState("");
+
     const { data, isLoading, error, mutate } = useSWR('/api/get-all-messages', fetcher);
+
     const form = useForm<z.infer<typeof MarkedReadSchema>>({
         resolver: zodResolver(MarkedReadSchema),
         defaultValues: {

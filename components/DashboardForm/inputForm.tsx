@@ -22,7 +22,6 @@ import { useState } from "react";
 import { FaSpinner, FaUpload } from "react-icons/fa6";
 import { IoCloseOutline } from "react-icons/io5";
 import { revalidateAll } from "@/lib/actions";
-import { Car } from "@/lib/types";
 
 const CarFormSchema = CarListSchema;
 

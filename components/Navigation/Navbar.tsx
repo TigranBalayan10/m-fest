@@ -22,7 +22,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between w-full">
           <Button variant="ghost">
             <Link href="/">
-              <Image src="/M-Logo.svg" width={50} height={50} alt="M-Fest Logo" />
+              <Image src="/M-Logo.svg" width={100} height={100} alt="M-Fest Logo" />
             </Link>
           </Button>
 
