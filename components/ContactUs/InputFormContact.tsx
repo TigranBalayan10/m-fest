@@ -32,7 +32,7 @@ const InputFormContact: React.FC<FormFieldProps> = ({
         return (
           <FormItem className="text-black">
             <FormControl>
-              {name === "message" ? (
+              {name === "content" ? (
                 <Textarea rows={10} {...field} placeholder={placeholder} />
               ) : (
                 <Input {...field} placeholder={placeholder} />

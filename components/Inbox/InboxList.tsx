@@ -5,7 +5,7 @@ import { FaCheck, FaRegTrashCan, FaBoxArchive, FaCircleDot, FaSpinner } from "re
 import { RxDotFilled } from "react-icons/rx";
 import MessageFull from "./MessageFull";
 import { fetcher } from "@/lib/swrFetcher";
-import { Contact } from "@/lib/Types/ContactUsTypes";
+import { Customer, Message } from "@/lib/Types/ContactUsTypes";
 import { formatDate } from "@/lib/FormatDate";
 import useSWR from "swr";
 import InboxSkeleton from "./InboxSkeleton";
@@ -149,7 +149,8 @@ export default function InboxList() {
         setIsArchiving(false);
     }
 
-    const allMessages: Contact[] = data?.contactData;
+    const allCustomersMessages: Customer[] = data?.messageData;
+    console.log(allCustomersMessages, "allMessages")
 
 
     if (isLoading) {
@@ -159,7 +160,8 @@ export default function InboxList() {
         return <div>Failed to load</div>
     }
 
-    if (allMessages.length === 0 || allMessages.every(message => message.isArchive)) {
+    if (allCustomersMessages.every((customer) => customer.Message === null) || allCustomersMessages.every(customer => customer.Message?.isArchive)) {
+
         return <div className="text-gray-400 p-4 text-center">No Messages</div>;
     }
 
@@ -217,24 +219,24 @@ export default function InboxList() {
                         </div>
                         <div className="space-y-4">
 
-                            {allMessages?.map((message) => (
-                                !message.isArchive && (
-                                    <div key={message.id} className="flex items-start space-x-4 rounded-lg border border-gray-200 p-4 hover:bg-gray-100">
-                                        <CheckboxForm control={form.control} name="ids" contactId={message.id} key={message.id} />
+                            {allCustomersMessages?.map((customer) => (
+                                !customer.Message?.isArchive && (
+                                    <div key={customer.id} className="flex items-start space-x-4 rounded-lg border border-gray-200 p-4 hover:bg-gray-100">
+                                        <CheckboxForm control={form.control} name="ids" contactId={customer.Message.id} key={customer.Message.id} />
                                         <div className="flex-1">
                                             <div className="flex items-center justify-between">
-                                                <div className="font-semibold">{message.customer.name}</div>
-                                                <div className="text-sm text-gray-500">{formatDate(message.createdAt)}</div>
+                                                <div className="font-semibold">{customer.name}</div>
+                                                <div className="text-sm text-gray-500">{formatDate(customer.Message.createdAt)}</div>
                                             </div>
-                                            <div className="text-sm font-medium">{message.customer.email}</div>
+                                            <div className="text-sm font-medium">{customer.email}</div>
                                             <div className="flex justify-between items-center">
                                                 <p className="text-sm text-gray-500 line-clamp-1 mr-4">
-                                                    {message.message}
+                                                    {customer.Message.content}
                                                 </p>
                                                 <div className="flex items-center">
-                                                    <MessageFull nameFull={message.customer.name} date={formatDate(message.createdAt)}
-                                                        message={message.message} phone={message.customer.phone} onView={() => handleViewMessage(message.id, message.isNew)} />
-                                                    {message.isNew && <RxDotFilled className="text-blue-500 w-7 h-7" />}
+                                                    <MessageFull nameFull={customer.name} date={formatDate(customer.Message?.createdAt)}
+                                                        message={customer.Message?.content} phone={customer.phone} onView={() => handleViewMessage(customer.Message.id, customer.Message.isNew)} />
+                                                    {customer.Message.isNew && <RxDotFilled className="text-blue-500 w-7 h-7" />}
                                                 </div>
                                             </div>
                                         </div>

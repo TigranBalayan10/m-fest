@@ -1,7 +1,7 @@
 "use client";
 
 import { nullable, z } from "zod";
-import { Customer, Contact } from "@prisma/client";
+import { Customer, Message } from "@prisma/client";
 
 export const CarListSchema = z.object({
   id: z.string().optional(),
@@ -49,17 +49,17 @@ export const CustomerSchema: z.ZodSchema<Customer> = z.lazy(() =>
     name: z.string(),
     email: z.string().email(),
     phone: z.string(),
-    contacts: z.array(ContactSchema).optional(),
+    Message: MessageSchema.optional(),
     createdAt: z.date(),
     updatedAt: z.date(),
   })
 );
 
-// Contact schema
-export const ContactSchema: z.ZodType<Contact> = z.lazy(() =>
+// Message schema
+export const MessageSchema: z.ZodType<Message> = z.lazy(() =>
   z.object({
     id: z.string().cuid(),
-    message: z.string(),
+    content: z.string(),
     isNew: z.boolean(),
     isArchive: z.boolean(),
     customerId: z.string(),
@@ -86,7 +86,7 @@ export const ContactUsSchema = z.object({
     .transform(
       (val) => `${val.slice(0, 3)}-${val.slice(3, 6)}-${val.slice(6, 10)}`
     ),
-  message: z.string().min(1, { message: "Message is required" }),
+  content: z.string().min(1, { message: "Message is required" }),
 });
 
 export const SearchSchema = z.object({

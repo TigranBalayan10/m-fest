@@ -8,7 +8,7 @@ export async function DELETE(request: any) {
 
   // Delete the message data
   try {
-    const deleteMessages = await prisma.contact.deleteMany({
+    const deleteMessages = await prisma.message.deleteMany({
       where: {
         id: {
           in: ids,

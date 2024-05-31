@@ -2,39 +2,22 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
 export async function GET() {
-  const contactData = await prisma.contact.findMany({
-    include: {
-      customer: true,
-    },
-    orderBy: {
-      createdAt: "asc",
-    },
-  });
-
-  const newMessages = await prisma.contact.findMany({
-    where: {
-      isNew: true,
-    },
-    include: {
-      customer: true,
-    },
-    orderBy: {
-      createdAt: "asc",
-    },
-  });
-
-  const archivedMessages = await prisma.contact.findMany({
-    where: {
-      isArchive: true,
-    },
-    include: {
-      customer: true,
-    },
-    orderBy: {
-      createdAt: "asc",
-    },
-  });
-  return NextResponse.json({ contactData, newMessages, archivedMessages });
+  try {
+    const messageData = await prisma.customer.findMany({
+      include: {
+        Message: true,
+      },
+      orderBy: {
+        createdAt: "asc",
+      },
+    });
+    console.log("messageData", messageData);
+    return NextResponse.json({ messageData });
+  } catch (error) {
+    console.error("Error fetching message data:", error);
+    return NextResponse.json(
+      { error: "An error occurred while fetching message data" },
+      { status: 500 }
+    );
+  }
 }
-
-

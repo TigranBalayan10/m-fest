@@ -3,18 +3,18 @@ export interface Customer {
   name: string;
   email: string;
   phone: string;
-  contacts?: Contact;
+  Message:  Message;
   createdAt: Date;
   updatedAt: Date;
 }
 
-export interface Contact {
+export interface Message {
+  length: number;
   id: string;
-  message: string;
+  content: string;
   isNew: boolean;
   isArchive: boolean;
   customerId: string;
-  customer: Customer;
   createdAt: Date;
   updatedAt: Date;
 }

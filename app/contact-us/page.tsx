@@ -37,7 +37,7 @@ export default function ContactUs() {
       name: "",
       email: "",
       phone: "",
-      message: "",
+      content: "",
     },
   });
 
@@ -97,7 +97,7 @@ export default function ContactUs() {
               />
               <InputFormContact
                 control={form.control}
-                name="message"
+                name="content"
                 placeholder="Message"
               />
             </form>

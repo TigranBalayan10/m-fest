@@ -8,7 +8,7 @@ export async function PUT(request: any) {
 
   try {
     // Update the message data
-    const markedAsRead = await prisma.contact.updateMany({
+    const markedAsRead = await prisma.message.updateMany({
       where: {
         id: { in: ids },
       },
@@ -20,7 +20,7 @@ export async function PUT(request: any) {
     console.log(markedAsRead, "markedAsRead");
 
     // Fetch the updated messages in the desired order
-    const updatedMessages = await prisma.contact.findMany({
+    const updatedMessages = await prisma.message.findMany({
       where: {
         id: { in: ids },
       },

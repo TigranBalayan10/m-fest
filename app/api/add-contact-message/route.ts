@@ -4,39 +4,29 @@ import prisma from "@/lib/prisma";
 export async function POST(request: Request) {
   const res = await request.json();
   try {
-    const { name, email, phone, message } = res.values;
+    const { name, email, phone, content } = res.values;
 
     console.log("res", res);
 
-    // Check if a customer with the given email already exists
-    let customer = await prisma.customer.findFirst({
-      where: { email },
+    // Create the customer
+    const customer = await prisma.customer.create({
+      data: {
+        name,
+        email,
+        phone,
+      },
     });
 
-    
-    // If the customer doesn't exist, create a new one
-    if (!customer) {
-      customer = await prisma.customer.create({
-        data: {
-          name,
-          email,
-          phone,
-        },
-      });
-    }
-    
-    console.log("customer", customer);
-    // Create the contact and associate it with the customer
-    const result = await prisma.contact.create({
+    // Create a new message associated with the customer
+    const message = await prisma.message.create({
       data: {
-        message,
+        content,
         customer: {
           connect: { id: customer.id },
         },
       },
     });
-
-    return NextResponse.json({ result });
+    return NextResponse.json({ customer, message});
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json({ error: error.message }, { status: 400 });
