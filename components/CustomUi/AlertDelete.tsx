@@ -51,7 +51,7 @@ export default function AlertAction({ title, itemId, actionEndpoint, actionName,
           console.log("revalidated inventory");
         } else {
           console.log("Updated item successfully");
-          revalidateCustomers();
+          mutate("/api/get-customers");
           console.log("revalidated customers");
         }
       }

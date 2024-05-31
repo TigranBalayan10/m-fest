@@ -50,12 +50,12 @@ export default function InboxList() {
             })
             console.log(response, "response")
             if (response.ok) {
-                mutate();
+                mutate('/api/get-all-messages');
+                setAlertDescription("Message has been marked as read. Click OK to continue");
                 form.reset();
             } else {
                 setIsOpen(true);
                 setErrorAlert('Failed to mark message as viewed');
-                setAlertDescription("Message has been marked as read. Click OK to continue");
             }
         } catch (error) {
             setIsOpen(true);
@@ -150,7 +150,7 @@ export default function InboxList() {
     }
 
     const allCustomersMessages: Customer[] = data?.messageData;
-    console.log(allCustomersMessages, "allMessages")
+
 
 
     if (isLoading) {
@@ -160,7 +160,7 @@ export default function InboxList() {
         return <div>Failed to load</div>
     }
 
-    if (allCustomersMessages.every((customer) => customer.Message === null) || allCustomersMessages.every(customer => customer.Message?.isArchive)) {
+    if (allCustomersMessages?.every((customer) => customer.Message === null) || allCustomersMessages?.every(customer => customer.Message?.isArchive)) {
 
         return <div className="text-gray-400 p-4 text-center">No Messages</div>;
     }
@@ -220,7 +220,7 @@ export default function InboxList() {
                         <div className="space-y-4">
 
                             {allCustomersMessages?.map((customer) => (
-                                !customer.Message?.isArchive && (
+                                customer.Message !== null && !customer.Message.isArchive && (
                                     <div key={customer.id} className="flex items-start space-x-4 rounded-lg border border-gray-200 p-4 hover:bg-gray-100">
                                         <CheckboxForm control={form.control} name="ids" contactId={customer.Message.id} key={customer.Message.id} />
                                         <div className="flex-1">
