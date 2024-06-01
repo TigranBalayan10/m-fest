@@ -7,7 +7,7 @@ import MessageFull from "./MessageFull";
 import { fetcher } from "@/lib/swrFetcher";
 import { Customer } from "@/lib/Types/ContactUsTypes";
 import { formatDate } from "@/lib/FormatDate";
-import useSWR from "swr";
+import useSWR, { useSWRConfig } from "swr";
 import InboxSkeleton from "./InboxSkeleton";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -82,7 +82,7 @@ export default function InboxList() {
                 },
             });
             if (response.ok) {
-                mutate();
+                mutate('/api/get-all-messages');
                 console.log('Message marked as viewed');
             } else {
                 console.log('Failed to mark message as viewed');
@@ -104,7 +104,7 @@ export default function InboxList() {
                 }
             })
             if (response.ok) {
-                mutate();
+                mutate('/api/get-all-messages');
                 form.reset();
             } else {
                 setIsOpen(true);
@@ -132,7 +132,7 @@ export default function InboxList() {
                 }
             })
             if (response.ok) {
-                mutate();
+                mutate('/api/get-all-messages');
                 form.reset();
             } else {
                 setIsOpen(true);
