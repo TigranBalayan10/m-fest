@@ -26,7 +26,7 @@ const AboutUs = () => {
                             <IoCarSportSharp className="w-12 h-12 text-gray-300 mb-4" />
                             <h2 className="text-2xl font-bold mb-2 text-gray-400">Our History</h2>
                             <p className="text-gray-300 leading-relaxed">
-                                Acme Auto Dealership has been a trusted name in the automotive industry for over 50 years. Founded in
+                                M-Fest MotorSport has been a trusted name in the automotive industry for over 50 years. Founded in
                                 1970, we have grown from a small family-owned business to a leading dealership in the region, offering a
                                 wide range of vehicles and exceptional service.
                             </p>
@@ -35,7 +35,7 @@ const AboutUs = () => {
                             <FaRegHandshake className="w-12 h-12 text-gray-300 mb-4" />
                             <h2 className="text-2xl font-bold mb-2 text-gray-400">Customer Service</h2>
                             <p className="text-gray-300 leading-relaxed">
-                                At Acme Auto Dealership, we believe that customer satisfaction is the key to our success. Our
+                                At M-Fest MotorSport, we believe that customer satisfaction is the key to our success. Our
                                 knowledgeable and friendly staff are dedicated to providing you with a hassle-free car buying
                                 experience, from the moment you step onto our lot until you drive away in your dream car.
                             </p>

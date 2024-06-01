@@ -21,7 +21,7 @@ const Footer = () => {
           <ul className="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 sm:mt-0">
             <li>
               <Button variant="link">
-                <Link href="/about">About</Link>
+                <Link href="/about-us">About</Link>
               </Button>
             </li>
             <li>
@@ -36,7 +36,7 @@ const Footer = () => {
             </li>
             <li>
               <Button variant="link">
-                <Link href="/contact">Contact</Link>
+                <Link href="/contact-us">Contact</Link>
               </Button>
             </li>
           </ul>
