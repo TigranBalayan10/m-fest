@@ -16,12 +16,14 @@ interface MessageFullProps {
     date: string;
     phone: string;
     message: string;
-    onView: () => Promise<void>
+    onView?: () => Promise<void>
 }
 
 const MessageFull: React.FC<MessageFullProps> = ({ nameFull, date, message, phone, onView }) => {
     const handleView = async () => {
-        await onView();
+        if (onView) {
+            onView();
+        }
     }
     return (
         <Dialog>
@@ -39,9 +41,9 @@ const MessageFull: React.FC<MessageFullProps> = ({ nameFull, date, message, phon
                         <a href={`tel:${phone}`}>Tel: {phone}</a>
                     </DialogDescription>
                 </DialogHeader>
-                <div className="flex items-center space-x-2 text-sm">
+                <p className="flex items-center space-x-2 text-sm">
                     {message}
-                </div>
+                </p>
                 <DialogFooter>
                     <DialogClose asChild>
                         <Button type="button" variant="default">

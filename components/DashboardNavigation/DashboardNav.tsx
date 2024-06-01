@@ -6,6 +6,7 @@ import { IoMenuSharp } from "react-icons/io5";
 import { UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import { auth } from "@clerk/nextjs/server";
+import AccordionInbox from "../Inbox/AccordionInbox";
 
 const DashboardNav = () => {
   const { userId } = auth();
@@ -51,15 +52,7 @@ const DashboardNav = () => {
                     </SheetClose>
                   </li>
                   <li>
-                    <SheetClose asChild>
-                      <Link
-                        className="flex items-center gap-2 rounded-md px-3 py-2 text-gray-700 transition-colors hover:bg-gray-200"
-                        href="/dashboard/inbox"
-                      >
-                        <FaInbox />
-                        Inbox
-                      </Link>
-                    </SheetClose>
+                      <AccordionInbox isMobile={true} />
                   </li>
                   <li>
                     <SheetClose asChild>

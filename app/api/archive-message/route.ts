@@ -8,7 +8,7 @@ export async function PUT(request: any) {
 
   try {
     // Update the message data
-    const archivedMessages = await prisma.contact.updateMany({
+    const archivedMessages = await prisma.message.updateMany({
       where: {
         id: {
           in: ids,

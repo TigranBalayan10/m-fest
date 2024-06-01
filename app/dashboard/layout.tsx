@@ -13,17 +13,14 @@ const dm_sans = DM_Sans({
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    
-      <html lang="en">
-        <body className={`${dm_sans.variable} flex flex-col min-h-screen`}>
-          <DashboardNav />
-          <div className="flex flex-1">
-            <div className="hidden w-64 bg-gray-100 p-4 md:block">
-              <DashboardSideBar />
-            </div>
-            <div className="flex-1 bg-gray-50 p-4 md:p-6">{children}</div>
-          </div>
-        </body>
-      </html>
+    <div className={`${dm_sans.variable} flex flex-col min-h-screen`}>
+      <DashboardNav />
+      <div className="flex flex-1">
+        <div className="hidden w-64 bg-gray-100 p-4 md:block">
+          <DashboardSideBar />
+        </div>
+        <div className="flex-1 bg-gray-50 p-4 md:p-6">{children}</div>
+      </div>
+    </div>
   );
 }
