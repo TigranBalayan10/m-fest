@@ -2,15 +2,18 @@ import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card";
 import DataTable from "@/components/DashboardForm/DataTable";
 import { auth } from "@clerk/nextjs/server";
 import CustomersDataCard from "@/components/DashboardCards/CustomersDatacard";
+import Link from "next/link";
 
 
 export default function Dashboard() {
   auth().protect();
-  return (
 
+  return (
     <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-        <CustomersDataCard />
+        <Link href="/dashboard/customers">
+          <CustomersDataCard />
+        </Link>
         <Card>
           <CardHeader className="flex items-center justify-between">
             <CardTitle>Subscriptions</CardTitle>

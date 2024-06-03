@@ -11,6 +11,7 @@ const dm_sans = DM_Sans({
   variable: "--font-dm_sans",
 });
 
+
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className={`${dm_sans.variable} flex flex-col min-h-screen`}>

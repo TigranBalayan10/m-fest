@@ -1,10 +1,11 @@
-"use client";
-
-import { fetcher } from "@/lib/swrFetcher";
+"use client"
+import useSWR from "swr";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
-import useSWR from "swr"
+import { fetcher } from "@/lib/swrFetcher";
 
-const CustomersDataCard = () => {
+
+
+const CustomersDataCard = () =>{
     const { data, isLoading, error } = useSWR("/api/get-customers?days=7", fetcher);
     const customersQuantity = data?.customerData?.length;
     const newCustomersQuantity = data?.recentCustomers?.length;
