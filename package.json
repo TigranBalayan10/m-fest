@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "postinstall": "prisma generate",
-    "seed": "ts-node app/seed.ts"
+    "seed": "node app/seed.js",
+    "cars_seed": "node app/cars_seed.js"
   },
   "prisma": {
     "schema": "app/schema.prisma"

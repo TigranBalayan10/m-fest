@@ -28,7 +28,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "lib/cloudinary.js"
+    "lib/cloudinary.js",
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "app/seed.js", "app/cars_seed.js"]
 }

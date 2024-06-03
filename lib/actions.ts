@@ -13,7 +13,7 @@ export async function revalidateAll() {
 }
 
 export async function revalidateInventory() {
-  revalidatePath("/api/inventory");
+  revalidatePath("/dashboard/inventory");
 }
 export async function revalidateDashboard() {
   revalidatePath("/dashboard");
@@ -22,5 +22,5 @@ export async function revalidateInbox() {
   revalidatePath("/dashboard/inbox");
 }
 export async function revalidateCustomers() {
-  revalidatePath("/api/get-customers");
+  revalidatePath("/dashboard/customers");
 }

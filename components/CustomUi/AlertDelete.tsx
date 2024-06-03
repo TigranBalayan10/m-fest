@@ -14,10 +14,9 @@ import {
 import { FaSpinner } from "react-icons/fa6";
 import { useState } from "react";
 import { Button } from "../ui/button";
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { AiFillDelete } from "react-icons/ai";
-import { revalidateCustomers, revalidateInventory } from "@/lib/actions";
-import useSWR, { useSWRConfig } from 'swr';
+import { useSWRConfig } from 'swr';
 
 interface AlertActionProps {
   itemId: string;
@@ -32,10 +31,9 @@ interface AlertActionProps {
 }
 
 export default function AlertAction({ title, itemId, actionEndpoint, actionName, actionColor, httpMethod, link, getEndpoint }: AlertActionProps) {
-  const router = useRouter();
   const pathname = usePathname();
   const [isLoading, setIsLoading] = useState(false);
-  const { mutate  } = useSWRConfig();
+  const { mutate } = useSWRConfig();
 
 
   const handleAction = async () => {
@@ -45,14 +43,12 @@ export default function AlertAction({ title, itemId, actionEndpoint, actionName,
         method: httpMethod,
       });
       if (response.ok) {
-        if (httpMethod === "DELETE" && pathname === "/dashboard/inventory" || pathname === "/dashboard") {
-          console.log("Deleted item successfully");
+        if (httpMethod === "DELETE" && pathname === "/dashboard/inventory" || pathname === "/dashboard" || pathname === "/dashboard/archive") {
           mutate("/api/inventory");
-          console.log("revalidated inventory");
-        } else {
-          console.log("Updated item successfully");
+        } else if (httpMethod === "DELETE" && pathname === "/dashboard/customers") {
           mutate("/api/get-customers");
-          console.log("revalidated customers");
+        } else {
+          mutate("/api/archive");
         }
       }
     } catch (error) {
@@ -67,7 +63,7 @@ export default function AlertAction({ title, itemId, actionEndpoint, actionName,
         {link === "link" && httpMethod === "DELETE" ? <Button variant="link" className="text-red-500"> {actionName}</Button> : null}
         {link === "link" && httpMethod === "PUT" ? <Button variant="link" className="text-amber-500"> {actionName}</Button> : null}
         {!link && pathname === "/dashboard/customers" && httpMethod === "DELETE" ? <Button variant="destructive" size="icon">
-        <AiFillDelete />
+          <AiFillDelete />
         </Button> : null}
       </AlertDialogTrigger>
       <AlertDialogContent>
@@ -83,7 +79,7 @@ export default function AlertAction({ title, itemId, actionEndpoint, actionName,
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction className={`${actionColor}`} onClick={handleAction}>
+          <AlertDialogAction disabled={isLoading} className={`${actionColor}`} onClick={handleAction}>
             {isLoading ? <FaSpinner className="animate-spin" /> : actionName}
           </AlertDialogAction>
         </AlertDialogFooter>

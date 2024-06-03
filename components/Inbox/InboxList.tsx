@@ -17,6 +17,7 @@ import { MarkedReadSchema } from "@/lib/zodSchema";
 import { Form } from "../ui/form";
 import CheckboxForm from "../CustomUi/CheckboxForm";
 import AlertConfirm from "../CustomUi/AlertConfirm";
+import getOptimisticUpdate from "@/lib/mutate";
 
 
 export default function InboxList() {
@@ -70,6 +71,14 @@ export default function InboxList() {
             return;
         }
         try {
+            // Optimistic update for marking a message as viewed
+            mutate(
+                getOptimisticUpdate(messageId, (message) => ({
+                    ...message,
+                    isNew: false,
+                })),
+                false
+            );
             const response = await fetch('/api/update-message', {
                 method: 'PUT',
                 body: JSON.stringify({
@@ -82,20 +91,27 @@ export default function InboxList() {
                 },
             });
             if (response.ok) {
-                mutate('/api/get-all-messages');
                 console.log('Message marked as viewed');
+                mutate();
             } else {
                 console.log('Failed to mark message as viewed');
+                mutate();
             }
         } catch (error) {
             console.error('Error:', error);
+            mutate();
         }
     };
 
     const onClickDelete = async (event: React.MouseEvent) => {
         event.preventDefault()
+        const messageIds = form.getValues().ids;
         setIsDeleting(true);
         try {
+            // Optimistic update for deleting messages
+            messageIds.forEach((messageId: string) => {
+                mutate(getOptimisticUpdate(messageId, () => undefined), false);
+            });
             const response = await fetch('/api/delete-message', {
                 method: 'DELETE',
                 body: JSON.stringify(form.getValues()),
@@ -104,17 +120,19 @@ export default function InboxList() {
                 }
             })
             if (response.ok) {
-                mutate('/api/get-all-messages');
+                mutate();
                 form.reset();
             } else {
                 setIsOpen(true);
                 setErrorAlert("Failed to delete message");
                 setAlertDescription("Error deleting message. Click OK to continue");
+                mutate();
             }
         } catch (error) {
             setIsOpen(true);
             setErrorAlert("Failed to delete message");
             setAlertDescription("Error deleting message. Click OK to continue");
+            mutate();
             console.error('Error:', error);
         }
         setIsDeleting(false);
@@ -122,8 +140,13 @@ export default function InboxList() {
 
     const onClickArchive = async (event: React.MouseEvent) => {
         event.preventDefault()
+        const messageIds = form.getValues().ids;
         setIsArchiving(true);
         try {
+            // Optimistic update for archiving a message
+            messageIds.forEach((messageId: string) => {
+                mutate(getOptimisticUpdate(messageId, () => undefined), false);
+            });
             const response = await fetch('/api/archive-message', {
                 method: 'PUT',
                 body: JSON.stringify(form.getValues()),
@@ -132,17 +155,19 @@ export default function InboxList() {
                 }
             })
             if (response.ok) {
-                mutate('/api/get-all-messages');
+                mutate();
                 form.reset();
             } else {
                 setIsOpen(true);
                 setErrorAlert("Failed to archive message");
                 setAlertDescription("Error archiving message. Click OK to continue");
+                mutate();
             }
         } catch (error) {
             setIsOpen(true);
             setErrorAlert("Failed to archive message");
             setAlertDescription("Error archiving message. Click OK to continue");
+            mutate();
             console.error('Error:', error);
         }
         setIsArchiving(false);

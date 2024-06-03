@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { revalidateCustomers } from "@/lib/actions";
 
 export async function GET(request: Request) {
   try {
@@ -17,6 +18,8 @@ export async function GET(request: Request) {
       return createdAt >= oneDayAgo;
     });
 
+    revalidateCustomers();
+    console.log("Revalidated customers");
     return NextResponse.json({ customerData, recentCustomers });
   } catch (error) {
     console.error("Error fetching customer data:", error);

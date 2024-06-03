@@ -14,6 +14,7 @@ import { useState } from "react";
 import { Form } from "../ui/form";
 import CheckboxForm from "../CustomUi/CheckboxForm";
 import AlertConfirm from "../CustomUi/AlertConfirm";
+import getOptimisticUpdate from "@/lib/mutate";
 
 export default function ArchiveList() {
     const [isOpen, setIsOpen] = useState(false);
@@ -31,8 +32,13 @@ export default function ArchiveList() {
 
     const onClickDelete = async (event: React.MouseEvent) => {
         event.preventDefault();
+        const messageIds = form.getValues().ids;
         setIsDeleting(true);
         try {
+            // Optimistic update for deleting a message
+            messageIds.forEach((messageId: string) => {
+                mutate(getOptimisticUpdate(messageId, () => undefined), false);
+            });
             const response = await fetch("/api/delete-message", {
                 method: "DELETE",
                 body: JSON.stringify(form.getValues()),
@@ -75,7 +81,7 @@ export default function ArchiveList() {
 
     return (
         <>
-             <Form {...form}>
+            <Form {...form}>
                 <form>
                     <div className="w-full max-w-3xl mx-auto py-6 px-4 md:px-6">
                         <div className="flex items-center justify-between mb-4">
