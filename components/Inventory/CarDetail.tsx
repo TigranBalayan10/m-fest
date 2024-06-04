@@ -41,7 +41,7 @@ const CarDetail: React.FC<CarDetailProps> = ({ car }) => {
         </CardDescription>
       </CardHeader>
       <CardContent className="p-0">
-        <div className="md:grid md:grid-cols-3 gap-6">
+        <div className="md:grid md:grid-cols-3 gap-6 md:container">
           <div className="md:col-span-2 ">
             <div className="flex flex-col">
               <CldImage
@@ -69,13 +69,13 @@ const CarDetail: React.FC<CarDetailProps> = ({ car }) => {
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-9 w-full">
+          <div className="flex flex-col w-full">
             <div>
-              <h1 className="text-3xl font-bold">{car.year} {car.model}</h1>
-              <p className=" text-gray-500">
+              <h1 className="text-3xl font-bold mb-2 mt-2 md:mt-0">{car.year} {car.model}</h1>
+              <p className="text-gray-500 max-h-25 overflow-y-auto">
                 {car.description}
               </p>
-              <Link className="mt-2 inline-flex items-center text-blue-600 hover:text-blue-800 font-medium" href="#">
+              <Link className="my-2 inline-flex items-center text-blue-600 hover:text-blue-800 font-medium" href="#">
                 See CarFax Report
                 <FaArrowUpRightFromSquare className="ml-2 w-4 h-4" />
               </Link>
@@ -142,7 +142,7 @@ const CarDetail: React.FC<CarDetailProps> = ({ car }) => {
               </div>
             )
               : (
-                <div>
+                <div className="mt-4">
                   <Link href="/contact-us" >
                     <Button className="mt-2 w-full">Contact Seller</Button>
                   </Link>

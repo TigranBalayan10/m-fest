@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import SearchSelect from "./SearchSelect";
 import { Button } from "../ui/button";
 import CarMilages from "@/lib/Data/CarMilages.json";
@@ -10,16 +10,15 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
 import useSWR from "swr";
+import { fetcher } from "@/lib/swrFetcher";
+import { FaSpinner } from "react-icons/fa6";
 
-async function fetcher() {
-  const response = await fetch('/api/inventory');
-  const data = await response.json();
-  return data;
-
+interface SearchBarProps {
+  onSearch: (result: CarListData[], params: SearchData) => void;
 }
 
-const SearchBar = () => {
-
+const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
+  const [isSearching, setIsSearching] = useState(false);
   const { data, error, isLoading } = useSWR('/api/inventory', fetcher);
   const selectData = data?.carData;
   // Create a Map to store unique makes and their corresponding models
@@ -55,8 +54,6 @@ const SearchBar = () => {
   const milageOptions = CarMilages.map((milage) => milage.label);
 
 
-
-
   const form = useForm<SearchData>({
     resolver: zodResolver(SearchSchema),
     defaultValues: {
@@ -72,12 +69,33 @@ const SearchBar = () => {
   const selectedMake = watch("make") || "";
   const selectedModel = watch("model") || "";
 
-  const onSubmit = (data: SearchData) => {
-    // Handle form submission, e.g., send data to backend API
-    console.log(data);
+  const resetForm = () => {
+    reset();
   };
 
-
+  async function onSubmit(data: SearchData) {
+    setIsSearching(true);
+    console.log("Search data:", data);
+    try {
+      const response = await fetch('/api/search-inventory', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      if (response.ok) {
+        const searchResults = await response.json();
+        console.log("Search results:", searchResults);
+        onSearch(searchResults, data);
+      } else {
+        console.error("Failed to send search request");
+      }
+    } catch (error) {
+      console.error("Error sending search request:", error);
+    }
+    setIsSearching(false);
+  };
 
   return (
     <div className="my-5 flex-grow mx-5">
@@ -125,8 +143,17 @@ const SearchBar = () => {
               />
             </div>
             <div className="flex justify-center gap-2">
-              <Button type="submit" size="lg">Search</Button>
-              <Button type="button" size="lg" onClick={() => reset()}>
+              {isSearching ? (
+                <Button type="button" size="lg" disabled>
+                  <FaSpinner className="animate-spin mr-2" />
+                  Searching...
+                </Button>
+              ) : (
+                <Button type="submit" size="lg">
+                  Search
+                </Button>
+              )}
+              <Button type="button" size="lg" onClick={resetForm}>
                 Reset
               </Button>
             </div>

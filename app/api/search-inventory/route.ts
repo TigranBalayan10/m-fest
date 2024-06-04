@@ -5,7 +5,6 @@ import { Prisma } from "@prisma/client";
 export async function POST(request: Request) {
   try {
     const res = await request.json();
-    console.log("Received search parameters:", res);
 
     const { model, make, year, milage, priceRange } = res;
     const where: Prisma.CarListWhereInput = {};
@@ -27,18 +26,18 @@ export async function POST(request: Request) {
       const [minPrice, maxPrice] = priceRange.match(/\d+/g)?.map(Number) || [];
       if (minPrice && maxPrice) {
         where.price = { gte: minPrice, lte: maxPrice };
-      } else {
-        console.warn("Invalid priceRange format:", priceRange);
-      }
+      } 
+        else if (minPrice) {
+            where.price = { gte: minPrice };
+        } 
+        else if (maxPrice) {
+            where.price = { lte: maxPrice };
+        }
     }
-
-    console.log("Prisma query:", where);
 
     const result = await prisma.carList.findMany({
       where,
     });
-
-    console.log("Search results:", result);
 
     return NextResponse.json(result);
   } catch (error) {

@@ -1,14 +1,17 @@
 "use client"
 
 import CarCard from "./CarCard";
-import { Car } from "@/lib/types";
+import { CarListData, SearchData } from "@/lib/zodSchema";
 import useSWR from "swr";
 import CarCardSkeleton from "./CarCardSkeleton";
 import { fetcher } from "@/lib/swrFetcher";
 
+interface InventoryProps {
+  searchResults: CarListData[];
+  searchParams: SearchData;
+}
 
-
-const CarsForSale = () => {
+const CarsForSale: React.FC<InventoryProps> = ({ searchResults, searchParams }) => {
 
   const { data, error, isLoading } = useSWR('/api/inventory', fetcher);
 
@@ -26,19 +29,41 @@ const CarsForSale = () => {
 
   if (error) return <div>Error: {error.message}</div>
 
+
+  const renderNoResultsMessage = () => {
+    if (searchResults?.length === 0 && Object.keys(searchParams).length > 0) {
+      return (
+        <div className="text-gray-300 font-sans font-thin text-center text-lg">
+          <p>No cars found matching the search criteria.
+            <br />
+            Please try with different one.</p>
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
     <div className="mt-5 flex-grow">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 h-full container mx-auto p-4">
-        {data?.carData?.length > 0 ? (
-          data?.carData?.map((car: Car, index: number) => (
+        {searchResults?.length > 0 ? (
+          searchResults?.map((car: CarListData, index: number) => (
             <CarCard key={index} car={car} />
           ))
         ) : (
-          <div className="text-gray-300 font-sans font-thin text-center text-lg">No cars found</div>
+          renderNoResultsMessage() || (
+            data?.carData?.length > 0 ? (
+              data.carData.map((car: CarListData, index: number) => (
+                <CarCard key={index} car={car} />
+              ))
+            ) : (
+              <div className="text-gray-300 font-sans font-thin text-center text-lg">
+                No cars available
+              </div>
+            )
+          )
         )}
       </div>
-
-
     </div>
   );
 };

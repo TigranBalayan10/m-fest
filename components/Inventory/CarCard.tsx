@@ -24,13 +24,13 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Separator } from "../ui/separator";
-import { Car } from "@/lib/types";
+import { CarListData } from "@/lib/zodSchema";
 import { CldImage } from "next-cloudinary";
 import Link from "next/link";
 import { Button } from "../ui/button";
 
 interface CarCardProps {
-  car: Car;
+  car: CarListData;
 }
 
 const CarCard: React.FC<CarCardProps> = ({ car }) => (
