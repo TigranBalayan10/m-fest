@@ -32,13 +32,13 @@ model CarList {
 }
 
 model Customer {
-    id        String    @id @default(cuid())
+    id        String   @id @default(cuid())
     name      String
     email     String
     phone     String
-    Message  Message?
-    createdAt DateTime  @default(now()) @map(name: "created_at")
-    updatedAt DateTime  @updatedAt @map(name: "updated_at")
+    Message   Message?
+    createdAt DateTime @default(now()) @map(name: "created_at")
+    updatedAt DateTime @updatedAt @map(name: "updated_at")
 }
 
 model Message {
@@ -50,4 +50,35 @@ model Message {
     customer   Customer @relation(fields: [customerId], references: [id])
     createdAt  DateTime @default(now()) @map(name: "created_at")
     updatedAt  DateTime @updatedAt @map(name: "updated_at")
+}
+
+model FinancingPersonal {
+    id         String   @id @default(cuid())
+    firstName  String
+    middleName String?
+    lastName   String
+    ssnItin    String
+    dob        DateTime
+    Financing  Financing[]
+}
+
+model FinancingContactInfo {
+    id         String   @id @default(cuid())
+    phone      String
+    email      String
+    address    String
+    city       String
+    state      String
+    zip        String
+    Financing  Financing[]
+}
+
+model Financing {
+    id         String   @id @default(cuid())
+    personalId String
+    contactId  String
+    personal   FinancingPersonal   @relation(fields: [personalId], references: [id])
+    contact    FinancingContactInfo @relation(fields: [contactId], references: [id])
+    createdAt DateTime @default(now()) @map(name: "created_at")
+    updatedAt DateTime @updatedAt @map(name: "updated_at")
 }
