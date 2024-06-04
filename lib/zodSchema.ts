@@ -1,6 +1,6 @@
 "use client";
 
-import { nullable, z } from "zod";
+import { z } from "zod";
 import { Customer, Message } from "@prisma/client";
 
 export const CarListSchema = z.object({
@@ -90,8 +90,8 @@ export const ContactUsSchema = z.object({
 });
 
 export const SearchSchema = z.object({
-  model: z.string().optional(),
-  make: z.string().optional(),
+  model: z.string().trim().optional(),
+  make: z.string().trim().optional(),
   year: z.string().optional(),
   milage: z.string().optional(),
   priceRange: z.string().optional(),

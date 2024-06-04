@@ -25,6 +25,7 @@ interface SearchSelectProps {
   options: string[];
   label: string;
   placeholder?: string;
+  previousLabel?: string;
 }
 
 const SearchSelect: React.FC<SearchSelectProps> = ({
@@ -33,6 +34,7 @@ const SearchSelect: React.FC<SearchSelectProps> = ({
   label,
   options,
   placeholder,
+  previousLabel,
 }) => {
   return (
 
@@ -51,11 +53,15 @@ const SearchSelect: React.FC<SearchSelectProps> = ({
               </SelectTrigger>
             </FormControl>
             <SelectContent>
-              {options?.map((option, index) => (
-                <SelectItem key={index} value={option}>
-                  {option}
-                </SelectItem>
-              ))}
+              {options?.length > 0 ? (
+                options.map((option, index) => (
+                  <SelectItem key={index} value={option}>
+                    {option}
+                  </SelectItem>
+                ))
+              ) : (
+                <SelectItem disabled value="No Options">Please select {previousLabel} </SelectItem>
+              )}
             </SelectContent>
           </Select>
           <FormMessage />

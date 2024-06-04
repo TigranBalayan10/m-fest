@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import SearchSelect from "./SearchSelect";
 import { Button } from "../ui/button";
 import CarMilages from "@/lib/Data/CarMilages.json";
 import { PriceRanges } from "@/lib/Data/PriceRanges";
-import CarModels from "@/lib/Data/CarModels.json";
 import { SearchData, SearchSchema, CarListData } from "@/lib/zodSchema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -23,10 +22,36 @@ const SearchBar = () => {
 
   const { data, error, isLoading } = useSWR('/api/inventory', fetcher);
   const selectData = data?.carData;
+  // Create a Map to store unique makes and their corresponding models
+  const makeToModelsMap = new Map<string, Set<string>>();
+  const modelToYearsMap = new Map<string, Set<string>>();
 
-  const yearOptions = selectData?.map((car: CarListData) => car.year);
-  const modelOptions = selectData?.map((car: CarListData) => car.model);
-  const makeOptions = selectData?.map((car: CarListData) => car.make);
+  // Populate the makeToModelsMap
+  selectData?.forEach((car: CarListData) => {
+    const { make, model, year } = car;
+    // Update makeToModelsMap
+    const modelSet = makeToModelsMap.get(make) || new Set();
+    modelSet.add(model);
+    makeToModelsMap.set(make, modelSet);
+    // Update modelToYearsMap
+    const yearSet = modelToYearsMap.get(model) || new Set();
+    yearSet.add(year);
+    modelToYearsMap.set(model, yearSet);
+  });
+
+  // Create a unique list of makes
+  const makeOptions = Array.from(makeToModelsMap.keys());
+
+  // Create a function to get models for a specific make
+  const getModelsForMake = (make: string) => {
+    const modelSet = makeToModelsMap.get(make);
+    return modelSet ? Array.from(modelSet) : [];
+  };
+
+  const getYearsForMake = (model: string) => {
+    const yearSet = modelToYearsMap.get(model);
+    return yearSet ? Array.from(yearSet) : [];
+  };
   const milageOptions = CarMilages.map((milage) => milage.label);
 
 
@@ -44,6 +69,8 @@ const SearchBar = () => {
   })
 
   const { handleSubmit, watch, register, reset, formState: { errors } } = form;
+  const selectedMake = watch("make") || "";
+  const selectedModel = watch("model") || "";
 
   const onSubmit = (data: SearchData) => {
     // Handle form submission, e.g., send data to backend API
@@ -61,13 +88,6 @@ const SearchBar = () => {
             <div className="px-5 flex flex-col md:flex-row md:justify-center gap-3">
               <SearchSelect
                 control={form.control}
-                name="model"
-                options={modelOptions}
-                label="Model"
-                placeholder="Select Model"
-              />
-              <SearchSelect
-                control={form.control}
                 name="make"
                 options={makeOptions}
                 label="Make"
@@ -75,10 +95,19 @@ const SearchBar = () => {
               />
               <SearchSelect
                 control={form.control}
+                name="model"
+                options={getModelsForMake(selectedMake)}
+                label="Model"
+                placeholder="Select Model"
+                previousLabel="Make"
+              />
+              <SearchSelect
+                control={form.control}
                 name="year"
-                options={yearOptions}
+                options={getYearsForMake(selectedModel)}
                 label="Year"
                 placeholder="Select Year"
+                previousLabel="Model"
               />
               <SearchSelect
                 control={form.control}
