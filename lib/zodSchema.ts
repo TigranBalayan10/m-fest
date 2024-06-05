@@ -75,8 +75,6 @@ export const MessageSchema: z.ZodType<Message> = z.lazy(() =>
   })
 );
 
-
-
 export const MarkedReadSchema = z.object({
   ids: z.array(z.string()),
 });
@@ -98,36 +96,63 @@ export const ContactUsSchema = z.object({
 });
 
 const DobSchema = z.object({
-  month: z.string().min(1, { message: 'Month is required' }),
-  day: z.string().min(1, { message: 'Day is required' }),
-  year: z.string().min(1, { message: 'Year is required' }),
+  month: z.string().min(1, { message: "Month is required" }),
+  day: z.string().min(1, { message: "Day is required" }),
+  year: z.string().min(1, { message: "Year is required" }),
 });
 
 // FinancingPersonalSchema
 const FinancingPersonalSchema = z.object({
-  firstName: z.string().min(1, { message: 'First name is required' }),
-  middleName: z.string().optional(),
-  lastName: z.string().min(1, { message: 'Last name is required' }),
-  ssnItin: z.string().min(9, { message: 'SSN/ITIN must be 9 characters' }).max(9, { message: 'SSN/ITIN must be 9 characters' }),
+  firstName: z
+    .string()
+    .trim()
+    .toUpperCase()
+    .min(1, { message: "First name is required" }),
+  middleName: z.string().trim().toUpperCase().optional(),
+  lastName: z
+    .string()
+    .trim()
+    .toUpperCase()
+    .min(1, { message: "Last name is required" }),
+  ssnItin: z
+    .string()
+    .min(9, { message: "SSN/ITIN must be 9 characters" })
+    .max(9, { message: "SSN/ITIN must be 9 characters" })
+    .trim()
+    .regex(/^\d{9}$/, { message: "SSN/ITIN must contain only numbers" }),
   dob: DobSchema,
 });
 
 // FinancingContactInfoSchema
 const FinancingContactInfoSchema = z.object({
-  phone: z.string().min(10, { message: 'Phone number must be at least 10 digits' }),
-  email: z.string().email({ message: 'Invalid email address' }),
-  address: z.string().min(1, { message: 'Address is required' }),
-  city: z.string().min(1, { message: 'City is required' }),
-  state: z.string().min(2, { message: 'State must be at least 2 characters' }),
-  zip: z.string().min(5, { message: 'ZIP code must be at least 5 characters' }),
+  phone: z
+    .string()
+    .min(10, { message: "Phone number must be at least 10 digits" })
+    .regex(/^\d{10,}$/, { message: "Phone number must contain only numbers" }),
+  email: z
+    .string()
+    .trim()
+    .toLowerCase()
+    .email({ message: "Invalid email address" }),
+  address: z
+    .string()
+    .min(1, { message: "Address is required" })
+    .regex(/^\d+\s+[a-zA-Z\s]+$/, {
+      message:
+        "Invalid address format. Address must start with numbers followed by a street name",
+    }),
+  city: z.string().min(1, { message: "City is required" }),
+  state: z.string().min(2, { message: "State must be at least 2 characters" }),
+  zip: z
+    .string()
+    .min(5, { message: "ZIP code must be at least 5 characters" })
+    .regex(/^\d+$/, { message: "ZIP code must contain only numbers" }),
 });
 
 // FinancingSchema
 const FinancingSchema = z.object({
   personal: FinancingPersonalSchema,
   contact: FinancingContactInfoSchema,
-  createdAt: z.date().optional(),
-  updatedAt: z.date().optional(),
 });
 
 // FinancingFormSchema
@@ -222,6 +247,8 @@ export type VinNumber = z.infer<typeof VinSchema>;
 export type VinDecodedData = z.infer<typeof VinDecodedSchema>;
 export type ContactData = z.infer<typeof ContactUsSchema>;
 export type FinancingPersonalType = z.infer<typeof FinancingPersonalSchema>;
-export type FinancingContactInfoType = z.infer<typeof FinancingContactInfoSchema>;
+export type FinancingContactInfoType = z.infer<
+  typeof FinancingContactInfoSchema
+>;
 export type FinancingType = z.infer<typeof FinancingSchema>;
 export type FinancingFormType = z.infer<typeof FinancingFormSchema>;

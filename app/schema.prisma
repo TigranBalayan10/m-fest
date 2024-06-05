@@ -58,7 +58,7 @@ model FinancingPersonal {
     middleName String?
     lastName   String
     ssnItin    String
-    dob        DateTime
+    dob        String
     Financing  Financing[]
 }
 

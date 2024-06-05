@@ -1,6 +1,7 @@
 "use client";
 
 import { useForm } from "react-hook-form"
+import { useState } from "react";
 import { Form } from "@/components/ui/form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from "@/components/ui/button"
@@ -14,9 +15,15 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { FinancingFormSchema, FinancingFormType } from "@/lib/zodSchema";
+import { FaSpinner } from "react-icons/fa6";
+import AlertConfirm from "../CustomUi/AlertConfirm";
 
 
 const FinancingForm = () => {
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState("");
+    const [alertTitle, setAlertTitle] = useState("Success");
+
     const defaultValues: Partial<FinancingFormType> = {
         financing: {
             personal: {
@@ -37,9 +44,7 @@ const FinancingForm = () => {
                 city: '',
                 state: '',
                 zip: '',
-            },
-            createdAt: undefined,
-            updatedAt: undefined,
+            }
         },
     };
 
@@ -48,17 +53,36 @@ const FinancingForm = () => {
         defaultValues,
     })
 
-    const { errors, isValid, isDirty, isSubmitting } = form.formState
-    console.log("Errors", errors)
+    const { errors, isValid, isDirty, isSubmitting, isSubmitSuccessful } = form.formState
 
 
-    function onSubmit(data: FinancingFormType) {
-        console.log("Submitted Data", data)
+    async function onSubmit(data: FinancingFormType) {
+        try {
+            const res = await fetch('/api/add-financing', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ data }),
+            })
+            if (res.ok) {
+                setAlertMessage("Financing application submitted successfully")
+                setShowAlert(true)
+                setAlertTitle("Success")
+                form.reset()
+            } else {
+                setAlertMessage("An error occurred while submitting the financing application")
+                setShowAlert(true)
+                setAlertTitle("Error")
+            }
+        } catch (error) {
+            console.error("Error", error)
+        }
     }
 
     return (
         <>
-            <Card className="shadow-md m-4 card-bg border-none text-white w-[780px] p-3">
+            <Card className="shadow-md m-4 card-bg border-none text-white w-[600px] p-3">
                 <CardHeader>
                     <CardTitle className="text-center">Financing Form</CardTitle>
                     <CardDescription className="text-center text-gray-400 dark:text-gray-400">
@@ -91,13 +115,30 @@ const FinancingForm = () => {
                             </div>
                         </CardContent>
                         <CardFooter className="gap-2">
-                            <Button type="submit" size="lg">Submit</Button>
+                            <Button disabled={!isDirty} type="submit">
+                                {isSubmitting ? "Submitting..." : "Submit"}
+                                {isSubmitting && <FaSpinner className="animate-spin ml-2" />}
+                            </Button>
                             <Button variant="destructive" type="reset" size="lg" onClick={() => form.reset()}>Reset</Button>
                             <Button variant="secondary" size="lg">Cancel</Button>
                         </CardFooter>
                     </form>
                 </Form>
             </Card >
+            {showAlert &&
+                (alertTitle ? (
+                    <AlertConfirm
+                        title={alertTitle}
+                        description={alertMessage}
+                        rerouteHref="/"
+                    />
+                ) : (
+                    <AlertConfirm
+                        title={alertTitle}
+                        description={alertMessage}
+                        rerouteHref="/"
+                    />
+                ))}
         </>
     )
 }
