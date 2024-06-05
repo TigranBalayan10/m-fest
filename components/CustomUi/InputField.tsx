@@ -11,7 +11,7 @@ import { Input } from "../ui/input";
 
 interface FormFieldProps<T extends FieldValues> {
   control: Control<T>;
-  name: keyof T;
+  name: string;
   placeholder: string;
   label: string;
 }
