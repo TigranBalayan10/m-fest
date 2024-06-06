@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { SheetTrigger, SheetContent, Sheet, SheetClose } from "@/components/ui/sheet";
-import { FaPlus, FaInbox, FaBoxArchive, FaUsers, FaChartLine, FaUncharted, FaCar } from "react-icons/fa6";
+import { FaPlus, FaBoxArchive, FaUsers, FaChartLine, FaUncharted, FaCar } from "react-icons/fa6";
+import { FcAddDatabase } from "react-icons/fc";
 import { IoMenuSharp } from "react-icons/io5";
 import { UserButton } from "@clerk/nextjs";
 import Image from "next/image";
@@ -71,28 +72,6 @@ const DashboardNav = () => {
                         className="flex items-center gap-2 rounded-md px-3 py-2 text-gray-700 transition-colors hover:bg-gray-200"
                         href="/dashboard/customers"
                       >
-                        <FaUncharted />
-                        Overview
-                      </Link>
-                    </SheetClose>
-                  </li>
-                  <li>
-                    <SheetClose asChild>
-                      <Link
-                        className="flex items-center gap-2 rounded-md px-3 py-2 text-gray-700 transition-colors hover:bg-gray-200"
-                        href="/dashboard/customers"
-                      >
-                        <FaChartLine />
-                        Analytics
-                      </Link>
-                    </SheetClose>
-                  </li>
-                  <li>
-                    <SheetClose asChild>
-                      <Link
-                        className="flex items-center gap-2 rounded-md px-3 py-2 text-gray-700 transition-colors hover:bg-gray-200"
-                        href="/dashboard/customers"
-                      >
                         <FaUsers />
                         Customers
                       </Link>
@@ -104,7 +83,7 @@ const DashboardNav = () => {
                         className="flex items-center gap-2 rounded-md px-3 py-2 transition-colors hover:bg-gray-800"
                         href="/dashboard/add-inventory"
                       >
-                        <FaPlus />
+                        <FcAddDatabase />
                         Add Manually
                       </Link>
                     </SheetClose>
@@ -113,7 +92,7 @@ const DashboardNav = () => {
                         className="flex items-center gap-2 rounded-md px-3 py-2 transition-colors hover:bg-gray-800"
                         href="/dashboard/add-by-vin"
                       >
-                        <FaPlus />
+                        <FcAddDatabase />
                         Add By Vin
                       </Link>
                     </SheetClose>
@@ -134,26 +113,10 @@ const DashboardNav = () => {
               </li>
               <li>
                 <Link
-                  className="rounded-md px-3 py-2 transition-colors hover:bg-gray-800"
-                  href="/dashboard/overview"
-                >
-                  Overview
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="rounded-md px-3 py-2 transition-colors hover:bg-gray-800"
-                  href="/dashboard/analytics"
-                >
-                  Analytics
-                </Link>
-              </li>
-              <li>
-                <Link
                   className="flex items-center gap-2 rounded-md px-3 py-2 transition-colors hover:bg-gray-800"
                   href="/dashboard/add-inventory"
                 >
-                  <FaPlus />
+                  <FcAddDatabase />
                   Add Manually
                 </Link>
               </li>
@@ -162,7 +125,7 @@ const DashboardNav = () => {
                   className="flex items-center gap-2 rounded-md px-3 py-2 transition-colors hover:bg-gray-800"
                   href="/dashboard/add-by-vin"
                 >
-                  <FaPlus />
+                  <FcAddDatabase />
                   Add By Vin
                 </Link>
               </li>

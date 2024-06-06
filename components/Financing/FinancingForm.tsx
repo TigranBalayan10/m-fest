@@ -66,7 +66,7 @@ const FinancingForm = () => {
                 body: JSON.stringify({ data }),
             })
             if (res.ok) {
-                setAlertMessage("Financing application submitted successfully")
+                setAlertMessage("Financing application submitted successfully. We will contact you shortly.")
                 setShowAlert(true)
                 setAlertTitle("Success")
                 form.reset()

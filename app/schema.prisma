@@ -36,7 +36,7 @@ model Customer {
     name      String
     email     String
     phone     String
-    Message   Message?
+    message   Message?
     createdAt DateTime @default(now()) @map(name: "created_at")
     updatedAt DateTime @updatedAt @map(name: "updated_at")
 }
@@ -46,8 +46,8 @@ model Message {
     content    String
     isNew      Boolean  @default(true)
     isArchive  Boolean  @default(false)
-    customerId String   @unique
     customer   Customer @relation(fields: [customerId], references: [id])
+    customerId String   @unique
     createdAt  DateTime @default(now()) @map(name: "created_at")
     updatedAt  DateTime @updatedAt @map(name: "updated_at")
 }

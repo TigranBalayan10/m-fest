@@ -184,7 +184,7 @@ export default function InboxList() {
         return <div>Failed to load</div>
     }
 
-    if (allCustomersMessages?.every((customer) => customer.Message === null) || allCustomersMessages?.every(customer => customer.Message?.isArchive)) {
+    if (allCustomersMessages?.every((customer) => customer.message === null) || allCustomersMessages?.every(customer => customer.message?.isArchive)) {
 
         return <div className="text-gray-400 p-4 text-center">No Messages</div>;
     }
@@ -244,23 +244,23 @@ export default function InboxList() {
                         <div className="space-y-4">
 
                             {allCustomersMessages?.map((customer) => (
-                                customer.Message !== null && !customer.Message.isArchive && (
+                                customer.message !== null && !customer.message.isArchive && (
                                     <div key={customer.id} className="flex items-start space-x-4 rounded-lg border border-gray-200 p-4 hover:bg-gray-100">
-                                        <CheckboxForm control={form.control} name="ids" contactId={customer.Message.id} key={customer.Message.id} />
+                                        <CheckboxForm control={form.control} name="ids" contactId={customer.message.id} key={customer.message.id} />
                                         <div className="flex-1">
                                             <div className="flex items-center justify-between">
                                                 <div className="font-semibold">{customer.name}</div>
-                                                <div className="text-sm text-gray-500">{formatDate(customer.Message.createdAt)}</div>
+                                                <div className="text-sm text-gray-500">{formatDate(customer.message.createdAt)}</div>
                                             </div>
                                             <div className="text-sm font-medium">{customer.email}</div>
                                             <div className="flex justify-between items-center">
                                                 <p className="text-sm text-gray-500 line-clamp-1 mr-4">
-                                                    {customer.Message.content}
+                                                    {customer.message.content}
                                                 </p>
                                                 <div className="flex items-center">
-                                                    <MessageFull nameFull={customer.name} date={formatDate(customer.Message?.createdAt)}
-                                                        message={customer.Message?.content} phone={customer.phone} onView={() => handleViewMessage(customer.Message.id, customer.Message.isNew)} />
-                                                    {customer.Message.isNew && <RxDotFilled className="text-blue-500 w-7 h-7" />}
+                                                    <MessageFull nameFull={customer.name} date={formatDate(customer.message?.createdAt)}
+                                                        message={customer.message?.content} phone={customer.phone} onView={() => handleViewMessage(customer.message.id, customer.message.isNew)} />
+                                                    {customer.message.isNew && <RxDotFilled className="text-blue-500 w-7 h-7" />}
                                                 </div>
                                             </div>
                                         </div>

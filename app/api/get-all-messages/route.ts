@@ -6,7 +6,7 @@ export async function GET() {
   try {
     const messageData = await prisma.customer.findMany({
       include: {
-        Message: true,
+        message: true,
       },
       orderBy: {
         createdAt: "asc",

@@ -3,7 +3,7 @@ export interface Customer {
   name: string;
   email: string;
   phone: string;
-  Message:  Message;
+  message:  Message;
   createdAt: Date;
   updatedAt: Date;
 }

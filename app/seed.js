@@ -9,7 +9,6 @@ async function main() {
     name: faker.person.fullName(),
     email: faker.internet.email(),
     phone: faker.phone.number(),
-    createdAt: faker.date.between({ from: '2022-01-01', to: '2023-06-02' }),
   }));
 
   await prismaClient.customer.createMany({ data: customers });
@@ -17,13 +16,20 @@ async function main() {
   // Create mock messages
   const createdCustomers = await prismaClient.customer.findMany();
 
-  const messages = createdCustomers.map((customer) => ({
-    content: faker.lorem.sentence(),
-    customerId: customer.id,
-    createdAt: faker.date.between({ from: customer.createdAt, to: '2023-06-02' }),
-  }));
+  for (const customer of createdCustomers) {
+    const messageCreatedAt = faker.date.between({
+      from: customer.createdAt,
+      to: new Date(),
+    });
 
-  await prismaClient.message.createMany({ data: messages });
+    await prismaClient.message.create({
+      data: {
+        content: faker.lorem.sentence(),
+        customerId: customer.id,
+        createdAt: messageCreatedAt,
+      },
+    });
+  }
 }
 
 main()
