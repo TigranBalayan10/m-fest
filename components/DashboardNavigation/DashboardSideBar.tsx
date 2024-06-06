@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FaBoxArchive, FaInbox, FaUsers, FaCar } from "react-icons/fa6";
+import { FaBoxArchive, FaInbox, FaUsers, FaCar, FaHandHoldingDollar } from "react-icons/fa6";
 import AccordionInbox from "../Inbox/AccordionInbox";
 
 const DashboardSideBar = () => {
@@ -25,6 +25,15 @@ const DashboardSideBar = () => {
           >
             <FaBoxArchive />
             Archive
+          </Link>
+        </li>
+        <li>
+          <Link
+            className="flex items-center gap-2 rounded-md px-3 py-2 text-gray-700 transition-colors hover:bg-gray-200"
+            href="/dashboard/financing-requests"
+          >
+            <FaHandHoldingDollar />
+            Financing
           </Link>
         </li>
         <li>

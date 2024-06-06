@@ -9,7 +9,8 @@
     "lint": "next lint",
     "postinstall": "prisma generate",
     "seed": "node app/seed.js",
-    "cars_seed": "node app/cars_seed.js"
+    "cars_seed": "node app/cars_seed.js",
+    "seed_financing": "node app/seed_financing.js"
   },
   "prisma": {
     "schema": "app/schema.prisma"

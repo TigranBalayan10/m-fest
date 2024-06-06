@@ -24,3 +24,7 @@ export async function revalidateInbox() {
 export async function revalidateCustomers() {
   revalidatePath("/dashboard/customers");
 }
+
+export async function revalidateFinancingRequests() {
+  revalidatePath("/dashboard/financing-requests");
+}

@@ -5,21 +5,6 @@ const DataTableSkeleton = () => {
   return (
     <div className="overflow-x-auto rounded-lg border shadow-sm max-w-full">
       <Table>
-        <TableCaption>A list of your recently added cars for sale</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-[100px]">Image</TableHead>
-            <TableHead className="hidden md:table-cell">Model</TableHead>
-            <TableHead className="hidden md:table-cell">VIN</TableHead>
-            <TableHead>Make</TableHead>
-            <TableHead className="hidden md:table-cell">Milage</TableHead>
-            <TableHead className="hidden md:table-cell">Year</TableHead>
-            <TableHead className="hidden md:table-cell">Exterior/Interior</TableHead>
-            <TableHead className="hidden md:table-cell">Price</TableHead>
-            <TableHead className="hidden md:table-cell text-right">Published Date</TableHead>
-            <TableHead className="text-right">Edit/Delete</TableHead>
-          </TableRow>
-        </TableHeader>
         <TableBody>
           {Array(5)
             .fill(0)
