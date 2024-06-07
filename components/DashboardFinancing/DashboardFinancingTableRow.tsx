@@ -25,7 +25,7 @@ const DashboardFinancingTableRow = ({ financing }: { financing: FinancingDataTyp
     const pathname = usePathname();
     const fullAddress = `${financing.contact.address}, ${financing.contact.city}, ${financing.contact.state}, ${financing.contact.zip}`;
     return (
-        <TableRow key={financing.id}>
+        <TableRow key={financing.id} className="hover:bg-emerald-100">
             <TableCell className="hidden md:table-cell">{financing.personal.firstName}</TableCell>
             <TableCell>{financing.personal.middleName}</TableCell>
             <TableCell className="hidden md:table-cell">{financing.personal.lastName}</TableCell>

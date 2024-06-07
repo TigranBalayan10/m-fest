@@ -15,7 +15,7 @@ const Hero = () => {
               muted
               playsInline
             >
-              <source src="/BMW logo animation.webm" type="video/webm" />
+              <source src="/BWM_Logo_Hero.mp4" type="video/webm" />
             </video>
           </div>
           <div className="md:w-1/2 p-8 flex md:ml-auto md:flex md:items-center">

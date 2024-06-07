@@ -17,8 +17,9 @@ import Link from "next/link";
 
 
 const DashboardFinancingData = () => {
+    
     const { data, error, isLoading } = useSWR("/api/get-financing-requests", fetcher);
-    console.log(data);
+
     if (isLoading) {
         return <DataTableSkeleton />;
     }

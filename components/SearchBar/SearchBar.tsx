@@ -103,7 +103,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
         <h1 className="text-2xl font-semibold text-center text-blue-400 mb-6">Search for your next BMW</h1>
         <Form {...form}>
           <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-center gap-5">
-            <div className="px-5 flex flex-col md:flex-row md:justify-center gap-3">
+            <div className="px-5 flex flex-col  lg:flex-row justify-center gap-3">
               <SearchSelect
                 control={form.control}
                 name="make"

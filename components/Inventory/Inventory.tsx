@@ -45,7 +45,7 @@ const CarsForSale: React.FC<InventoryProps> = ({ searchResults, searchParams }) 
 
   return (
     <div className="mt-5 flex-grow">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 h-full container mx-auto p-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 h-full container mx-auto p-4">
         {searchResults?.length > 0 ? (
           searchResults?.map((car: CarListData, index: number) => (
             <CarCard key={index} car={car} />

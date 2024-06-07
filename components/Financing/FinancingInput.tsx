@@ -31,22 +31,22 @@ const FinancingInput: React.FC<FormFieldProps> = ({
     const isPersonalField = name in FinancingFormSchema.shape.financing.shape.personal.shape;
     const fieldName = isPersonalField ? `financing.personal.${name}` : `financing.contact.${name}`;
 
+    const monthController = useController({
+        name: "financing.personal.dob.month" as const,
+        control,
+    });
+
+    const dayController = useController({
+        name: "financing.personal.dob.day" as const,
+        control,
+    });
+
+    const yearController = useController({
+        name: "financing.personal.dob.year" as const,
+        control,
+    });
+
     if (name === "dob") {
-        const monthController = useController({
-            name: "financing.personal.dob.month" as const,
-            control,
-        });
-
-        const dayController = useController({
-            name: "financing.personal.dob.day" as const,
-            control,
-        });
-
-        const yearController = useController({
-            name: "financing.personal.dob.year" as const,
-            control,
-        });
-
         return (
             <FormField
                 control={control}

@@ -25,7 +25,7 @@ import { usePathname } from "next/navigation";
 
 const CarTableRow = ({ car }: { car: Car }) => {
   const pathname = usePathname();
-  return (<TableRow key={car.id}>
+  return (<TableRow key={car.id} className="hover:bg-emerald-100">
     <TableCell>
       <Avatar>
         <CldImage

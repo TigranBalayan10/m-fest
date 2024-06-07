@@ -4,7 +4,6 @@ import FinancingRequestCard from "@/components/DashboardFinancing/FinancingReque
 import { FaSpinner } from "react-icons/fa6";
 import useSWR from "swr";
 import { fetcher } from "@/lib/swrFetcher";
-import { Card } from "@/components/ui/card";
 
 const FinancingDetails = ({ params }: { params: { financingId: string } }) => {
     const { data, isLoading, error } = useSWR(
@@ -18,8 +17,8 @@ const FinancingDetails = ({ params }: { params: { financingId: string } }) => {
 
     if (isLoading) {
         return (
-            <div className="text-white">
-                <FaSpinner className="animate-spin inline-block mr-2" />
+            <div className="">
+                <FaSpinner className="animate-spin inline-block mr-2 text-black" />
                 Loading...
             </div>
         );
@@ -34,9 +33,9 @@ const FinancingDetails = ({ params }: { params: { financingId: string } }) => {
     }
 
     return (
-        <Card>
+        <div className="container mx-auto px-4 sm:px-0 p-4 flex flex-col gap-4 items-center justify-center">
             <FinancingRequestCard financing={financingRequest} />
-        </Card>
+        </div>
     );
 };
 

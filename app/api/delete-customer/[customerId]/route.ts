@@ -18,7 +18,7 @@ export async function DELETE(request: any, { params }: { params: any }) {
         id: id,
       },
       include: {
-        Message: true,
+        message: true,
       },
     });
     console.log("Deleted customer:", deletedCustomer);

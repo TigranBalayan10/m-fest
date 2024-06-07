@@ -46,7 +46,7 @@ const SearchSelect: React.FC<SearchSelectProps> = ({
           <FormLabel className="text-slate-200">{label}</FormLabel>
           <Select onValueChange={field.onChange} defaultValue={field.value?.toString()}>
             <FormControl>
-              <SelectTrigger className="md:w-[200px] text-black">
+              <SelectTrigger className="lg:w-[200px] text-black">
                 <SelectValue placeholder={placeholder}>
                   {field.value}
                 </SelectValue>
