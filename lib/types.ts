@@ -39,6 +39,8 @@ export interface Car {
   exteriorInterior: string;
   imageUrls: string[];
   isArchive?: boolean;
+  isHot?: boolean;
+  isSold?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }

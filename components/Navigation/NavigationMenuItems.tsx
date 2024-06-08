@@ -29,7 +29,8 @@ export function NavigationMenuItems() {
   const [isMenu, setIsMenu] = useState<boolean>(true);
 
   const { data, error, isLoading } = useSWR('/api/inventory', fetcher);
-  const firstFourCars = data?.carData?.slice(0, 4);
+  const hotCars = data?.carData?.filter((car: Car) => car.isHot);
+  console.log(hotCars);
 
   return (
 
@@ -42,7 +43,7 @@ export function NavigationMenuItems() {
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
-        {isMenu && firstFourCars && firstFourCars.length > 1 && (
+        {isMenu && hotCars && hotCars.length > 1 && (
           <div className="hidden md:block">
             <NavigationMenuItem>
               <NavigationMenuTrigger className={navigationMenuTriggerStyle()}>
@@ -51,7 +52,7 @@ export function NavigationMenuItems() {
               <NavigationMenuContent>
                 {/* Grid layout for tablets and desktops */}
                 <ul className="grid w-[200px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] bg-stone-300">
-                  {firstFourCars.map((item: CarListData, index: number) => (
+                  {hotCars.map((item: CarListData, index: number) => (
                     <ListItem key={index} title={item.make} href={`/inventory/${item.id}`}>
                       <CldImage
                         src={item.imageUrls[0]}

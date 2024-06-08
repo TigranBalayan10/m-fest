@@ -1,0 +1,7 @@
+-- AlterTable
+ALTER TABLE "CarList" ADD COLUMN     "isHot" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "isSold" BOOLEAN NOT NULL DEFAULT false;
+
+-- AlterTable
+ALTER TABLE "Financing" ADD COLUMN     "isArchive" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "isNew" BOOLEAN NOT NULL DEFAULT true;

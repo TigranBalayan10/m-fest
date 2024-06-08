@@ -26,6 +26,8 @@ model CarList {
     year             Int
     exteriorInterior String
     imageUrls        String[]
+    isSold           Boolean  @default(false)
+    isHot            Boolean  @default(false)
     isArchive        Boolean  @default(false)
     createdAt        DateTime @default(now()) @map(name: "created_at")
     updatedAt        DateTime @updatedAt @map(name: "updated_at")
@@ -77,6 +79,8 @@ model Financing {
     id         String   @id @default(cuid())
     personalId String
     contactId  String
+    isNew      Boolean  @default(true)
+    isArchive  Boolean  @default(false)
     personal   FinancingPersonal   @relation(fields: [personalId], references: [id])
     contact    FinancingContactInfo @relation(fields: [contactId], references: [id])
     createdAt DateTime @default(now()) @map(name: "created_at")
