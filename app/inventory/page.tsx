@@ -3,6 +3,7 @@ import Inventory from "@/components/Inventory/Inventory"
 import SearchBar from "@/components/SearchBar/SearchBar"
 import { CarListData, SearchData } from "@/lib/zodSchema"
 import { useState } from "react"
+import DealsHot from "@/components/Inventory/DealsHot";
 
 
 const InventoryPage = () => {
@@ -15,6 +16,7 @@ const InventoryPage = () => {
     return (
         <>
             <SearchBar onSearch={handleSearch} />
+            <DealsHot />
             <Inventory searchResults={searchResult} searchParams={searchParams} />
         </>
     )

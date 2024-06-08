@@ -16,6 +16,7 @@ export async function PUT(request: any, { params }: { params: any }) {
     exteriorInterior,
     imageUrls,
     isHot,
+    isSold,
   } = res.values;
 
   const updatedCar = await prisma.carList.update({
@@ -31,6 +32,7 @@ export async function PUT(request: any, { params }: { params: any }) {
       exteriorInterior,
       imageUrls,
       isHot,
+      isSold,
     },
   });
   console.log(updatedCar);

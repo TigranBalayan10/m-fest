@@ -12,11 +12,13 @@ import { Checkbox } from "../ui/checkbox";
 interface IsHotCheckboxProps<T extends FieldValues> {
     control: Control<T>;
     name: keyof T;
+    label: string;
 }
 
 const IsHotCheckbox = <T extends Record<string, any>>({
     control,
     name,
+    label,
 }: IsHotCheckboxProps<T>) => (
     <FormField
         control={control}
@@ -31,7 +33,7 @@ const IsHotCheckbox = <T extends Record<string, any>>({
                         }}
                     />
                 </FormControl>
-                <FormLabel className="font-normal">Featured on Sale/Hot section</FormLabel>
+                <FormLabel className="font-normal">{label}</FormLabel>
                 <FormMessage />
             </FormItem>
         )}

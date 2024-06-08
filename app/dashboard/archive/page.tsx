@@ -1,13 +1,14 @@
 import DataTable from "@/components/DashboardForm/DataTable";
-import { Card } from "@/components/ui/card";
+import { Card, CardTitle } from "@/components/ui/card";
 
 
 
 const ArchivePage = () => {
     return (
-        <Card>
-            <DataTable endpoint="/api/archive"/>
-        </Card>
+        <div className="mt-6">
+            <CardTitle className="mb-4 text-center">Inventory Archive</CardTitle>
+            <DataTable endpoint="/api/archive" />
+        </div>
     )
 }
 

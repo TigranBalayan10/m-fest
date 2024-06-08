@@ -34,9 +34,10 @@ export default function Dashboard() {
         </Card>
       </div>
       <div className="mt-6">
-        <Card>
+        <>
+          <CardTitle className="mb-4 text-center">Inventory</CardTitle>
           <DataTable endpoint="/api/inventory" />
-        </Card>
+        </>
       </div>
     </>
   );

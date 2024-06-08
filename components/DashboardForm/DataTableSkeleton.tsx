@@ -6,7 +6,7 @@ const DataTableSkeleton = () => {
     <div className="overflow-x-auto rounded-lg border shadow-sm max-w-full">
       <Table>
         <TableBody>
-          {Array(5)
+          {Array(1)
             .fill(0)
             .map((_, rowIndex) => (
               <TableRow key={rowIndex}>

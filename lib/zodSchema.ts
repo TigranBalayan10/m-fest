@@ -44,6 +44,7 @@ export const CarListSchema = z.object({
     .trim()
     .min(1, { message: "Exterior/Interior is required" }),
   isHot: z.boolean().optional(),
+  isSold: z.boolean().optional(),
   imageUrls: z
     .array(z.string())
     .min(5, { message: "At least 5 Images are required" }),

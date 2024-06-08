@@ -18,6 +18,7 @@ export async function POST(request: Request) {
     exteriorInterior,
     imageUrls,
     isHot,
+    isSold,
   } = res.values;
   const result = await prisma.carList.create({
     data: {
@@ -35,6 +36,7 @@ export async function POST(request: Request) {
       exteriorInterior,
       imageUrls,
       isHot,
+      isSold,
     },
   });
   return NextResponse.json({ result });

@@ -30,7 +30,8 @@ export function NavigationMenuItems() {
 
   const { data, error, isLoading } = useSWR('/api/inventory', fetcher);
   const hotCars = data?.carData?.filter((car: Car) => car.isHot);
-  console.log(hotCars);
+  const NavHotCars = hotCars?.slice(0, 4);
+
 
   return (
 
@@ -43,17 +44,21 @@ export function NavigationMenuItems() {
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
-        {isMenu && hotCars && hotCars.length > 1 && (
+        {isMenu && NavHotCars && NavHotCars.length > 1 && (
           <div className="hidden md:block">
             <NavigationMenuItem>
               <NavigationMenuTrigger className={navigationMenuTriggerStyle()}>
-                New Arrivals
+                Hot Deals
               </NavigationMenuTrigger>
               <NavigationMenuContent>
                 {/* Grid layout for tablets and desktops */}
                 <ul className="grid w-[200px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] bg-stone-300">
-                  {hotCars.map((item: CarListData, index: number) => (
-                    <ListItem key={index} title={item.make} href={`/inventory/${item.id}`}>
+                  {NavHotCars.map((item: CarListData, index: number) => (
+                    <ListItem
+                      key={index}
+                      title={`${item.make}`}
+                      price={`$${item.price}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                      href={`/inventory/${item.id}`}>
                       <CldImage
                         src={item.imageUrls[0]}
                         width="480"
@@ -104,8 +109,8 @@ export function NavigationMenuItems() {
 
 const ListItem = React.forwardRef<
   React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
+  React.ComponentPropsWithoutRef<"a"> & { price?: string }
+>(({ className, title, price, children, ...props }, ref) => {
   return (
     <li>
       <NavigationMenuLink asChild>
@@ -117,7 +122,10 @@ const ListItem = React.forwardRef<
           )}
           {...props}
         >
-          <div className="text-sm font-medium leading-none">{title}</div>
+          <div className="text-sm flex justify-between items-center font-medium leading-none mb-3">
+            <span>{title}</span>
+            {price && <span className="text-muted-foreground">{price}</span>}
+          </div>
           <p className="line-clamp-3 text-sm leading-snug text-muted-foreground">
             {children}
           </p>

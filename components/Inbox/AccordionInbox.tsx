@@ -54,9 +54,9 @@ const AccordionInbox: React.FC<AccordionInboxProps> = ({ isMobile = false }) => 
                                         <Button variant="link" className="w-full justify-start">
                                             <FaInbox className="mr-2" />
                                             Inbox
-                                            <span className="ml-auto inline-flex items-center justify-center bg-red-500 text-white rounded-full px-2 py-1 text-xs font-semibold no-underline">
+                                            {unreadMessageQuantity === 0 ? null : <span className="ml-auto inline-flex items-center justify-center bg-red-500 text-white rounded-full px-2 py-1 text-xs font-semibold no-underline">
                                                 {unreadMessageQuantity}
-                                            </span>
+                                            </span>}
                                         </Button>
                                     </Link>
                                 </SheetClose>
@@ -65,9 +65,9 @@ const AccordionInbox: React.FC<AccordionInboxProps> = ({ isMobile = false }) => 
                                     <Button variant="link" className="w-full justify-start">
                                         <FaInbox className="mr-2" />
                                         Inbox
-                                        <span className="ml-auto inline-flex items-center justify-center bg-red-500 text-white rounded-full px-2 py-1 text-xs no-underline">
+                                        {unreadMessageQuantity === 0 ? null : <span className="ml-auto inline-flex items-center justify-center bg-red-500 text-white rounded-full px-2 py-1 text-xs font-semibold no-underline">
                                             {unreadMessageQuantity}
-                                        </span>
+                                        </span>}
                                     </Button>
                                 </Link>
                             )}

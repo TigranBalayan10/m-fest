@@ -22,7 +22,6 @@ import { useState } from "react";
 import { FaSpinner, FaUpload } from "react-icons/fa6";
 import { IoCloseOutline } from "react-icons/io5";
 import { revalidateAll } from "@/lib/actions";
-import CheckboxForm from "../CustomUi/CheckboxForm";
 import IsHotCheckbox from "../CustomUi/IsHotCheckbox";
 
 const CarFormSchema = CarListSchema;
@@ -48,6 +47,7 @@ const InputForm = ({
     exteriorInterior: string;
     imageUrls: string[];
     isHot?: boolean;
+    isSold?: boolean;
   };
 }) => {
   const router = useRouter();
@@ -62,6 +62,7 @@ const InputForm = ({
     milage: initialData?.milage?.toString() || "",
     year: initialData?.year?.toString() || "",
     isHot: initialData?.isHot || false,
+    isSold: initialData?.isSold || false,
   }
     : {
       model: "",
@@ -96,6 +97,7 @@ const InputForm = ({
       milage: Number(values.milage),
       year: Number(values.year),
       isHot: values.isHot,
+      isSold: values.isSold,
     };
     try {
       // Determine the API endpoint and the HTTP method based on the mode
@@ -261,7 +263,10 @@ const InputForm = ({
                     />
                   </div>
                   <div className="grid gap-2">
-                    <IsHotCheckbox control={form.control} name="isHot" />
+                    <IsHotCheckbox control={form.control} name="isHot" label="Mark as Hot" />
+                  </div>
+                  <div className="grid gap-2">
+                    <IsHotCheckbox control={form.control} name="isSold" label="Mark as Sold" />
                   </div>
                 </div>
                 <div>
