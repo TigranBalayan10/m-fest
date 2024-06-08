@@ -1,16 +1,22 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { revalidatePath } from "next/cache";
+import { revalidateAll, revalidateInventory } from "@/lib/actions";
 
 export async function GET() {
-  "use server";
-  const carData = await prisma.carList.findMany({
-    where: {
-      isArchive: false,
-    },
-  });
-  if (process.env.NODE_ENV === "production") {
-    revalidatePath("/api/inventory");
+  try {
+    const carData = await prisma.carList.findMany({
+      where: {
+        isArchive: false,
+      },
+    });
+    revalidateAll();
+    console.log("Revalidated inventory page.");
+    return NextResponse.json({ carData });
+  } catch (error) {
+    console.error("Error fetching car data:", error);
+    return NextResponse.json(
+      { error: "An error occurred while fetching car data" },
+      { status: 500 }
+    );
   }
-  return NextResponse.json({ carData });
 }

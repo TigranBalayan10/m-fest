@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { SheetTrigger, SheetContent, Sheet, SheetClose } from "@/components/ui/sheet";
-import { FaPlus, FaBoxArchive, FaUsers, FaChartLine, FaUncharted, FaCar } from "react-icons/fa6";
+import { FaPlus, FaBoxArchive, FaUsers, FaChartLine, FaUncharted, FaCar, FaHandHoldingDollar } from "react-icons/fa6";
 import { FcAddDatabase } from "react-icons/fc";
 import { IoMenuSharp } from "react-icons/io5";
 import { UserButton } from "@clerk/nextjs";
@@ -53,7 +53,7 @@ const DashboardNav = () => {
                     </SheetClose>
                   </li>
                   <li>
-                      <AccordionInbox isMobile={true} />
+                    <AccordionInbox isMobile={true} />
                   </li>
                   <li>
                     <SheetClose asChild>
@@ -63,6 +63,17 @@ const DashboardNav = () => {
                       >
                         <FaBoxArchive />
                         Archive
+                      </Link>
+                    </SheetClose>
+                  </li>
+                  <li>
+                    <SheetClose asChild>
+                      <Link
+                        className="flex items-center gap-2 rounded-md px-3 py-2 text-gray-700 transition-colors hover:bg-gray-200"
+                        href="/dashboard/financing-requests"
+                      >
+                        <FaHandHoldingDollar />
+                        Financing
                       </Link>
                     </SheetClose>
                   </li>

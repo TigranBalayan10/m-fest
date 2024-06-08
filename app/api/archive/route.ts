@@ -1,17 +1,21 @@
 "use server";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { revalidatePath } from "next/cache";
+import { revalidateInventoryArchive } from "@/lib/actions";
 
 export async function GET() {
-  const archivedInventory = await prisma.carList.findMany({
-    where: {
-      isArchive: true,
-    },
-  });
-  if (process.env.NODE_ENV === "production") {
-    revalidatePath("/api/archive");
+  try {
+    const archivedInventory = await prisma.carList.findMany({
+      where: {
+        isArchive: true,
+      },
+    });
+    return NextResponse.json({ archivedInventory });
+  } catch (error) {
+    console.error("Error fetching archived inventory:", error);
+    return NextResponse.json(
+      { error: "An error occurred while fetching archived inventory" },
+      { status: 500 }
+    );
   }
-  
-  return NextResponse.json({ archivedInventory });
 }

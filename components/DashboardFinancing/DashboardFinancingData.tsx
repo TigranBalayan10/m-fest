@@ -17,7 +17,7 @@ import Link from "next/link";
 
 
 const DashboardFinancingData = () => {
-    
+
     const { data, error, isLoading } = useSWR("/api/get-financing-requests", fetcher);
 
     if (isLoading) {
@@ -45,11 +45,11 @@ const DashboardFinancingData = () => {
                 <TableCaption>A list of recently requested financing applications</TableCaption>
                 <TableHeader>
                     <TableRow>
-                        <TableHead className="w-[100px]">First Name</TableHead>
+                        <TableHead>First Name</TableHead>
                         <TableHead className="hidden md:table-cell">Middle Name</TableHead>
-                        <TableHead className="hidden md:table-cell">Last Name</TableHead>
-                        <TableHead>SSN/ITIN</TableHead>
-                        <TableHead className="hidden md:table-cell">Phone</TableHead>
+                        <TableHead>Last Name</TableHead>
+                        <TableHead className="hidden md:table-cell">SSN/ITIN</TableHead>
+                        <TableHead>Phone</TableHead>
                         <TableHead className="hidden md:table-cell">Email</TableHead>
                         <TableHead className="hidden md:table-cell">Address</TableHead>
                         <TableHead className="hidden md:table-cell text-right">Published Date</TableHead>

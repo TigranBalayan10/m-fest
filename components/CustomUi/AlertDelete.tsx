@@ -17,7 +17,8 @@ import { Button } from "../ui/button";
 import { usePathname } from "next/navigation";
 import { AiFillDelete } from "react-icons/ai";
 import { useSWRConfig } from 'swr';
-import ToastAlert from "./ToastAlert";
+import { ToastAction } from "@/components/ui/toast"
+import { useToast } from "@/components/ui/use-toast"
 
 interface AlertActionProps {
   itemId: string;
@@ -35,6 +36,7 @@ export default function AlertAction({ title, itemId, actionEndpoint, actionName,
   const pathname = usePathname();
   const [isLoading, setIsLoading] = useState(false);
   const { mutate } = useSWRConfig();
+  const { toast } = useToast()
 
 
   const handleAction = async () => {
@@ -44,12 +46,16 @@ export default function AlertAction({ title, itemId, actionEndpoint, actionName,
         method: httpMethod,
       });
       if (response.ok) {
-        if (httpMethod === "DELETE" && pathname === "/dashboard/inventory" || pathname === "/dashboard" || pathname === "/dashboard/archive") {
+        if (httpMethod === "DELETE" && pathname === "/dashboard/inventory" || pathname === "/dashboard") {
           mutate("/api/inventory");
+        } else if (httpMethod === "DELETE" && pathname === "/dashboard/archive") {
+          mutate("/api/archive");
         } else if (httpMethod === "DELETE" && pathname === "/dashboard/customers") {
           mutate("/api/get-customers");
+        } else if (httpMethod === "PUT" && pathname === "/dashboard/inventory") {
+          mutate(`/api/archive-inventory/${itemId}`);
         } else {
-          mutate("/api/archive");
+          mutate("/api/archive")
         }
       }
     } catch (error) {

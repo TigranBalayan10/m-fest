@@ -26,11 +26,11 @@ const DashboardFinancingTableRow = ({ financing }: { financing: FinancingDataTyp
     const fullAddress = `${financing.contact.address}, ${financing.contact.city}, ${financing.contact.state}, ${financing.contact.zip}`;
     return (
         <TableRow key={financing.id} className="hover:bg-emerald-100">
-            <TableCell className="hidden md:table-cell">{financing.personal.firstName}</TableCell>
-            <TableCell>{financing.personal.middleName}</TableCell>
-            <TableCell className="hidden md:table-cell">{financing.personal.lastName}</TableCell>
+            <TableCell>{financing.personal.firstName}</TableCell>
+            <TableCell className="hidden md:table-cell">{financing.personal.middleName}</TableCell>
+            <TableCell>{financing.personal.lastName}</TableCell>
             <TableCell className="hidden md:table-cell">{financing.personal.ssnItin}</TableCell>
-            <TableCell className="hidden md:table-cell">{financing.contact.phone}</TableCell>
+            <TableCell>{financing.contact.phone}</TableCell>
             <TableCell className="hidden md:table-cell">{financing.contact.email}</TableCell>
             <TableCell className="hidden md:table-cell">{fullAddress}</TableCell>
             <TableCell className="hidden md:table-cell text-right">

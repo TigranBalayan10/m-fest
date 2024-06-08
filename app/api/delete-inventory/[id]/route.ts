@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import cloudinary from "@/lib/cloudinary";
+import { revalidateInventoryArchive } from "@/lib/actions";
 
 export async function DELETE(request: any, { params }: { params: any }) {
   const id = params.id;
@@ -24,6 +25,8 @@ export async function DELETE(request: any, { params }: { params: any }) {
       id: id,
     },
   });
+  revalidateInventoryArchive();
+  console.log("Revalidated inventory archive page.");
 
   return NextResponse.json(deletedCar);
 }
