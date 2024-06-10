@@ -8,10 +8,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
-import { z } from "zod";
-import { CarListSchema } from "@/lib/zodSchema";
+import { CarListData } from "@/lib/zodSchema";
 
-type FormData = z.infer<typeof CarListSchema>;
+type FormData = CarListData;
 
 interface FormFieldProps {
   control: Control<FormData>;
@@ -28,13 +27,15 @@ const CustomFormField: React.FC<FormFieldProps> = ({
     control={control}
     name={name}
     render={({ field }) => {
+      const { value, ...restField } = field;
+      const inputValue = typeof value === "string" || typeof value === "number" ? value : "";
       return (
         <FormItem>
           <FormControl>
             {name === "description" ? (
-              <Textarea {...field} placeholder={placeholder} />
+              <Textarea {...restField} value={inputValue as string} placeholder={placeholder} />
             ) : (
-              <Input {...field} placeholder={placeholder}  />
+              <Input {...restField} value={inputValue} placeholder={placeholder} />
             )}
           </FormControl>
           <FormMessage />

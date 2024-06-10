@@ -31,9 +31,11 @@ const Hero = () => {
                 <Link href="/inventory">
                   <Button>Browse Inventory</Button>
                 </Link>
-                <Button variant="ghost" className="ml-2 text-slate-400">
-                  Learn More
-                </Button>
+                <Link href="/about-us">
+                  <Button variant="ghost" className="ml-2 text-slate-400">
+                    Learn More
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>

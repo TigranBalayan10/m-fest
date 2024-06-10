@@ -7,7 +7,7 @@ import MessageFull from "./MessageFull";
 import { fetcher } from "@/lib/swrFetcher";
 import { Customer } from "@/lib/Types/ContactUsTypes";
 import { formatDate } from "@/lib/FormatDate";
-import useSWR, { useSWRConfig } from "swr";
+import useSWR from "swr";
 import InboxSkeleton from "./InboxSkeleton";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -16,17 +16,14 @@ import { z } from "zod"
 import { MarkedReadSchema } from "@/lib/zodSchema";
 import { Form } from "../ui/form";
 import CheckboxForm from "../CustomUi/CheckboxForm";
-import AlertConfirm from "../CustomUi/AlertConfirm";
 import getOptimisticUpdate from "@/lib/mutate";
+import { useToast } from "@/components/ui/use-toast";
 
 
 export default function InboxList() {
-    const [isOpen, setIsOpen] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
     const [isArchiving, setIsArchiving] = useState(false);
-    const [confirm, setConfirm] = useState("");
-    const [alertDescription, setAlertDescription] = useState("");
-    const [errorAlert, setErrorAlert] = useState("");
+    const { toast } = useToast();
 
     const { data, isLoading, error, mutate } = useSWR('/api/get-all-messages', fetcher);
 
@@ -51,17 +48,28 @@ export default function InboxList() {
             console.log(response, "response")
             if (response.ok) {
                 mutate('/api/get-all-messages');
-                setAlertDescription("Message has been marked as read. Click OK to continue");
                 form.reset();
+                toast({
+                    variant: "success",
+                    title: "Success",
+                    description: "Message marked as read successfully.",
+                });
             } else {
-                setIsOpen(true);
-                setErrorAlert('Failed to mark message as viewed');
+                mutate();
+                toast({
+                    variant: "destructive",
+                    title: "Error",
+                    description: "Failed to mark message as read.",
+                });
             }
         } catch (error) {
-            setIsOpen(true);
-            setErrorAlert('Failed to mark message as viewed');
-            setAlertDescription("Message has been marked as read. Click OK to continue");
             console.error('Error:', error);
+            mutate();
+            toast({
+                variant: "destructive",
+                title: "Error:",
+                description: "Failed to mark message as read.",
+            });
         }
     }
 
@@ -94,7 +102,11 @@ export default function InboxList() {
                 console.log('Message marked as viewed');
                 mutate();
             } else {
-                console.log('Failed to mark message as viewed');
+                toast({
+                    variant: "destructive",
+                    title: "Error",
+                    description: "Failed to mark message as viewed.",
+                });
                 mutate();
             }
         } catch (error) {
@@ -122,18 +134,26 @@ export default function InboxList() {
             if (response.ok) {
                 mutate();
                 form.reset();
+                toast({
+                    variant: "success",
+                    title: "Success",
+                    description: "Message deleted successfully.",
+                });
             } else {
-                setIsOpen(true);
-                setErrorAlert("Failed to delete message");
-                setAlertDescription("Error deleting message. Click OK to continue");
                 mutate();
+                toast({
+                    variant: "destructive",
+                    title: "Error",
+                    description: "Failed to delete message.",
+                });
             }
         } catch (error) {
-            setIsOpen(true);
-            setErrorAlert("Failed to delete message");
-            setAlertDescription("Error deleting message. Click OK to continue");
             mutate();
-            console.error('Error:', error);
+            toast({
+                variant: "destructive",
+                title: "Error",
+                description: "Failed to delete message.",
+            });
         }
         setIsDeleting(false);
     }
@@ -157,18 +177,26 @@ export default function InboxList() {
             if (response.ok) {
                 mutate();
                 form.reset();
+                toast({
+                    variant: "archived",
+                    title: "Success",
+                    description: "Message archived successfully.",
+                });
             } else {
-                setIsOpen(true);
-                setErrorAlert("Failed to archive message");
-                setAlertDescription("Error archiving message. Click OK to continue");
                 mutate();
+                toast({
+                    variant: "destructive",
+                    title: "Error",
+                    description: "Failed to archive message.",
+                });
             }
         } catch (error) {
-            setIsOpen(true);
-            setErrorAlert("Failed to archive message");
-            setAlertDescription("Error archiving message. Click OK to continue");
             mutate();
-            console.error('Error:', error);
+            toast({
+                variant: "destructive",
+                title: "Error",
+                description: "Failed to archive message.",
+            });
         }
         setIsArchiving(false);
     }
@@ -194,7 +222,6 @@ export default function InboxList() {
 
     return (
         <>
-            {isOpen && <AlertConfirm title={confirm} description={alertDescription} />}
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)}>
                     <div className="w-full max-w-3xl mx-auto py-6 px-4 md:px-6">

@@ -4,9 +4,6 @@ import { z } from "zod";
 import {
   Customer,
   Message,
-  FinancingPersonal,
-  FinancingContactInfo,
-  Financing,
 } from "@prisma/client";
 
 export const CarListSchema = z.object({

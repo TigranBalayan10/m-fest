@@ -10,6 +10,7 @@ export async function GET() {
         isArchive: true,
       },
     });
+    revalidateInventoryArchive();
     return NextResponse.json({ archivedInventory });
   } catch (error) {
     console.error("Error fetching archived inventory:", error);

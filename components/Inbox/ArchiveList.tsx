@@ -13,14 +13,12 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { Form } from "../ui/form";
 import CheckboxForm from "../CustomUi/CheckboxForm";
-import AlertConfirm from "../CustomUi/AlertConfirm";
 import getOptimisticUpdate from "@/lib/mutate";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function ArchiveList() {
-    const [isOpen, setIsOpen] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
-    const [alertDescription, setAlertDescription] = useState("");
-    const [errorAlert, setErrorAlert] = useState("");
+    const { toast } = useToast();
 
     const { data, isLoading, error, mutate } = useSWR("/api/get-all-messages", fetcher);
 
@@ -49,16 +47,24 @@ export default function ArchiveList() {
             if (response.ok) {
                 mutate();
                 form.reset();
+                toast({
+                    variant: "success",
+                    title: "Success",
+                    description: "Message deleted successfully",
+                });
             } else {
-                setIsOpen(true);
-                setErrorAlert("Failed to delete message");
-                setAlertDescription("Error deleting message. Click OK to continue");
+                toast({
+                    variant: "destructive",
+                    title: "Error",
+                    description: "Failed to delete message",
+                });
             }
         } catch (error) {
-            setIsOpen(true);
-            setErrorAlert("Failed to delete message");
-            setAlertDescription("Error deleting message. Click OK to continue");
-            console.error("Error:", error);
+            toast({
+                variant: "destructive",
+                title: "Error",
+                description: "Failed to delete message",
+            });
         }
         setIsDeleting(false);
     };
