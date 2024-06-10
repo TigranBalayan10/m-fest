@@ -15,6 +15,7 @@ import { formatDate } from "@/lib/FormatDate";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -25,6 +26,7 @@ import { usePathname } from "next/navigation";
 
 const CarTableRow = ({ car }: { car: Car }) => {
   const pathname = usePathname();
+
   return (<TableRow key={car.id} className="hover:bg-emerald-100">
     <TableCell>
       <Avatar>
@@ -56,50 +58,51 @@ const CarTableRow = ({ car }: { car: Car }) => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-        <DropdownMenuSeparator />
-          <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          {pathname === "/dashboard/archive" ? (
-            null) : (
-            <DropdownMenuItem>
-              <Link href={`/dashboard/edit-inventory/${car.id}`}>
-                <Button variant="link" className="text-primary">
-                  Edit
-                </Button>
-              </Link>
-            </DropdownMenuItem>
-          )}
-          <DropdownMenuItem>
-            <div onClick={(e) => e.stopPropagation()}>
-              <AlertDelete title={car.model} itemId={car.id || ""} actionEndpoint="delete-inventory"
-                actionName="Delete"
-                actionColor="destructive hover:bg-destructive/90"
-                httpMethod="DELETE"
-                link="link"
-              />
-            </div>
-          </DropdownMenuItem>
-          {pathname === "/dashboard/archive" ? (
-            null) : (
-            <DropdownMenuItem>
-              <div onClick={(e) => e.stopPropagation()}>
-                <AlertDelete title={car.model}
-                  itemId={car.id || ""}
-                  actionEndpoint="archive-inventory"
-                  actionName="Archive"
-                  actionColor="amber-600 hover:bg-amber-500"
-                  httpMethod="PUT"
+          <DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <ul className="py-1 flex flex-col">
+              <li>
+                {pathname === "/dashboard/archive" ? (
+                  null) : (
+                  <Link href={`/dashboard/edit-inventory/${car.id}`}>
+                    <Button variant="link" className="text-primary p-2">
+                      Edit
+                    </Button>
+                  </Link>
+                )}
+              </li>
+              <li>
+                <AlertDelete title={car.make + " " + car.model} itemId={car.id || ""} actionEndpoint="delete-inventory"
+                  actionName="Delete"
+                  actionColor="destructive hover:bg-destructive/90"
+                  httpMethod="DELETE"
                   link="link"
                 />
-              </div>
-            </DropdownMenuItem>
-          )}
-          <DropdownMenuItem>
-            <Link href={`/dashboard/inventory/${car.id}`}>
-              <Button variant="link" className="text-primary">
-                Details
-              </Button>
-            </Link>
-          </DropdownMenuItem>
+              </li>
+              <li>
+                {pathname === "/dashboard/archive" ? (
+                  null) : (
+                  <AlertDelete title={car.make + " " + car.model}
+                    itemId={car.id || ""}
+                    actionEndpoint="archive-inventory"
+                    actionName="Archive"
+                    actionColor="amber-600 hover:bg-amber-500"
+                    httpMethod="PUT"
+                    link="link"
+                    getEndpoint="inventory"
+                  />
+                )}
+              </li>
+              <li>
+                <Link href={`/dashboard/inventory/${car.id}`}>
+                  <Button variant="link" className="text-primary p-2">
+                    Details
+                  </Button>
+                </Link>
+              </li>
+            </ul>
+          </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
     </TableCell>

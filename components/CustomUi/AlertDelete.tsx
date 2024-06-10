@@ -1,24 +1,23 @@
 "use client";
 
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import { FaSpinner } from "react-icons/fa6";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { usePathname } from "next/navigation";
 import { AiFillDelete } from "react-icons/ai";
 import { useSWRConfig } from 'swr';
-import { ToastAction } from "@/components/ui/toast"
-import { useToast } from "@/components/ui/use-toast"
+import React from "react";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { useToast } from "@/components/ui/use-toast";
 
 interface AlertActionProps {
   itemId: string;
@@ -30,13 +29,15 @@ interface AlertActionProps {
   httpMethod: string;
   getEndpoint?: string;
   children?: React.ReactNode;
+  onAction?: () => void;
 }
 
-export default function AlertAction({ title, itemId, actionEndpoint, actionName, actionColor, httpMethod, link, getEndpoint }: AlertActionProps) {
+export default function AlertAction({ title, itemId, actionEndpoint, actionName, actionColor, httpMethod, link, onAction, getEndpoint }: AlertActionProps) {
   const pathname = usePathname();
   const [isLoading, setIsLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const { mutate } = useSWRConfig();
-  const { toast } = useToast()
+  const { toast } = useToast();
 
 
   const handleAction = async () => {
@@ -46,51 +47,90 @@ export default function AlertAction({ title, itemId, actionEndpoint, actionName,
         method: httpMethod,
       });
       if (response.ok) {
-        if (httpMethod === "DELETE" && pathname === "/dashboard/inventory" || pathname === "/dashboard") {
-          mutate("/api/inventory");
-        } else if (httpMethod === "DELETE" && pathname === "/dashboard/archive") {
-          mutate("/api/archive");
-        } else if (httpMethod === "DELETE" && pathname === "/dashboard/customers") {
-          mutate("/api/get-customers");
-        } else if (httpMethod === "PUT" && pathname === "/dashboard/inventory") {
-          mutate(`/api/archive-inventory/${itemId}`);
-        } else {
-          mutate("/api/archive")
+        if (httpMethod === "DELETE") {
+          if (pathname === "/dashboard/inventory" || pathname === "/dashboard") {
+            await mutate("/api/inventory");
+            toast({
+              variant: "success",
+              title: "Success",
+              description: `${title} deleted successfully.`,
+            });
+          } else if (pathname === "/dashboard/archive") {
+            await mutate("/api/archive");
+            toast({
+              variant: "success",
+              title: "Success",
+              description: `${title} deleted successfully.`,
+            });
+          } else if (pathname === "/dashboard/customers") {
+            await mutate("/api/get-customers");
+            toast({
+              variant: "success",
+              title: "Success",
+              description: "Customer deleted successfully.",
+            });
+          }
+        } else if (httpMethod === "PUT" && pathname === "/dashboard/inventory" || pathname === "/dashboard") {
+          await mutate(`/api/${getEndpoint}`);
+          toast({
+            variant: "archived",
+            title: "Success",
+            description: `${title} archived successfully.`,
+          });
+          setIsOpen(false); // Close the dialog after archiving
         }
+        setIsLoading(false);
+      } else {
+        throw new Error(`Failed to ${actionName} item: ${response.statusText}`);
       }
     } catch (error) {
       console.error(`Failed to ${actionName} item:`, error);
+      setIsLoading(false);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: `Failed to ${actionName} item. Please try again.`,
+      });
     }
-    setIsLoading(false);
   };
 
   return (
-    <AlertDialog>
-      <AlertDialogTrigger>
-        {link === "link" && httpMethod === "DELETE" ? <Button variant="link" className="text-red-500"> {actionName}</Button> : null}
-        {link === "link" && httpMethod === "PUT" ? <Button variant="link" className="text-amber-500"> {actionName}</Button> : null}
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogTrigger>
+        {link === "link" && httpMethod === "DELETE" ? <Button variant="link" className="text-red-500 p-2"> {actionName}</Button> : null}
+        {link === "link" && httpMethod === "PUT" ? <Button variant="link" className="text-amber-500 p-2"> {actionName}</Button> : null}
         {!link && pathname === "/dashboard/customers" && httpMethod === "DELETE" ? <Button variant="destructive" size="icon">
           <AiFillDelete />
         </Button> : null}
-      </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>{actionName}</DialogTitle>
+          <DialogDescription>
             Are you absolutely sure you want {actionName?.toLowerCase()}
             <span > {title} </span>
-            ?
-          </AlertDialogTitle>
-          <AlertDialogDescription>
-            This action cannot be undone. This will permanently {actionName?.toLowerCase()} the item.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction disabled={isLoading} className={`${actionColor}`} onClick={handleAction}>
-            {isLoading ? <FaSpinner className="animate-spin" /> : actionName}
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+            ? This action cannot be undone.
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter className="gap-2">
+          <DialogClose >Cancel</DialogClose>
+          {isLoading ? (
+            <Button
+              {...(httpMethod === "DELETE" ? { variant: "destructive" } : { className: "bg-amber-600 hover:bg-amber-500" })}
+              disabled>
+              <FaSpinner className="animate-spin mr-2" /> {actionName}
+            </Button>
+          ) : (
+            <Button
+              {...(httpMethod === "DELETE" ? { variant: "destructive" } : { className: "bg-amber-600 hover:bg-amber-500" })}
+              onClick={handleAction}
+            >
+              {actionName}
+            </Button>
+          )}
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }
+

@@ -46,8 +46,8 @@ const CarCard: React.FC<CarCardProps> = ({ car }) => (
         <DialogTrigger>
           <CldImage
             src={car.imageUrls[0]}
-            width="480"
-            height="240"
+            width="680"
+            height="300"
             crop="fill"
             alt={car.make + " " + car.model}
           />

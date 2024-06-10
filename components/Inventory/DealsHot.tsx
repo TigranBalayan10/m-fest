@@ -12,6 +12,24 @@ const DealsHot = () => {
 
     const hotCars = data?.carData.filter((car: any) => car.isHot === true)
 
+    const getGridClasses = (count: number) => {
+        if (count === 1) {
+            return "grid-cols-1";
+        } else if (count === 2) {
+            return "grid-cols-1 md:grid-cols-2";
+        } else if (count === 3) {
+            return "grid-cols-1 md:grid-cols-2 lg:grid-cols-3";
+        } else if (count === 4) {
+            return "grid-cols-1 md:grid-cols-2";
+        } else if (count === 5) {
+            return "grid-cols-1 md:grid-cols-2 lg:grid-cols-3";
+        } else if (count >= 6) {
+            return "grid-cols-1 md:grid-cols-2 lg:grid-cols-3";
+        } else {
+            return "grid-cols-1";
+        }
+    };
+
     if (isLoading) {
         return (
             <div className="mt-5 flex-grow">
@@ -31,7 +49,7 @@ const DealsHot = () => {
             <h1 className="text-2xl font-bold text-center text-gray-200">
                 Deals of the Week
             </h1>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 h-full container mx-auto p-4">
+            <div className={`grid ${getGridClasses(hotCars?.length)} gap-3 h-full container mx-auto p-4`}>
                 {hotCars?.length > 0 ? (
                     hotCars?.map((car: CarListData, index: number) => (
                         <CarCard key={index} car={car} />

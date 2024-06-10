@@ -14,7 +14,7 @@ export async function PUT(request: any, { params }: { params: any }) {
       },
     });
     revalidateInventory();
-    console.log("Revalidated Inventory page.");
+    console.log("Archived and Revalidated Inventory page.");
     return NextResponse.json(archivedCar);
   } catch (error) {
     console.error("Error archiving car:", error);

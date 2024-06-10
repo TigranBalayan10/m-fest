@@ -15,8 +15,8 @@ const InventoryPage = () => {
     }
     return (
         <>
-            <SearchBar onSearch={handleSearch} />
             <DealsHot />
+            <SearchBar onSearch={handleSearch} />
             <Inventory searchResults={searchResult} searchParams={searchParams} />
         </>
     )
