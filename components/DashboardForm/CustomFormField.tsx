@@ -16,12 +16,14 @@ interface FormFieldProps {
   control: Control<FormData>;
   name: keyof FormData;
   placeholder: string;
+  disabled?: boolean;
 }
 
 const CustomFormField: React.FC<FormFieldProps> = ({
   control,
   name,
   placeholder,
+  disabled = false,
 }) => (
   <FormField
     control={control}
@@ -35,7 +37,7 @@ const CustomFormField: React.FC<FormFieldProps> = ({
             {name === "description" ? (
               <Textarea {...restField} value={inputValue as string} placeholder={placeholder} />
             ) : (
-              <Input {...restField} value={inputValue} placeholder={placeholder} />
+              <Input disabled={disabled} {...restField} value={inputValue} placeholder={placeholder} />
             )}
           </FormControl>
           <FormMessage />

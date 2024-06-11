@@ -114,23 +114,23 @@ const InputForm = ({
         },
         body: JSON.stringify({ values: carFormData }),
       });
+
+      const data = await response.json();
       if (response.ok) {
-        setAlertMessage(
-          `Car ${mode === "edit" ? "updated" : "added"} successfully`,
-        );
+        setAlertMessage(data.message);
         setShowAlert(true);
         setAlertTitle("Success");
         revalidateAll();
       } else {
-        setAlertMessage(
-          `Car ${mode === "edit" ? "updated" : "added"} successfully`,
-        );
+        setAlertMessage(data.message);
         setShowAlert(true);
         setAlertTitle("Error");
-        setAlertMessage("Failed to add car");
+        revalidateAll();
       }
     } catch (error) {
-      console.error(error);
+      setShowAlert(true);
+      setAlertTitle("Error");
+      setAlertMessage("An error occurred. Please try again");
     }
   }
 
@@ -192,11 +192,29 @@ const InputForm = ({
                   />
                 </div>
                 <div className="grid gap-2">
-                  <CustomFormField
-                    control={form.control}
-                    name="vin"
-                    placeholder="VIN"
-                  />
+                  {mode === "edit" && (
+                    <CustomFormField
+                      control={form.control}
+                      name="vin"
+                      placeholder="VIN"
+                      disabled
+                    />
+                  )}
+                  {mode === "add" && (
+                    <CustomFormField
+                      control={form.control}
+                      name="vin"
+                      placeholder="VIN"
+                    />
+                  )}
+                  {mode === "addByVin" && (
+                    <CustomFormField
+                      control={form.control}
+                      name="vin"
+                      placeholder="VIN"
+                      disabled
+                    />
+                  )}
                 </div>
                 <div className="grid gap-2">
                   <CustomFormField

@@ -1,3 +1,6 @@
+import { Car } from "../types";
+
+
 export interface FinancingDataTypes {
     id: string;
     personalId: string;
@@ -21,4 +24,5 @@ export interface FinancingDataTypes {
       state: string;
       zip: string;
     };
+    car: Car;
   }

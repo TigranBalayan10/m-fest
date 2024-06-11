@@ -18,7 +18,7 @@ model CarList {
     description      String
     price            Int
     milage           Int
-    vin              String
+    vin              String @unique
     drivetrain       String
     transmission     String
     engine           String
@@ -26,6 +26,7 @@ model CarList {
     year             Int
     exteriorInterior String
     imageUrls        String[]
+    financing        Financing[]
     isSold           Boolean  @default(false)
     isHot            Boolean  @default(false)
     isArchive        Boolean  @default(false)
@@ -81,6 +82,8 @@ model Financing {
     contactId  String
     isNew      Boolean  @default(true)
     isArchive  Boolean  @default(false)
+    vin        String
+    car        CarList @relation(fields: [vin], references: [vin])
     personal   FinancingPersonal   @relation(fields: [personalId], references: [id])
     contact    FinancingContactInfo @relation(fields: [contactId], references: [id])
     createdAt DateTime @default(now()) @map(name: "created_at")

@@ -8,6 +8,14 @@ export async function GET() {
       where: {
         isArchive: false,
       },
+      orderBy: [
+        {
+          isHot: "desc",
+        },
+        {
+          createdAt: "desc",
+        },
+      ],
     });
     revalidateAll();
     console.log("Revalidated inventory page.");

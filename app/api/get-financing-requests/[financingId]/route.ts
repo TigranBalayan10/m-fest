@@ -12,6 +12,7 @@ export async function GET(
       include: {
         personal: true,
         contact: true,
+        car: true,
       },
     });
 

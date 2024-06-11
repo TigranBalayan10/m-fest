@@ -13,18 +13,17 @@ const Hero = () => {
               className="w-full h-auto rounded-t-md md:rounded-l-md md:rounded-r-none"
               autoPlay
               muted
-              playsInline
             >
-              <source src="/BWM_Logo_Hero.mp4" type="video/webm" />
+              <source src="BMW logo animation.webm" type="video/webm" />
             </video>
           </div>
           <div className="md:w-1/2 p-8 flex md:ml-auto md:flex md:items-center">
             <div className="md:text-right text-center">
               <h2 className="text-3xl font-semibold text-gray-400 md:text-4xl">
-                Welcome to <br></br> <span className="text-blue-400">M Fest MotorSport</span>
+                Welcome to <br></br> <span className="text-blue-400">M Fest Motorsport</span>
               </h2>
               <p className="mt-2 text-sm text-gray-200 md:text-base">
-                Welcome to M Fest MotorSport, your home for luxury BMW vehicles.
+                Welcome to M Fest Motorsport, your home for luxury BMW vehicles.
                 Explore our iconic models and start your BMW journey today!
               </p>
               <div className="flex md:justify-end justify-center mt-6">

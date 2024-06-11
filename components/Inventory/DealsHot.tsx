@@ -10,7 +10,7 @@ import { fetcher } from "@/lib/swrFetcher";
 const DealsHot = () => {
     const { data, error, isLoading } = useSWR('/api/inventory', fetcher);
 
-    const hotCars = data?.carData.filter((car: any) => car.isHot === true)
+    const hotCars = data?.carData?.filter((car: any) => car.isHot === true)
 
     const getGridClasses = (count: number) => {
         if (count === 1) {

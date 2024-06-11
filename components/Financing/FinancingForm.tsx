@@ -17,6 +17,7 @@ import {
 import { FinancingFormSchema, FinancingFormType } from "@/lib/zodSchema";
 import { FaSpinner } from "react-icons/fa6";
 import AlertConfirm from "../CustomUi/AlertConfirm";
+import Link from "next/link";
 
 
 const FinancingForm = () => {
@@ -115,12 +116,12 @@ const FinancingForm = () => {
                             </div>
                         </CardContent>
                         <CardFooter className="gap-2">
-                            <Button disabled={!isDirty} type="submit">
+                            <Button disabled={!isDirty} type="submit" size="lg">
                                 {isSubmitting ? "Submitting..." : "Submit"}
                                 {isSubmitting && <FaSpinner className="animate-spin ml-2" />}
                             </Button>
                             <Button variant="destructive" type="reset" size="lg" onClick={() => form.reset()}>Reset</Button>
-                            <Button variant="secondary" size="lg">Cancel</Button>
+                            <Link href="/"><Button variant="secondary" size="lg">Cancel</Button></Link>
                         </CardFooter>
                     </form>
                 </Form>

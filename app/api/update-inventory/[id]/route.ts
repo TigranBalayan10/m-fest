@@ -35,6 +35,5 @@ export async function PUT(request: any, { params }: { params: any }) {
       isSold,
     },
   });
-  console.log(updatedCar);
-  return NextResponse.json({ updatedCar });
+  return NextResponse.json({ updatedCar, message: "Car updated successfully"});
 }

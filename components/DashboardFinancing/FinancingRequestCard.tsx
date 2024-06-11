@@ -3,7 +3,7 @@ import { formatDate } from "@/lib//FormatDate";
 import { FinancingDataTypes } from "@/lib/Types/FinancingFormTypes";
 
 const FinancingRequestCard = ({ financing }: { financing: FinancingDataTypes }) => {
-  const { personal, contact, createdAt } = financing;
+  const { personal, contact, car, createdAt } = financing;
 
   return (
     <Card className="shadow-lg">
@@ -11,7 +11,16 @@ const FinancingRequestCard = ({ financing }: { financing: FinancingDataTypes }) 
         <CardTitle className="text-2xl font-bold text-center mb-4">Financing Request</CardTitle>
       </CardHeader>
       <CardContent className="p-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div>
+            <h3 className="text-xl font-semibold mb-4">Car Information</h3>
+            <div className="bg-gray-100 rounded-lg p-4">
+              <p className="text-lg"><strong>Stock Number:</strong> {`${car.stockNumber}`}</p>
+              <p className="text-lg"><strong>Make/Model:</strong> {`${car.make} ${car.model}`}</p>
+              <p className="text-lg"><strong>VIN:</strong> {car.vin}</p>
+              <p className="text-lg"><strong>Price:</strong> {`$${car.price}`}</p>
+            </div>
+          </div>
           <div>
             <h3 className="text-xl font-semibold mb-4">Personal Information</h3>
             <div className="bg-gray-100 rounded-lg p-4">
