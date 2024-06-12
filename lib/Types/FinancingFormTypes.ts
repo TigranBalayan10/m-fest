@@ -7,6 +7,8 @@ export interface FinancingDataTypes {
     contactId: string;
     createdAt: string;
     updatedAt: string;
+    isNew: boolean;
+    isArchive: boolean;
     personal: {
       id: string;
       firstName: string;

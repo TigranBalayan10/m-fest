@@ -8,7 +8,7 @@ async function main() {
   const existingCarList = await prismaClient.carList.findMany();
 
   // Create mock financing personal data
-  const financingPersonalData = Array.from({ length: 10 }, () => ({
+  const financingPersonalData = Array.from({ length: 5 }, () => ({
     firstName: faker.person.firstName(),
     middleName: faker.person.middleName(),
     lastName: faker.person.lastName(),
@@ -23,7 +23,7 @@ async function main() {
   });
 
   // Create mock financing contact info data
-  const financingContactInfoData = Array.from({ length: 10 }, () => ({
+  const financingContactInfoData = Array.from({ length: 5 }, () => ({
     phone: faker.phone.number(),
     email: faker.internet.email(),
     address: faker.location.streetAddress(),

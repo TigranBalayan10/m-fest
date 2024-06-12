@@ -16,6 +16,9 @@ export async function GET() {
           createdAt: "desc",
         },
       ],
+      include: {
+        financing: true,
+      },
     });
     revalidateAll();
     console.log("Revalidated inventory page.");

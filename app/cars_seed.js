@@ -22,7 +22,7 @@ async function main() {
   const publicIds = result.resources.map((resource) => resource.public_id);
 
   // Create mock car listings
-  const carListings = Array.from({ length: 20 }, () => ({
+  const carListings = Array.from({ length: 10 }, () => ({
     make: faker.vehicle.manufacturer(),
     model: faker.vehicle.model(),
     description: faker.lorem.paragraph(),

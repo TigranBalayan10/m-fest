@@ -29,6 +29,7 @@ async function fetcher(url: string) {
 
 const DataTable: React.FC<DataTableProps> = ({ endpoint }) => {
   const { data: inventoryData, error, isLoading } = useSWR(endpoint, fetcher);
+  console.log(inventoryData);
 
   if (isLoading) {
     return <DataTableSkeleton />;
