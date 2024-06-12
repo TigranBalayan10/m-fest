@@ -29,7 +29,11 @@ const CarTableRow = ({ car }: { car: Car }) => {
   return (
     <TableRow
       key={car.id}
-      className={`${car.isHot ? "bg-red-100" : (car.financing?.length ?? 0) > 0 ? "bg-emerald-200" : "bg-white"
+      className={`
+        ${car.isHot && (car.financing?.length ?? 0) > 0 ? "bg-violet-200" :
+          car.isHot ? "bg-red-100" :
+            (car.financing?.length ?? 0) > 0 ? "bg-emerald-200" :
+              "bg-white"
         } hover:bg-emerald-100`}
     >
       <TableCell>

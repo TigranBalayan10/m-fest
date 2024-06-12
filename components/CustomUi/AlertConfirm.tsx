@@ -50,11 +50,7 @@ const AlertConfirm = ({
               OK
             </AlertDialogAction>
           ) : (
-            <AlertDialogAction className="text-red-500" onClick={() => {
-              if (rerouteHref) {
-                router.push(rerouteHref);
-              }
-            }}>
+            <AlertDialogAction className="text-red-500">
               Close
             </AlertDialogAction>
           )}

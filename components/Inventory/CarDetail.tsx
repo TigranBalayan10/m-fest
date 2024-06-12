@@ -13,9 +13,7 @@ import {
 } from "@/components/ui/card";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
-import ToolTip from "../CustomUi/ToolTip";
 import { Separator } from "../ui/separator";
-import AlertDelete from "../CustomUi/AlertDelete";
 
 interface CarDetailProps {
   car: Car;
@@ -72,9 +70,6 @@ const CarDetail: React.FC<CarDetailProps> = ({ car }) => {
           <div className="flex flex-col w-full">
             <div>
               <h1 className="text-3xl font-bold mb-2 mt-2 md:mt-0">{car.year} {car.model}</h1>
-              <p className="text-gray-500 max-h-25 overflow-y-auto">
-                {car.description}
-              </p>
               <Link className="my-2 inline-flex items-center text-blue-600 hover:text-blue-800 font-medium" href="#">
                 See CarFax Report
                 <FaArrowUpRightFromSquare className="ml-2 w-4 h-4" />
@@ -142,9 +137,12 @@ const CarDetail: React.FC<CarDetailProps> = ({ car }) => {
               </div>
             )
               : (
-                <div className="mt-4">
+                <div className="my-4">
                   <Link href="/contact-us" >
                     <Button className="mt-2 w-full">Contact Seller</Button>
+                  </Link>
+                  <Link href="/financing" >
+                    <Button className="mt-2 w-full">Financing</Button>
                   </Link>
                 </div>
               )}

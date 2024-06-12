@@ -5,10 +5,11 @@ export async function POST(request: Request) {
   const res = await request.json();
   try {
     const { financing } = res.data;
-    const { personal, contact } = financing;
+    const { personal, contact, car } = financing;
     const { firstName, middleName, lastName, ssnItin, dob } = personal;
     const { month, day, year } = dob;
     const { phone, email, address, city, state, zip } = contact;
+    const { vin } = car;
 
     // Create the Personal Financing
     const FinancingPersonal = await prisma.financingPersonal.create({
@@ -44,10 +45,14 @@ export async function POST(request: Request) {
         contact: {
           connect: { id: FinancingContact.id },
         },
+        car: {
+          connect: { vin },
+        },
       },
       include: {
         personal: true,
         contact: true,
+        car: true,
       },
     });
 

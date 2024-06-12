@@ -148,10 +148,17 @@ const FinancingContactInfoSchema = z.object({
     .regex(/^\d+$/, { message: "ZIP code must contain only numbers" }),
 });
 
+export const VinSchema = z.object({
+  vin: z
+    .string()
+    .min(17, { message: "VIN must be at least 17 characters" })
+    .max(17, { message: "VIN must be at most 17 characters" }),
+});
 // FinancingSchema
 const FinancingSchema = z.object({
   personal: FinancingPersonalSchema,
   contact: FinancingContactInfoSchema,
+  car: VinSchema,
 });
 
 // FinancingFormSchema
@@ -172,12 +179,6 @@ export const LoginSchema = z.object({
   password: z.string().min(1, { message: "Password is required" }),
 });
 
-export const VinSchema = z.object({
-  vin: z
-    .string()
-    .min(17, { message: "VIN must be at least 17 characters" })
-    .max(17, { message: "VIN must be at most 17 characters" }),
-});
 
 const VinDecodedTrimSchema = z.object({
   id: z.number(),

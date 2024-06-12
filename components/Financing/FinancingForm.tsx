@@ -18,12 +18,15 @@ import { FinancingFormSchema, FinancingFormType } from "@/lib/zodSchema";
 import { FaSpinner } from "react-icons/fa6";
 import AlertConfirm from "../CustomUi/AlertConfirm";
 import Link from "next/link";
+import useSWR from "swr";
+import { fetcher } from "@/lib/swrFetcher";
 
 
 const FinancingForm = () => {
     const [showAlert, setShowAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
     const [alertTitle, setAlertTitle] = useState("Success");
+
 
     const defaultValues: Partial<FinancingFormType> = {
         financing: {
@@ -45,7 +48,10 @@ const FinancingForm = () => {
                 city: '',
                 state: '',
                 zip: '',
-            }
+            },
+            car: {
+                vin: '',
+            },
         },
     };
 
@@ -53,6 +59,13 @@ const FinancingForm = () => {
         resolver: zodResolver(FinancingFormSchema),
         defaultValues,
     })
+    const vin = form.watch('financing.car.vin');
+
+    const { data, error } = useSWR(`/api/get-inventory/${vin}`, fetcher);
+    const carInfo = data?.getCarByVin;
+    const { make, model, price } = carInfo || { make: '', model: '', price: '' };
+
+
 
     const { errors, isValid, isDirty, isSubmitting, isSubmitSuccessful } = form.formState
 
@@ -72,8 +85,11 @@ const FinancingForm = () => {
                 setAlertTitle("Success")
                 form.reset()
             } else {
-                setAlertMessage("An error occurred while submitting the financing application")
+                const data = await res.json()
+                const errorMessage = data?.error?.message || "An error occurred while submitting the financing application"
+
                 setShowAlert(true)
+                setAlertMessage(`${errorMessage}`)
                 setAlertTitle("Error")
             }
         } catch (error) {
@@ -93,6 +109,18 @@ const FinancingForm = () => {
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                         <CardContent>
+                            <h3 className="text-lg font-semibold">Car for Financing Info</h3>
+                            <div className="grid md:grid-cols-2 grid-cols-1 gap-4 mb-4">
+                                <FinancingInput control={form.control} name="vin" placeholder="VIN" label="VIN number" />
+                                {carInfo && (
+                                    <div>
+                                        <p>Make: {make}</p>
+                                        <p>Model: {model}</p>
+                                        <p>Price: ${price}</p>
+                                    </div>
+                                )}
+                                {error && <p>Failed to fetch car information.</p>}
+                            </div>
                             <h3 className="text-lg font-semibold">Personal Info</h3>
                             <div className="grid md:grid-cols-3 grid-cols-1 gap-4">
                                 <FinancingInput control={form.control} name="firstName" placeholder="First Name" label="First Name" />
@@ -131,7 +159,6 @@ const FinancingForm = () => {
                     <AlertConfirm
                         title={alertTitle}
                         description={alertMessage}
-                        rerouteHref="/"
                     />
                 ) : (
                     <AlertConfirm

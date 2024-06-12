@@ -17,7 +17,7 @@ type FormData = z.infer<typeof FinancingFormSchema>;
 
 interface FormFieldProps {
     control: Control<FormData>;
-    name: keyof FormData["financing"]["personal"] | keyof FormData["financing"]["contact"];
+    name: keyof FormData["financing"]["personal"] | keyof FormData["financing"]["contact"] | keyof FormData["financing"]["car"];
     placeholder: string;
     label: string;
 }
@@ -29,7 +29,12 @@ const FinancingInput: React.FC<FormFieldProps> = ({
     label,
 }) => {
     const isPersonalField = name in FinancingFormSchema.shape.financing.shape.personal.shape;
-    const fieldName = isPersonalField ? `financing.personal.${name}` : `financing.contact.${name}`;
+    const isCarField = name in FinancingFormSchema.shape.financing.shape.car.shape;
+    const fieldName = isPersonalField
+        ? `financing.personal.${name}`
+        : isCarField
+            ? `financing.car.${name}`
+            : `financing.contact.${name}`;
 
     const monthController = useController({
         name: "financing.personal.dob.month" as const,

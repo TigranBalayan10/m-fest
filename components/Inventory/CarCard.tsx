@@ -28,6 +28,7 @@ import { CarListData } from "@/lib/zodSchema";
 import { CldImage } from "next-cloudinary";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { Badge } from "../ui/badge";
 
 interface CarCardProps {
   car: CarListData;
@@ -36,9 +37,16 @@ interface CarCardProps {
 const CarCard: React.FC<CarCardProps> = ({ car }) => (
   <Card className="card-bg border-none text-gray-300">
     <CardHeader>
-      <CardTitle>
-        {car.year} {car.make} {car.model}
-      </CardTitle>
+      <div className="flex justify-between items-center">
+        <CardTitle>
+          {car.year} {car.make} {car.model}
+        </CardTitle>
+        {car.isHot && (
+          <Badge variant="destructive" className="text-white text-base font-bold rotate-12">
+            HOT DEAL
+          </Badge>
+        )}
+      </div>
       <CardDescription>{car.milage} mi.</CardDescription>
     </CardHeader>
     <CardContent>
