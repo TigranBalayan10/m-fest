@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form"
 import { useState } from "react";
-import { Form } from "@/components/ui/form"
+import { Form, FormMessage } from "@/components/ui/form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from "@/components/ui/button"
 import FinancingInput from "./FinancingInput";
@@ -58,12 +58,13 @@ const FinancingForm = () => {
     const form = useForm<FinancingFormType>({
         resolver: zodResolver(FinancingFormSchema),
         defaultValues,
+        mode: 'onChange',
     })
     const vin = form.watch('financing.car.vin');
 
-    const { data, error } = useSWR(`/api/get-inventory/${vin}`, fetcher);
-    const carInfo = data?.getCarByVin;
-    const { make, model, price } = carInfo || { make: '', model: '', price: '' };
+    const { data, error, isLoading } = useSWR(vin ? `/api/get-inventory/${vin}` : null, fetcher);
+    const carInfo = data?.data;
+    console.log(carInfo)
 
 
 
@@ -111,15 +112,16 @@ const FinancingForm = () => {
                         <CardContent>
                             <h3 className="text-lg font-semibold">Car for Financing Info</h3>
                             <div className="grid md:grid-cols-2 grid-cols-1 gap-4 mb-4">
-                                <FinancingInput control={form.control} name="vin" placeholder="VIN" label="VIN number" />
+                                <FinancingInput control={form.control} name="vin" placeholder="VIN" label="VIN number" customErrorMessage={error?.message} />
+                                {vin && isLoading && <FaSpinner className="animate-spin ml-2" />
+                                }
                                 {carInfo && (
                                     <div>
-                                        <p>Make: {make}</p>
-                                        <p>Model: {model}</p>
-                                        <p>Price: ${price}</p>
+                                        <p>Make: {carInfo.make}</p>
+                                        <p>Model: {carInfo.model}</p>
+                                        <p>Price: ${carInfo.price}</p>
                                     </div>
                                 )}
-                                {error && <p>Failed to fetch car information.</p>}
                             </div>
                             <h3 className="text-lg font-semibold">Personal Info</h3>
                             <div className="grid md:grid-cols-3 grid-cols-1 gap-4">

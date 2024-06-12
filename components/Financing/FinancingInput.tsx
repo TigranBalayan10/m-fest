@@ -1,5 +1,5 @@
 import React from "react";
-import { Control, useController } from "react-hook-form";
+import { Control, useController, useFormContext } from "react-hook-form";
 import {
     FormControl,
     FormField,
@@ -8,7 +8,7 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "../ui/input";
-import { z } from "zod";
+import { custom, z } from "zod";
 import { FinancingFormSchema } from "@/lib/zodSchema";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { generateMonthOptions, generateDayOptions, generateYearOptions } from "@/lib/dateUtils";
@@ -20,6 +20,7 @@ interface FormFieldProps {
     name: keyof FormData["financing"]["personal"] | keyof FormData["financing"]["contact"] | keyof FormData["financing"]["car"];
     placeholder: string;
     label: string;
+    customErrorMessage?: string;
 }
 
 const FinancingInput: React.FC<FormFieldProps> = ({
@@ -27,6 +28,7 @@ const FinancingInput: React.FC<FormFieldProps> = ({
     name,
     placeholder,
     label,
+    customErrorMessage,
 }) => {
     const isPersonalField = name in FinancingFormSchema.shape.financing.shape.personal.shape;
     const isCarField = name in FinancingFormSchema.shape.financing.shape.car.shape;
@@ -115,6 +117,26 @@ const FinancingInput: React.FC<FormFieldProps> = ({
                         <FormMessage />
                     </FormItem>
                 )}
+            />
+        );
+    }
+
+    if (name === "vin") {
+        return (
+            <FormField
+                control={control}
+                name="financing.car.vin"
+                render={({ field }) => {
+                    return (
+                        <FormItem className="text-black">
+                            <FormLabel className="text-gray-300 text-xs">{label}</FormLabel>
+                            <FormControl>
+                                <Input {...field} placeholder={placeholder} />
+                            </FormControl>
+                            {customErrorMessage? <FormMessage>{customErrorMessage}</FormMessage> : <FormMessage />}
+                        </FormItem>
+                    );
+                }}
             />
         );
     }
