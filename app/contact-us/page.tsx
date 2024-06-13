@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import AlertConfirm from "@/components/CustomUi/AlertConfirm";
 import { FaSpinner } from "react-icons/fa6";
+import { useSearchParams } from "next/navigation";
 
 
 
@@ -30,6 +31,9 @@ export default function ContactUs() {
   const [alertMessage, setAlertMessage] = useState("");
   const [alertTitle, setAlertTitle] = useState("Success");
 
+  const searchParams = useSearchParams();
+  const carInfo = searchParams.get("car_info");
+  const [vin, make, model] = carInfo ? carInfo.split("-") : ["", "", ""];
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -37,7 +41,7 @@ export default function ContactUs() {
       name: "",
       email: "",
       phone: "",
-      content: "",
+      content: carInfo ? `I am interested in the ${make} ${model} with VIN: ${vin}` : "",
     },
   });
 
@@ -57,7 +61,7 @@ export default function ContactUs() {
         setAlertMessage("Your message has been sent successfully!");
         setShowAlert(true);
         setAlertTitle("Success");
-      } else  {
+      } else {
         setAlertMessage("An error occurred, please try again later");
         setShowAlert(true);
         setAlertTitle("Error");
@@ -110,7 +114,7 @@ export default function ContactUs() {
             {isSubmitting && <FaSpinner className="animate-spin ml-2" />}
             {!isSubmitting && "Submit"}
           </Button>
-          <Button variant="secondary" onClick={() => router.push("/")}>
+          <Button variant="secondary" onClick={() => router.back()}>
             Cancel
           </Button>
         </CardFooter>

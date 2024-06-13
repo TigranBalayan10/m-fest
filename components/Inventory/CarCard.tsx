@@ -42,8 +42,8 @@ const CarCard: React.FC<CarCardProps> = ({ car }) => (
           {car.year} {car.make} {car.model}
         </CardTitle>
         {car.isHot && (
-          <Badge variant="destructive" className="text-white text-base font-bold rotate-12">
-            HOT DEAL
+          <Badge variant="destructive" className="text-white font-bold rotate-12">
+            HOT
           </Badge>
         )}
       </div>
@@ -111,7 +111,7 @@ const CarCard: React.FC<CarCardProps> = ({ car }) => (
       </div>
       <Separator className="my-1" />
       <div className="flex justify-between mt-2">
-        <Link href="/contact-us">
+        <Link href={`/contact-us?car_info=${car.vin}-${car.make}-${car.model}`} shallow>
           <Button variant="link" className="p-0 text-gray-400">Contact about this car</Button>
         </Link>
         <Link href={`/inventory/${car.id}`}>

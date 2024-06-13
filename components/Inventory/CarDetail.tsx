@@ -138,10 +138,10 @@ const CarDetail: React.FC<CarDetailProps> = ({ car }) => {
             )
               : (
                 <div className="my-4">
-                  <Link href="/contact-us" >
+                  <Link href={`/contact-us?car_info=${car.vin}-${car.make}-${car.model}`} shallow>
                     <Button className="mt-2 w-full">Contact Seller</Button>
                   </Link>
-                  <Link href="/financing" >
+                  <Link href={`/financing?vin=${car.vin}`} shallow>
                     <Button className="mt-2 w-full">Financing</Button>
                   </Link>
                 </div>

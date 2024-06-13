@@ -15,6 +15,7 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { FinancingFormSchema, FinancingFormType } from "@/lib/zodSchema";
+import { useSearchParams } from 'next/navigation';
 import { FaSpinner } from "react-icons/fa6";
 import AlertConfirm from "../CustomUi/AlertConfirm";
 import Link from "next/link";
@@ -60,7 +61,9 @@ const FinancingForm = () => {
         defaultValues,
         mode: 'onChange',
     })
-    const vin = form.watch('financing.car.vin');
+    const vinFromUrl = useSearchParams().get('vin');
+    const watchedVin = form.watch('financing.car.vin');
+    const vin = vinFromUrl || watchedVin;
 
     const { data, error, isLoading } = useSWR(vin ? `/api/get-inventory/${vin}` : null, fetcher);
     const carInfo = data?.data;
@@ -113,12 +116,11 @@ const FinancingForm = () => {
                             <CardDescription className="text-gray-400">
                                 Please input vin number to get car information.
                             </CardDescription>
-                            <div className="grid md:grid-cols-2 grid-cols-1 gap-4 my-4">
+                            <div className="grid md:grid-cols-2 grid-cols-1 gap-4 my-4 items-end">
                                 <FinancingInput control={form.control} name="vin" placeholder="VIN" label="VIN number" customErrorMessage={error?.message} spinner={vin !== "" && isLoading} />
                                 {carInfo && (
-                                    <div>
-                                        <p>Make: {carInfo.make}</p>
-                                        <p>Model: {carInfo.model}</p>
+                                    <div className="items-center bg-emerald-700 rounded-md p-2 pl-4">
+                                        <p>Car Info: {carInfo.make} {carInfo.model}</p>
                                         <p>Price: ${carInfo.price}</p>
                                     </div>
                                 )}
@@ -133,7 +135,7 @@ const FinancingForm = () => {
                                 <FinancingInput control={form.control} name="ssnItin" placeholder="SSN/ITIN" label="SSN/ITIN" />
                             </div>
                             <div className="mt-4">
-                                <FinancingInput control={form.control} name="dob" placeholder="Date of Birth" label="Date of Birth"/>
+                                <FinancingInput control={form.control} name="dob" placeholder="Date of Birth" label="Date of Birth" />
                             </div>
                             <h3 className="mt-8 text-lg font-semibold">Contact Info</h3>
                             <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
@@ -160,7 +162,8 @@ const FinancingForm = () => {
                 (alertTitle ? (
                     <AlertConfirm
                         title={alertTitle}
-                        description={alertMessage}
+                        description={alertMessage}                        
+                        rerouteHref="/"
                     />
                 ) : (
                     <AlertConfirm

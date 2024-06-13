@@ -13,6 +13,7 @@ import { FinancingFormSchema } from "@/lib/zodSchema";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { generateMonthOptions, generateDayOptions, generateYearOptions } from "@/lib/dateUtils";
 import { FaSpinner } from "react-icons/fa6";
+import { useSearchParams } from "next/navigation";
 
 type FormData = z.infer<typeof FinancingFormSchema>;
 
@@ -74,7 +75,7 @@ const FinancingInput: React.FC<FormFieldProps> = ({
                     <FormItem className="text-black">
                         <FormLabel className="text-gray-300 text-xs">{label}</FormLabel>
                         <div className="flex space-x-2">
-                            <div className="w-full space-x-2">
+                            <div className="w-full space-x-1">
                                 <Select
                                     onValueChange={monthController.field.onChange}
                                     value={monthController.field.value}
@@ -153,12 +154,20 @@ const FinancingInput: React.FC<FormFieldProps> = ({
                 control={control}
                 name="financing.car.vin"
                 render={({ field }) => {
+                    const vinFromUrl = useSearchParams().get('vin');
+                    const isDisabled = !!vinFromUrl;
+    
                     return (
                         <FormItem className="text-black">
                             <FormLabel className="text-gray-300 text-xs">{label}</FormLabel>
                             <FormControl>
                                 <div className="relative">
-                                    <Input {...field} placeholder={placeholder} />
+                                    <Input
+                                        {...field}
+                                        placeholder={placeholder}
+                                        value={vinFromUrl || field.value}
+                                        disabled={isDisabled}
+                                    />
                                     {spinner && (
                                         <div className="absolute inset-y-0 right-0 flex items-center pr-2">
                                             <FaSpinner className="animate-spin" />
@@ -166,7 +175,11 @@ const FinancingInput: React.FC<FormFieldProps> = ({
                                     )}
                                 </div>
                             </FormControl>
-                            {customErrorMessage ? <FormMessage>{customErrorMessage}</FormMessage> : <FormMessage />}
+                            {customErrorMessage ? (
+                                <FormMessage>{customErrorMessage}</FormMessage>
+                            ) : (
+                                <FormMessage />
+                            )}
                         </FormItem>
                     );
                 }}
