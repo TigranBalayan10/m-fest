@@ -1,5 +1,5 @@
 import React from "react";
-import { Control, useController, useFormContext } from "react-hook-form";
+import { Control, useController, useFormContext, useWatch } from "react-hook-form";
 import {
     FormControl,
     FormField,
@@ -12,6 +12,7 @@ import { custom, z } from "zod";
 import { FinancingFormSchema } from "@/lib/zodSchema";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { generateMonthOptions, generateDayOptions, generateYearOptions } from "@/lib/dateUtils";
+import { FaSpinner } from "react-icons/fa6";
 
 type FormData = z.infer<typeof FinancingFormSchema>;
 
@@ -21,6 +22,7 @@ interface FormFieldProps {
     placeholder: string;
     label: string;
     customErrorMessage?: string;
+    spinner?: boolean;
 }
 
 const FinancingInput: React.FC<FormFieldProps> = ({
@@ -29,6 +31,7 @@ const FinancingInput: React.FC<FormFieldProps> = ({
     placeholder,
     label,
     customErrorMessage,
+    spinner,
 }) => {
     const isPersonalField = name in FinancingFormSchema.shape.financing.shape.personal.shape;
     const isCarField = name in FinancingFormSchema.shape.financing.shape.car.shape;
@@ -43,15 +46,24 @@ const FinancingInput: React.FC<FormFieldProps> = ({
         control,
     });
 
+    const errorMonth = monthController.fieldState.error?.message;
+
     const dayController = useController({
         name: "financing.personal.dob.day" as const,
         control,
     });
 
+    const errorDay = dayController.fieldState.error?.message;
+
     const yearController = useController({
         name: "financing.personal.dob.year" as const,
         control,
     });
+
+    const errorYear = yearController.fieldState.error?.message;
+
+    console.log(errorDay, errorMonth, errorYear)
+
 
     if (name === "dob") {
         return (
@@ -62,59 +74,73 @@ const FinancingInput: React.FC<FormFieldProps> = ({
                     <FormItem className="text-black">
                         <FormLabel className="text-gray-300 text-xs">{label}</FormLabel>
                         <div className="flex space-x-2">
-                            <Select
-                                onValueChange={monthController.field.onChange}
-                                value={monthController.field.value}
-                            >
-                                <FormControl>
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Month" />
-                                    </SelectTrigger>
-                                </FormControl>
-                                <SelectContent>
-                                    {generateMonthOptions().map(({ value, label }) => (
-                                        <SelectItem key={value} value={value}>
-                                            {label}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
-                            <Select
-                                onValueChange={dayController.field.onChange}
-                                value={dayController.field.value}
-                            >
-                                <FormControl>
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Day" />
-                                    </SelectTrigger>
-                                </FormControl>
-                                <SelectContent>
-                                    {generateDayOptions().map(({ value, label }) => (
-                                        <SelectItem key={value} value={value}>
-                                            {label}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
-                            <Select
-                                onValueChange={yearController.field.onChange}
-                                value={yearController.field.value}
-                            >
-                                <FormControl>
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Year" />
-                                    </SelectTrigger>
-                                </FormControl>
-                                <SelectContent>
-                                    {generateYearOptions().map(({ value, label }) => (
-                                        <SelectItem key={value} value={value}>
-                                            {label}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
+                            <div className="w-full space-x-2">
+                                <Select
+                                    onValueChange={monthController.field.onChange}
+                                    value={monthController.field.value}
+                                >
+                                    <FormControl>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Month" />
+                                        </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                        {generateMonthOptions().map(({ value, label }) => (
+                                            <SelectItem key={value} value={value}>
+                                                {label}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                                {errorMonth && (
+                                    <p className="mt-1 text-red-500 text-xs">{errorMonth}</p>
+                                )}
+                            </div>
+                            <div className="w-full space-x-1">
+                                <Select
+                                    onValueChange={dayController.field.onChange}
+                                    value={dayController.field.value}
+                                >
+                                    <FormControl>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Day" />
+                                        </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                        {generateDayOptions().map(({ value, label }) => (
+                                            <SelectItem key={value} value={value}>
+                                                {label}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                                {errorDay && (
+                                    <p className="mt-1 text-red-500 text-xs">{errorDay}</p>
+                                )}
+                            </div>
+                            <div className="w-full space-x-1">
+                                <Select
+                                    onValueChange={yearController.field.onChange}
+                                    value={yearController.field.value}
+                                >
+                                    <FormControl>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Year" />
+                                        </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                        {generateYearOptions().map(({ value, label }) => (
+                                            <SelectItem key={value} value={value}>
+                                                {label}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                                {errorYear && (
+                                    <p className="mt-1 text-red-500 text-xs">{errorYear}</p>
+                                )}
+                            </div>
                         </div>
-                        <FormMessage />
                     </FormItem>
                 )}
             />
@@ -131,9 +157,16 @@ const FinancingInput: React.FC<FormFieldProps> = ({
                         <FormItem className="text-black">
                             <FormLabel className="text-gray-300 text-xs">{label}</FormLabel>
                             <FormControl>
-                                <Input {...field} placeholder={placeholder} />
+                                <div className="relative">
+                                    <Input {...field} placeholder={placeholder} />
+                                    {spinner && (
+                                        <div className="absolute inset-y-0 right-0 flex items-center pr-2">
+                                            <FaSpinner className="animate-spin" />
+                                        </div>
+                                    )}
+                                </div>
                             </FormControl>
-                            {customErrorMessage? <FormMessage>{customErrorMessage}</FormMessage> : <FormMessage />}
+                            {customErrorMessage ? <FormMessage>{customErrorMessage}</FormMessage> : <FormMessage />}
                         </FormItem>
                     );
                 }}

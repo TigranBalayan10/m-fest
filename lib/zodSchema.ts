@@ -1,10 +1,7 @@
 "use client";
 
 import { z } from "zod";
-import {
-  Customer,
-  Message,
-} from "@prisma/client";
+import { Customer, Message } from "@prisma/client";
 
 export const CarListSchema = z.object({
   id: z.string().optional(),
@@ -178,7 +175,6 @@ export const LoginSchema = z.object({
   username: z.string().min(1, { message: "Username is required" }),
   password: z.string().min(1, { message: "Password is required" }),
 });
-
 
 const VinDecodedTrimSchema = z.object({
   id: z.number(),

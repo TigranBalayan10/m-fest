@@ -64,7 +64,6 @@ const FinancingForm = () => {
 
     const { data, error, isLoading } = useSWR(vin ? `/api/get-inventory/${vin}` : null, fetcher);
     const carInfo = data?.data;
-    console.log(carInfo)
 
 
 
@@ -110,11 +109,12 @@ const FinancingForm = () => {
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                         <CardContent>
-                            <h3 className="text-lg font-semibold">Car for Financing Info</h3>
-                            <div className="grid md:grid-cols-2 grid-cols-1 gap-4 mb-4">
-                                <FinancingInput control={form.control} name="vin" placeholder="VIN" label="VIN number" customErrorMessage={error?.message} />
-                                {vin && isLoading && <FaSpinner className="animate-spin ml-2" />
-                                }
+                            <h3 className="text-lg font-semibold">Car Info for Financing </h3>
+                            <CardDescription className="text-gray-400">
+                                Please input vin number to get car information.
+                            </CardDescription>
+                            <div className="grid md:grid-cols-2 grid-cols-1 gap-4 my-4">
+                                <FinancingInput control={form.control} name="vin" placeholder="VIN" label="VIN number" customErrorMessage={error?.message} spinner={vin !== "" && isLoading} />
                                 {carInfo && (
                                     <div>
                                         <p>Make: {carInfo.make}</p>
@@ -133,7 +133,7 @@ const FinancingForm = () => {
                                 <FinancingInput control={form.control} name="ssnItin" placeholder="SSN/ITIN" label="SSN/ITIN" />
                             </div>
                             <div className="mt-4">
-                                <FinancingInput control={form.control} name="dob" placeholder="Date of Birth" label="Date of Birth" />
+                                <FinancingInput control={form.control} name="dob" placeholder="Date of Birth" label="Date of Birth"/>
                             </div>
                             <h3 className="mt-8 text-lg font-semibold">Contact Info</h3>
                             <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
