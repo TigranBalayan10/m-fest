@@ -3,8 +3,9 @@ import prisma from "@/lib/prisma";
 
 export async function POST(request: Request) {
   const res = await request.json();
+  console.log("res", res);
   try {
-    const { financing } = res.data;
+    const { financing } = res;
     const { personal, contact, car } = financing;
     const { firstName, middleName, lastName, ssnItin, dob } = personal;
     const { month, day, year } = dob;

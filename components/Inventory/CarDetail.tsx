@@ -14,6 +14,7 @@ import {
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { Separator } from "../ui/separator";
+import { useRouter } from "next/navigation";
 
 interface CarDetailProps {
   car: Car;
@@ -23,14 +24,13 @@ const CarDetail: React.FC<CarDetailProps> = ({ car }) => {
 
   const [selectedImage, setSelectedImage] = useState(car.imageUrls[0]);
   const pathname = usePathname();
+  const router = useRouter();
 
   return (
     <>
       {pathname === (`/dashboard/inventory/${car.id}`) ? (
         null) : (
-        <Link href="/inventory">
-          <Button variant="link" className="text-blue-600 hover:text-blue-800 p-0"><FaArrowLeftLong className="mr-1" />Back to Inventory</Button>
-        </Link>
+          <Button variant="link" className="text-blue-600 hover:text-blue-800 p-0" onClick={() => router.back()}><FaArrowLeftLong className="mr-1" />Back</Button>
       )}
       <CardHeader>
         <CardTitle>Car Details</CardTitle>

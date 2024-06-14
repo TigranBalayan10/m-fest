@@ -63,8 +63,6 @@ const FinancingInput: React.FC<FormFieldProps> = ({
 
     const errorYear = yearController.fieldState.error?.message;
 
-    console.log(errorDay, errorMonth, errorYear)
-
 
     if (name === "dob") {
         return (

@@ -21,12 +21,17 @@ import AlertConfirm from "../CustomUi/AlertConfirm";
 import Link from "next/link";
 import useSWR from "swr";
 import { fetcher } from "@/lib/swrFetcher";
+import { useRouter } from "next/navigation";
+import { z } from "zod";
 
 
 const FinancingForm = () => {
     const [showAlert, setShowAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
     const [alertTitle, setAlertTitle] = useState("Success");
+
+    const router = useRouter();
+    const vinFromUrl = useSearchParams().get('vin');
 
 
     const defaultValues: Partial<FinancingFormType> = {
@@ -51,20 +56,20 @@ const FinancingForm = () => {
                 zip: '',
             },
             car: {
-                vin: '',
+                vin: vinFromUrl || '',
             },
         },
     };
+
 
     const form = useForm<FinancingFormType>({
         resolver: zodResolver(FinancingFormSchema),
         defaultValues,
         mode: 'onChange',
     })
-    const vinFromUrl = useSearchParams().get('vin');
+
     const watchedVin = form.watch('financing.car.vin');
     const vin = vinFromUrl || watchedVin;
-
     const { data, error, isLoading } = useSWR(vin ? `/api/get-inventory/${vin}` : null, fetcher);
     const carInfo = data?.data;
 
@@ -74,29 +79,41 @@ const FinancingForm = () => {
 
 
     async function onSubmit(data: FinancingFormType) {
+        if (vinFromUrl) {
+            data.financing.car.vin = vinFromUrl;
+        }
+
         try {
+            const validatedData = await FinancingFormSchema.parseAsync(data);
+            console.log("validatedData", validatedData);
+
             const res = await fetch('/api/add-financing', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ data }),
-            })
-            if (res.ok) {
-                setAlertMessage("Financing application submitted successfully. We will contact you shortly.")
-                setShowAlert(true)
-                setAlertTitle("Success")
-                form.reset()
-            } else {
-                const data = await res.json()
-                const errorMessage = data?.error?.message || "An error occurred while submitting the financing application"
+                body: JSON.stringify(validatedData),
+            });
 
-                setShowAlert(true)
-                setAlertMessage(`${errorMessage}`)
-                setAlertTitle("Error")
+            if (res.ok) {
+                setAlertMessage("Financing application submitted successfully. We will contact you shortly.");
+                setShowAlert(true);
+                setAlertTitle("Success");
+                form.reset();
+            } else {
+                const responseData = await res.json();
+                const errorMessage = responseData?.error?.message || "An error occurred while submitting the financing application";
+
+                setShowAlert(true);
+                setAlertMessage(`${errorMessage}`);
+                setAlertTitle("Error");
             }
         } catch (error) {
-            console.error("Error", error)
+            if (error instanceof z.ZodError) {
+                console.error("Validation error:", error.issues);
+            } else {
+                console.error("Error", error);
+            }
         }
     }
 
@@ -153,7 +170,7 @@ const FinancingForm = () => {
                                 {isSubmitting && <FaSpinner className="animate-spin ml-2" />}
                             </Button>
                             <Button variant="destructive" type="reset" size="lg" onClick={() => form.reset()}>Reset</Button>
-                            <Link href="/"><Button variant="secondary" size="lg">Cancel</Button></Link>
+                            <Button variant="secondary" size="lg" onClick={() => router.back()} >Cancel</Button>
                         </CardFooter>
                     </form>
                 </Form>
@@ -162,7 +179,7 @@ const FinancingForm = () => {
                 (alertTitle ? (
                     <AlertConfirm
                         title={alertTitle}
-                        description={alertMessage}                        
+                        description={alertMessage}
                         rerouteHref="/"
                     />
                 ) : (
