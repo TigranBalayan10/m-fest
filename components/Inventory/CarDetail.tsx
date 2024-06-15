@@ -1,6 +1,5 @@
 import React from "react";
 import { Car } from "@/lib/types";
-import { CldImage } from "next-cloudinary";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { FaArrowUpRightFromSquare, FaArrowLeftLong } from "react-icons/fa6";
@@ -11,10 +10,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { Separator } from "../ui/separator";
 import { useRouter } from "next/navigation";
+import DetailCarousel from "@/components/Inventory/DetailCarousel";
 
 interface CarDetailProps {
   car: Car;
@@ -22,7 +21,6 @@ interface CarDetailProps {
 
 const CarDetail: React.FC<CarDetailProps> = ({ car }) => {
 
-  const [selectedImage, setSelectedImage] = useState(car.imageUrls[0]);
   const pathname = usePathname();
   const router = useRouter();
 
@@ -30,7 +28,7 @@ const CarDetail: React.FC<CarDetailProps> = ({ car }) => {
     <>
       {pathname === (`/dashboard/inventory/${car.id}`) ? (
         null) : (
-          <Button variant="link" className="text-blue-600 hover:text-blue-800 p-0" onClick={() => router.back()}><FaArrowLeftLong className="mr-1" />Back</Button>
+        <Button variant="link" className="text-blue-600 hover:text-blue-800 p-0" onClick={() => router.back()}><FaArrowLeftLong className="mr-1" />Back</Button>
       )}
       <CardHeader>
         <CardTitle>Car Details</CardTitle>
@@ -40,31 +38,9 @@ const CarDetail: React.FC<CarDetailProps> = ({ car }) => {
       </CardHeader>
       <CardContent className="p-0">
         <div className="md:grid md:grid-cols-3 gap-6 md:container">
-          <div className="md:col-span-2 ">
+          <div className="md:col-span-2">
             <div className="flex flex-col">
-              <CldImage
-                src={selectedImage}
-                width="1000"
-                height="600"
-                crop="fill"
-                alt={car.model}
-              />
-              <div className="flex justify-start mt-2">
-                <div className="grid grid-cols-4  sm:grid-cols-8 sm:m-0 gap-1 mt-4">
-                  {car.imageUrls.map((imageUrl, index) => (
-                    <Button key={index} size="xl" className="border p-1 border-gray-300 rounded-md overflow-hidden bg-transparent focus:bg-slate-900 aspect-square" onClick={() => setSelectedImage(imageUrl)}>
-                      <CldImage
-                        src={imageUrl}
-                        width="480"
-                        height="300"
-                        crop="fill"
-                        alt={`Thumbnail ${index + 2}`}
-                        className="w-full h-full object-cover"
-                      />
-                    </Button>
-                  ))}
-                </div>
-              </div>
+              <DetailCarousel car={car} />
             </div>
           </div>
           <div className="flex flex-col w-full">
