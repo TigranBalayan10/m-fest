@@ -13,7 +13,6 @@ import { FinancingFormSchema } from "@/lib/zodSchema";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { generateMonthOptions, generateDayOptions, generateYearOptions } from "@/lib/dateUtils";
 import { FaSpinner } from "react-icons/fa6";
-import { useSearchParams } from "next/navigation";
 
 type FormData = z.infer<typeof FinancingFormSchema>;
 
@@ -24,6 +23,7 @@ interface FormFieldProps {
     label: string;
     customErrorMessage?: string;
     spinner?: boolean;
+    vinFromUrl?: string;
 }
 
 const FinancingInput: React.FC<FormFieldProps> = ({
@@ -33,6 +33,7 @@ const FinancingInput: React.FC<FormFieldProps> = ({
     label,
     customErrorMessage,
     spinner,
+    vinFromUrl,
 }) => {
     const isPersonalField = name in FinancingFormSchema.shape.financing.shape.personal.shape;
     const isCarField = name in FinancingFormSchema.shape.financing.shape.car.shape;
@@ -152,7 +153,6 @@ const FinancingInput: React.FC<FormFieldProps> = ({
                 control={control}
                 name="financing.car.vin"
                 render={({ field }) => {
-                    const vinFromUrl = useSearchParams().get('vin');
                     const isDisabled = !!vinFromUrl;
     
                     return (

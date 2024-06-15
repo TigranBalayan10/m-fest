@@ -134,7 +134,7 @@ const FinancingForm = () => {
                                 Please input vin number to get car information.
                             </CardDescription>
                             <div className="grid md:grid-cols-2 grid-cols-1 gap-4 my-4 items-end">
-                                <FinancingInput control={form.control} name="vin" placeholder="VIN" label="VIN number" customErrorMessage={error?.message} spinner={vin !== "" && isLoading} />
+                                <FinancingInput control={form.control} name="vin" placeholder="VIN" label="VIN number" customErrorMessage={error?.message} spinner={vin !== "" && isLoading} vinFromUrl={vinFromUrl ? vin : "" } />
                                 {carInfo && (
                                     <div className="items-center bg-emerald-700 rounded-md p-2 pl-4">
                                         <p>Car Info: {carInfo.make} {carInfo.model}</p>
