@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { revalidateAll, revalidateInventory } from "@/lib/actions";
+import { revalidateAll } from "@/lib/actions";
 
 export async function GET() {
   try {

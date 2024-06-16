@@ -4,6 +4,7 @@ import "./styles.css";
 import DashboardNav from "@/components/DashboardNavigation/DashboardNav";
 import DashboardSideBar from "@/components/DashboardNavigation/DashboardSideBar";
 import { Toaster } from "@/components/ui/toaster";
+import Providers from "./Providers";
 
 
 const dm_sans = DM_Sans({
@@ -21,7 +22,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className="hidden w-64 bg-gray-100 p-4 md:block">
           <DashboardSideBar />
         </div>
-        <div className="flex-1 bg-gray-50 p-4 md:p-6">{children}
+        <div className="flex-1 bg-gray-50 p-4 md:p-6">
+          <Providers>
+            {children}
+          </Providers>
           <Toaster />
         </div>
       </div>

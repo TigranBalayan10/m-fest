@@ -25,14 +25,12 @@ interface AlertActionProps {
   actionEndpoint: string;
   link?: string;
   actionName?: string;
-  actionColor?: string;
   httpMethod: string;
   getEndpoint?: string;
   children?: React.ReactNode;
-  onAction?: () => void;
 }
 
-export default function AlertAction({ title, itemId, actionEndpoint, actionName, actionColor, httpMethod, link, onAction, getEndpoint }: AlertActionProps) {
+export default function AlertAction({ title, itemId, actionEndpoint, actionName, httpMethod, link, getEndpoint }: AlertActionProps) {
   const pathname = usePathname();
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -55,6 +53,7 @@ export default function AlertAction({ title, itemId, actionEndpoint, actionName,
               title: "Success",
               description: `${title} deleted successfully.`,
             });
+            setIsOpen(false);
           } else if (pathname === "/dashboard/archive") {
             await mutate("/api/archive");
             toast({

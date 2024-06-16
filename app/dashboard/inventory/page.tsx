@@ -1,27 +1,29 @@
+"use client";
+
 import { Card, CardTitle } from "@/components/ui/card";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
-import prisma from "@/lib/prisma";
+import useSWR from "swr";
 
-async function getInventoryData() {
-    try {
-        const inventoryData = await prisma.carList.findMany();
-        return inventoryData;
-    } catch (error) {
-        console.error("Error fetching inventory data:", error);
-        return [];
-    }
-}
+const DashboardInventory =  () => {
+  const { data, error } = useSWR("/api/inventory");
+  const inventoryData = data?.carData;
 
-const DashboardInventory = async () => {
-    const inventoryData = await getInventoryData();
+  if (error) {
+    return <div>Error loading inventory data</div>;
+  }
 
-    return (
-        <div className="mt-6">
-            <CardTitle className="mb-4 text-center">Inventory</CardTitle>
-            <DataTable columns={columns} data={inventoryData} />
-        </div>
-    );
+  if (!inventoryData) {
+    return <div>Loading...</div>;
+  }
+
+
+  return (
+    <div className="mt-6">
+      <CardTitle className="mb-4 text-center">Inventory</CardTitle>
+      <DataTable columns={columns} data={inventoryData} />
+    </div>
+  );
 };
 
 export default DashboardInventory;

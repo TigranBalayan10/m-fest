@@ -83,7 +83,6 @@ const CarTableRow = ({ car }: { car: Car }) => {
                 <li>
                   <AlertDelete title={car.make + " " + car.model} itemId={car.id || ""} actionEndpoint="delete-inventory"
                     actionName="Delete"
-                    actionColor="destructive hover:bg-destructive/90"
                     httpMethod="DELETE"
                     link="link"
                   />
@@ -95,7 +94,6 @@ const CarTableRow = ({ car }: { car: Car }) => {
                       itemId={car.id || ""}
                       actionEndpoint="archive-inventory"
                       actionName="Archive"
-                      actionColor="amber-600 hover:bg-amber-500"
                       httpMethod="PUT"
                       link="link"
                       getEndpoint="inventory"
