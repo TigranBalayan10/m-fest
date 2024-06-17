@@ -31,23 +31,23 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { useState, useEffect } from "react"
 import { useMediaQuery } from "@react-hookz/web";
+import DialogDashInventory from "@/components/CustomUi/DialogDashInventory"
+import { Car } from "@/lib/types"
 
-interface DataTableProps<TData, TValue> {
-    columns: ColumnDef<TData, TValue>[]
-    data: TData[]
+interface DataTableProps<TValue> {
+    columns: ColumnDef<Car, TValue>[];
+    data: Car[];
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<TValue>({
     columns,
     data,
-}: DataTableProps<TData, TValue>) {
-
-    const [sorting, setSorting] = useState<SortingState>([])
-    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-    const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
-    const [rowSelection, setRowSelection] = useState({})
-
-
+}: DataTableProps<TValue>) {
+    const [sorting, setSorting] = useState<SortingState>([]);
+    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+    const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+    const [rowSelection, setRowSelection] = useState({});
+    const [selectedCarIds, setSelectedCarIds] = useState<(string | undefined)[]>([]);
 
     const table = useReactTable({
         data,
@@ -66,14 +66,19 @@ export function DataTable<TData, TValue>({
             columnVisibility,
             rowSelection,
         },
-    })
+    });
+
+    const resetRowSelection = () => {
+        setRowSelection({});
+        setSelectedCarIds([]);
+    };
 
     const isSmallScreen = useMediaQuery("(max-width: 640px)")
 
     useEffect(() => {
         table.getAllColumns().forEach((column) => {
             if (isSmallScreen) {
-                if (["image", "make", "actions"].includes(column.id)) {
+                if (["image", "make", "actions", "select"].includes(column.id)) {
                     column.toggleVisibility(true);
                 } else {
                     column.toggleVisibility(false);
@@ -84,17 +89,30 @@ export function DataTable<TData, TValue>({
         });
     }, [isSmallScreen, table]);
 
+    console.log('Data:', data); // Log the data
+
+    useEffect(() => {
+        const ids = Object.entries(rowSelection)
+            .filter(([key, value]) => value)
+            .map(([key]) => data[parseInt(key)]?.id);
+        setSelectedCarIds(ids || []);
+    }, [rowSelection, data]);
+
     return (
         <div>
             <div className="flex items-center py-4">
-                <Input
-                    placeholder="Filter Makes..."
-                    value={(table.getColumn("make")?.getFilterValue() as string) ?? ""}
-                    onChange={(event) =>
-                        table.getColumn("make")?.setFilterValue(event.target.value)
-                    }
-                    className="max-w-sm"
-                />
+                <div className="flex gap-1 items-center mr-1">
+                    <Input
+                        placeholder="Filter Makes..."
+                        value={(table.getColumn("make")?.getFilterValue() as string) ?? ""}
+                        onChange={(event) =>
+                            table.getColumn("make")?.setFilterValue(event.target.value)
+                        }
+                        className="max-w-sm"
+                    />
+                    <DialogDashInventory action="Delete" itemId={selectedCarIds}/>
+                    <DialogDashInventory action="Archive" itemId={selectedCarIds}/>
+                </div>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline" className="ml-auto">

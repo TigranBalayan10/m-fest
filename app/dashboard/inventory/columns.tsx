@@ -137,55 +137,71 @@ export const columns: ColumnDef<Car>[] = [
         accessorKey: "actions",
         header: () => <div className="text-right">Action</div>,
         cell: ({ row }) => {
-            const car = row.original
-            const router = useRouter()
+            const car = row.original;
+            const router = useRouter();
+            const isRowSelected = row.getIsSelected();
+
             return (
                 <div className="text-right">
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" className="h-8 w-8 p-0">
-                                <span className="sr-only">Open menu</span>
-                                <MoreHorizontal className="h-4 w-4" />
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                            <DropdownMenuGroup>
-                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                <DropdownMenuSeparator />
-                                <ul className="py-1 flex flex-col">
-                                    <li>
-                                        <AlertDelete title={car.make + " " + car.model} itemId={car.id || ""} actionEndpoint="delete-inventory"
-                                            actionName="Delete"
-                                            httpMethod="DELETE"
-                                            link="link"
-                                        />
-                                    </li>
-                                    <li>
-                                        <Button variant="link" className="text-primary p-2" onClick={() => router.push(`/dashboard/edit-inventory/${car.id}`)}>
-                                            Edit
-                                        </Button>
-                                    </li>
-                                    <li>
-                                        <Button variant="link" className="text-primary p-2" onClick={() => router.push(`/dashboard/inventory/${car.id}`)}>
-                                            Details
-                                        </Button>
-                                    </li>
-                                    <li>
-                                        <AlertDelete title={car.make + " " + car.model}
-                                            itemId={car.id || ""}
-                                            actionEndpoint="archive-inventory"
-                                            actionName="Archive"
-                                            httpMethod="PUT"
-                                            link="link"
-                                            getEndpoint="inventory"
-                                        />
-                                    </li>
-                                </ul>
-                            </DropdownMenuGroup>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                    {!isRowSelected ? (
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" className="h-8 w-8 p-0">
+                                    <span className="sr-only">Open menu</span>
+                                    <MoreHorizontal className="h-4 w-4" />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent>
+                                <DropdownMenuGroup>
+                                    <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                    <DropdownMenuSeparator />
+                                    <ul className="py-1 flex flex-col">
+                                        <li>
+                                            <AlertDelete
+                                                title={car.make + " " + car.model}
+                                                itemId={car.id || ""}
+                                                actionEndpoint="delete-inventory"
+                                                actionName="Delete"
+                                                httpMethod="DELETE"
+                                                link="link"
+                                            />
+                                        </li>
+                                        <li>
+                                            <Button
+                                                variant="link"
+                                                className="text-primary p-2"
+                                                onClick={() => router.push(`/dashboard/edit-inventory/${car.id}`)}
+                                            >
+                                                Edit
+                                            </Button>
+                                        </li>
+                                        <li>
+                                            <Button
+                                                variant="link"
+                                                className="text-primary p-2"
+                                                onClick={() => router.push(`/dashboard/inventory/${car.id}`)}
+                                            >
+                                                Details
+                                            </Button>
+                                        </li>
+                                        <li>
+                                            <AlertDelete
+                                                title={car.make + " " + car.model}
+                                                itemId={car.id || ""}
+                                                actionEndpoint="archive-inventory"
+                                                actionName="Archive"
+                                                httpMethod="PUT"
+                                                link="link"
+                                                getEndpoint="inventory"
+                                            />
+                                        </li>
+                                    </ul>
+                                </DropdownMenuGroup>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    ) : null}
                 </div>
-            )
-        }
-    }
+            );
+        },
+    },
 ]

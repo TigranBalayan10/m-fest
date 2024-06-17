@@ -18,18 +18,9 @@ interface DataTableProps {
   isArchive?: boolean;
 }
 
-
-async function fetcher(url: string) {
-  const response = await fetch(url);
-  const data = await response.json();
-  return data.carData || data.archivedInventory;
-}
-
-
-
 const DataTable: React.FC<DataTableProps> = ({ endpoint }) => {
-  const { data: inventoryData, error, isLoading } = useSWR(endpoint, fetcher);
-  console.log(inventoryData);
+  const { data, error, isLoading } = useSWR(endpoint,);
+  const inventoryData = data?.archivedInventory || data?.carData;
 
   if (isLoading) {
     return <DataTableSkeleton />;
