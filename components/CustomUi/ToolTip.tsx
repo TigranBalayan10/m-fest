@@ -30,8 +30,6 @@ const ToolTip: React.FC<ToolTipProps> = ({ children, tooltipText, itemId, action
                             actionEndpoint={actionEndpoint}
                             httpMethod={httpMethod}
                             actionName="Delete"
-                            actionColor="bg-red-500 hover:bg-red-500/90"
-                            getEndpoint={getEndpoint || ""}
                        />
                     </Button>
                 </TooltipTrigger>

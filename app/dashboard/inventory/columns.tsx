@@ -5,21 +5,10 @@ import { Car } from "@/lib/types"
 import { formatDate } from "@/lib/FormatDate"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { CldImage } from "next-cloudinary"
-import { MoreHorizontal, ArrowUpDown } from "lucide-react"
+import { ArrowUpDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuGroup,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import { Checkbox } from "@/components/ui/checkbox"
-import Link from "next/link"
-import AlertDelete from "@/components/CustomUi/AlertDelete";
-import { useRouter } from "next/navigation"
+import ActionsCell from "@/components/CustomUi/ActionCell"
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -138,69 +127,10 @@ export const columns: ColumnDef<Car>[] = [
         header: () => <div className="text-right">Action</div>,
         cell: ({ row }) => {
             const car = row.original;
-            const router = useRouter();
             const isRowSelected = row.getIsSelected();
 
             return (
-                <div className="text-right">
-                    {!isRowSelected ? (
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" className="h-8 w-8 p-0">
-                                    <span className="sr-only">Open menu</span>
-                                    <MoreHorizontal className="h-4 w-4" />
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent>
-                                <DropdownMenuGroup>
-                                    <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                    <DropdownMenuSeparator />
-                                    <ul className="py-1 flex flex-col">
-                                        <li>
-                                            <AlertDelete
-                                                title={car.make + " " + car.model}
-                                                itemId={car.id || ""}
-                                                actionEndpoint="delete-inventory"
-                                                actionName="Delete"
-                                                httpMethod="DELETE"
-                                                link="link"
-                                            />
-                                        </li>
-                                        <li>
-                                            <Button
-                                                variant="link"
-                                                className="text-primary p-2"
-                                                onClick={() => router.push(`/dashboard/edit-inventory/${car.id}`)}
-                                            >
-                                                Edit
-                                            </Button>
-                                        </li>
-                                        <li>
-                                            <Button
-                                                variant="link"
-                                                className="text-primary p-2"
-                                                onClick={() => router.push(`/dashboard/inventory/${car.id}`)}
-                                            >
-                                                Details
-                                            </Button>
-                                        </li>
-                                        <li>
-                                            <AlertDelete
-                                                title={car.make + " " + car.model}
-                                                itemId={car.id || ""}
-                                                actionEndpoint="archive-inventory"
-                                                actionName="Archive"
-                                                httpMethod="PUT"
-                                                link="link"
-                                                getEndpoint="inventory"
-                                            />
-                                        </li>
-                                    </ul>
-                                </DropdownMenuGroup>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    ) : null}
-                </div>
+                <ActionsCell car={car} isRowSelected={isRowSelected} />
             );
         },
     },
