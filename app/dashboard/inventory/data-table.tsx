@@ -68,11 +68,6 @@ export function DataTable<TValue>({
         },
     });
 
-    const resetRowSelection = () => {
-        setRowSelection({});
-        setSelectedCarIds([]);
-    };
-
     const isSmallScreen = useMediaQuery("(max-width: 640px)")
 
     useEffect(() => {
@@ -88,8 +83,6 @@ export function DataTable<TValue>({
             }
         });
     }, [isSmallScreen, table]);
-
-    console.log('Data:', data); // Log the data
 
     useEffect(() => {
         const ids = Object.entries(rowSelection)
@@ -110,8 +103,8 @@ export function DataTable<TValue>({
                         }
                         className="max-w-sm"
                     />
-                    <DialogDashInventory action="Delete" itemId={selectedCarIds}/>
-                    <DialogDashInventory action="Archive" itemId={selectedCarIds}/>
+                    <DialogDashInventory action="Delete" itemId={selectedCarIds} resetCheckbox={() => setRowSelection({})}/>
+                    <DialogDashInventory action="Archive" itemId={selectedCarIds} resetCheckbox={() => setRowSelection({})}/>
                 </div>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>

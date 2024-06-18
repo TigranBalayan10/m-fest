@@ -18,9 +18,10 @@ import { FaSpinner } from "react-icons/fa6";
 interface DialogDashInventoryProps {
     action: "Delete" | "Archive";
     itemId: (string | undefined)[]
+    resetCheckbox: () => void;
 }
 
-const DialogDashInventory = ({ action, itemId }: DialogDashInventoryProps) => {
+const DialogDashInventory = ({ action, itemId, resetCheckbox }: DialogDashInventoryProps) => {
     const [isLoading, setIsLoading] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const { toast } = useToast();
@@ -44,6 +45,7 @@ const DialogDashInventory = ({ action, itemId }: DialogDashInventoryProps) => {
                     description: "Car(s) deleted successfully.",
                 });
                 setIsOpen(false);
+                resetCheckbox();
             }
         } catch (error) {
             toast({
@@ -74,6 +76,7 @@ const DialogDashInventory = ({ action, itemId }: DialogDashInventoryProps) => {
                     description: "Car(s) archived successfully.",
                 });
                 setIsOpen(false);
+                resetCheckbox();
             }
         } catch (error) {
             toast({
