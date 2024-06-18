@@ -8,6 +8,9 @@ export async function GET(request: Request) {
       orderBy: {
         name: "asc",
       },
+      include: {
+        message: true
+      },
     });
 
     const now = new Date();
