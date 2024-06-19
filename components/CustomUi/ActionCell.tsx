@@ -51,41 +51,65 @@ const ActionsCell = <TData extends { id?: string, make?: string, model?: string,
                                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
                                     <DropdownMenuSeparator />
                                     <ul className="py-1 flex flex-col">
-                                        <li>
-                                            <AlertDelete
-                                                title={data.make + " " + data.model}
-                                                itemId={data.id || ""}
-                                                actionEndpoint="delete-inventory"
-                                                actionName="Delete"
-                                                httpMethod="DELETE"
-                                                link="link"
-                                            />
-                                        </li>
-                                        <li>
-                                            <Link href={`/dashboard/edit-inventory/${data.id}`}>
-                                                <Button variant="link" className="text-primary p-2">
-                                                    Edit
-                                                </Button>
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link href={`/dashboard/inventory/${data.id}`}>
-                                                <Button variant="link" className="text-primary p-2">
-                                                    Details
-                                                </Button>
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <AlertDelete
-                                                title={data.make + " " + data.model}
-                                                itemId={data.id || ""}
-                                                actionEndpoint="archive-inventory"
-                                                actionName="Archive"
-                                                httpMethod="PUT"
-                                                link="link"
-                                                getEndpoint="inventory"
-                                            />
-                                        </li>
+                                        {pathname === "/dashboard/archive" ? (
+                                            <>
+                                                <li>
+                                                    <AlertDelete
+                                                        title={data.make + " " + data.model}
+                                                        itemId={data.id || ""}
+                                                        actionEndpoint="delete-inventory"
+                                                        actionName="Delete"
+                                                        httpMethod="DELETE"
+                                                        link="link"
+                                                    />
+                                                </li>
+                                                <li>
+                                                    <Link href={`/dashboard/inventory/${data.id}`}>
+                                                        <Button variant="link" className="text-primary p-2">
+                                                            Details
+                                                        </Button>
+                                                    </Link>
+                                                </li>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <li>
+                                                    <AlertDelete
+                                                        title={data.make + " " + data.model}
+                                                        itemId={data.id || ""}
+                                                        actionEndpoint="delete-inventory"
+                                                        actionName="Delete"
+                                                        httpMethod="DELETE"
+                                                        link="link"
+                                                    />
+                                                </li>
+                                                <li>
+                                                    <Link href={`/dashboard/edit-inventory/${data.id}`}>
+                                                        <Button variant="link" className="text-primary p-2">
+                                                            Edit
+                                                        </Button>
+                                                    </Link>
+                                                </li>
+                                                <li>
+                                                    <Link href={`/dashboard/inventory/${data.id}`}>
+                                                        <Button variant="link" className="text-primary p-2">
+                                                            Details
+                                                        </Button>
+                                                    </Link>
+                                                </li>
+                                                <li>
+                                                    <AlertDelete
+                                                        title={data.make + " " + data.model}
+                                                        itemId={data.id || ""}
+                                                        actionEndpoint="archive-inventory"
+                                                        actionName="Archive"
+                                                        httpMethod="PUT"
+                                                        link="link"
+                                                        getEndpoint="inventory"
+                                                    />
+                                                </li>
+                                            </>
+                                        )}
                                     </ul>
                                 </DropdownMenuGroup>
                             </DropdownMenuContent>

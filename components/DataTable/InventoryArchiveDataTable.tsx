@@ -6,18 +6,18 @@ import { columns } from "@/components/DataTable/columns";
 import useSWR from "swr";
 import DataTableSkeleton from "@/components/DashboardForm/DataTableSkeleton";
 
-const InventoryDataTable = () => {
-  const { data, error, isLoading } = useSWR("/api/inventory");
-  const inventoryData = data?.carData;
+const InventoryArchiveDataTable = () => {
+  const { data, error, isLoading } = useSWR("/api/archive");
+  const inventoryArchiveData = data?.archivedInventory;
 
   if (error) {
-    return <div>Error loading inventory data: {error}</div>;
+    return <div>Error loading archive data: {error}</div>;
   }
 
   if (isLoading) {
     return (
       <div className="mt-6">
-        <CardTitle className="mb-4 text-center">Inventory</CardTitle>
+        <CardTitle className="mb-4 text-center">Inventory Archive</CardTitle>
         <DataTableSkeleton />
       </div>
     );
@@ -26,19 +26,18 @@ const InventoryDataTable = () => {
 
   return (
     <div className="mt-6">
-      <CardTitle className="mb-4 text-center">Inventory</CardTitle>
+      <CardTitle className="mb-4 text-center">Inventory Archive</CardTitle>
       <DataTable
             columns={columns}
-            data={inventoryData}
+            data={inventoryArchiveData}
             smallScreenColumnIds={["make", "price", "actions"]}
             filterColumn="make"
             filterPlaceholder="Filter by make..."
             deleteEndpoint="/api/delete-inventory-bulk"
-            archiveEndpoint="/api/archive-inventory-bulk"
-            mutateEndpoint="/api/inventory"
+            mutateEndpoint="/api/archive"
         />
     </div>
   );
 };
 
-export default InventoryDataTable;
+export default InventoryArchiveDataTable;
