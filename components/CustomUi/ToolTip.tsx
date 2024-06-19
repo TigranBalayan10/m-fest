@@ -11,7 +11,7 @@ import React from "react";
 interface ToolTipProps {
     children?: React.ReactNode;
     tooltipText: string;
-    itemId: string;
+    itemId?: string;
     actionEndpoint: string;
     httpMethod: string;
     title: string;

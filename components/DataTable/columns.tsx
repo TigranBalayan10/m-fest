@@ -126,11 +126,11 @@ export const columns: ColumnDef<Car>[] = [
         accessorKey: "actions",
         header: () => <div className="text-right">Action</div>,
         cell: ({ row }) => {
-            const car = row.original;
+            const data = row.original;
             const isRowSelected = row.getIsSelected();
 
             return (
-                <ActionsCell car={car} isRowSelected={isRowSelected} />
+                <ActionsCell data={data} isRowSelected={isRowSelected} />
             );
         },
     },

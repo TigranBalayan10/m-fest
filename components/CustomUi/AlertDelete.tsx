@@ -61,6 +61,7 @@ export default function AlertAction({ title, itemId, actionEndpoint, actionName,
               title: "Success",
               description: `${title} deleted successfully.`,
             });
+            setIsOpen(false);
           } else if (pathname === "/dashboard/customers") {
             await mutate("/api/get-customers");
             toast({
@@ -68,6 +69,7 @@ export default function AlertAction({ title, itemId, actionEndpoint, actionName,
               title: "Success",
               description: "Customer deleted successfully.",
             });
+            setIsOpen(false);
           }
         } else if (httpMethod === "PUT" && pathname === "/dashboard/inventory" || pathname === "/dashboard") {
           await mutate(`/api/${getEndpoint}`);

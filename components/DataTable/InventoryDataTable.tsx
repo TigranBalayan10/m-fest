@@ -1,7 +1,7 @@
 "use client";
 
 import { CardTitle } from "@/components/ui/card";
-import { DataTable } from "@/components/DataTable/data-table";
+import { DataTable } from "@/components/ui/data-table";
 import { columns } from "@/components/DataTable/columns";
 import useSWR from "swr";
 import DataTableSkeleton from "@/components/DashboardForm/DataTableSkeleton";
@@ -27,7 +27,16 @@ const InventoryDataTable = () => {
   return (
     <div className="mt-6">
       <CardTitle className="mb-4 text-center">Inventory</CardTitle>
-      <DataTable columns={columns} data={inventoryData} />
+      <DataTable
+            columns={columns}
+            data={inventoryData}
+            smallScreenColumnIds={["make", "price", "actions"]}
+            filterColumn="make"
+            filterPlaceholder="Filter by name..."
+            deleteEndpoint="/api/delete-inventory-bulk"
+            archiveEndpoint="/api/archive-inventory-bulk"
+            mutateEndpoint="/api/inventory"
+        />
     </div>
   );
 };
