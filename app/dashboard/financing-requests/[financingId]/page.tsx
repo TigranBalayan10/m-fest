@@ -3,13 +3,10 @@
 import FinancingRequestCard from "@/components/DashboardFinancing/FinancingRequestCard"
 import { FaSpinner } from "react-icons/fa6";
 import useSWR from "swr";
-import { fetcher } from "@/lib/swrFetcher";
 
 const FinancingDetails = ({ params }: { params: { financingId: string } }) => {
     const { data, isLoading, error } = useSWR(
-        `/api/get-financing-requests/${params.financingId}`,
-        fetcher
-    );
+        `/api/get-financing-requests/${params.financingId}`);
 
     const financingRequest = data?.getFinancingRequest;
 

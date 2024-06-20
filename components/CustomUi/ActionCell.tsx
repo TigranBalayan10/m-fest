@@ -16,6 +16,8 @@ import ToolTip from "./ToolTip";
 interface ActionsCellProps<TData> {
     data: TData;
     isRowSelected: boolean;
+    detail?: string;
+    edit?: string;
 }
 
 
@@ -23,6 +25,8 @@ interface ActionsCellProps<TData> {
 const ActionsCell = <TData extends { id?: string, make?: string, model?: string, name?: string },>({
     data,
     isRowSelected,
+    detail,
+    edit,
 }: ActionsCellProps<TData>) => {
     const pathname = usePathname();
     return (
@@ -64,7 +68,7 @@ const ActionsCell = <TData extends { id?: string, make?: string, model?: string,
                                                     />
                                                 </li>
                                                 <li>
-                                                    <Link href={`/dashboard/inventory/${data.id}`}>
+                                                    <Link href={`/dashboard/${detail}/${data.id}`}>
                                                         <Button variant="link" className="text-primary p-2">
                                                             Details
                                                         </Button>
@@ -83,15 +87,16 @@ const ActionsCell = <TData extends { id?: string, make?: string, model?: string,
                                                         link="link"
                                                     />
                                                 </li>
-                                                <li>
-                                                    <Link href={`/dashboard/edit-inventory/${data.id}`}>
+                                                {edit && (<li>
+                                                    <Link href={`/dashboard/${edit}/${data.id}`}>
                                                         <Button variant="link" className="text-primary p-2">
                                                             Edit
                                                         </Button>
                                                     </Link>
                                                 </li>
+                                                )}
                                                 <li>
-                                                    <Link href={`/dashboard/inventory/${data.id}`}>
+                                                    <Link href={`/dashboard/${detail}/${data.id}`}>
                                                         <Button variant="link" className="text-primary p-2">
                                                             Details
                                                         </Button>

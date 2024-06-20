@@ -65,7 +65,7 @@ export const columns: ColumnDef<Car>[] = [
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Model
+                    Make
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             )
@@ -130,7 +130,7 @@ export const columns: ColumnDef<Car>[] = [
             const isRowSelected = row.getIsSelected();
 
             return (
-                <ActionsCell data={data} isRowSelected={isRowSelected} />
+                <ActionsCell data={data} isRowSelected={isRowSelected} detail="inventory" edit="edit-inventory" />
             );
         },
     },
