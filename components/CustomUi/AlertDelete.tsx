@@ -56,12 +56,20 @@ export default function AlertAction({ title, itemId, actionEndpoint, actionName,
             setIsOpen(false);
           } else if (pathname === "/dashboard/archive") {
             await mutate("/api/archive");
+            setIsOpen(false);
             toast({
               variant: "success",
               title: "Success",
               description: `${title} deleted successfully.`,
             });
+          } else if (pathname === "/dashboard/financing-requests") {
+            await mutate("/api/get-financing-requests");
             setIsOpen(false);
+            toast({
+              variant: "success",
+              title: "Success",
+              description: `${title} deleted successfully.`,
+            });
           } else if (pathname === "/dashboard/customers") {
             await mutate("/api/get-customers");
             toast({

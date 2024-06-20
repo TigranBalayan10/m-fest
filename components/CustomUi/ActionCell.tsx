@@ -22,7 +22,7 @@ interface ActionsCellProps<TData> {
 
 
 
-const ActionsCell = <TData extends { id?: string, make?: string, model?: string, name?: string },>({
+const ActionsCell = <TData extends { id?: string, make?: string, model?: string, name?: string, firstName?: string, lastName?: string}>({
     data,
     isRowSelected,
     detail,
@@ -55,13 +55,13 @@ const ActionsCell = <TData extends { id?: string, make?: string, model?: string,
                                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
                                     <DropdownMenuSeparator />
                                     <ul className="py-1 flex flex-col">
-                                        {pathname === "/dashboard/archive" ? (
+                                        {pathname === "/dashboard/archive" || pathname === "/dashboard/financing-requests" ? (
                                             <>
                                                 <li>
                                                     <AlertDelete
-                                                        title={data.make + " " + data.model}
+                                                        title={pathname === "/dashboard/financing-requests" ? data.firstName: data.make + " " + data.model}
                                                         itemId={data.id || ""}
-                                                        actionEndpoint="delete-inventory"
+                                                        actionEndpoint={pathname === "/dashboard/archive" ? "delete-inventory" : "delete-financing-request"}
                                                         actionName="Delete"
                                                         httpMethod="DELETE"
                                                         link="link"
@@ -87,14 +87,13 @@ const ActionsCell = <TData extends { id?: string, make?: string, model?: string,
                                                         link="link"
                                                     />
                                                 </li>
-                                                {edit && (<li>
+                                                <li>
                                                     <Link href={`/dashboard/${edit}/${data.id}`}>
                                                         <Button variant="link" className="text-primary p-2">
                                                             Edit
                                                         </Button>
                                                     </Link>
                                                 </li>
-                                                )}
                                                 <li>
                                                     <Link href={`/dashboard/${detail}/${data.id}`}>
                                                         <Button variant="link" className="text-primary p-2">

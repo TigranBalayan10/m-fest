@@ -46,58 +46,18 @@ export const columns: ColumnDef<FinancingDataTypes>[] = [
                 </div>
             )
         },
-        cell: ({ row }) => {
-            const firstName = row.original.personal.firstName;
-            return (
-                <div className="flex items-center gap-3">
-                    <div className="grid gap-0.5">
-                        <p className="font-medium hidden md:table-cell">{firstName}</p>
-                    </div>
-                </div>
-            )
-        },
     },
     {
         accessorKey: "middleName",
         header: "Middle Name",
-        cell: ({ row }) => {
-            const financingPersonal = row.original.personal
-            return (
-                <div className="flex items-center gap-3">
-                    <div className="grid gap-0.5">
-                        <p className="font-medium hidden md:table-cell">{financingPersonal.middleName}</p>
-                    </div>
-                </div>
-            )
-        }
     },
     {
         accessorKey: "lastName",
         header: "Last Name",
-        cell: ({ row }) => {
-            const financingPersonal = row.original.personal
-            return (
-                <div className="flex items-center gap-3">
-                    <div className="grid gap-0.5">
-                        <p className="font-medium hidden md:table-cell">{financingPersonal.lastName}</p>
-                    </div>
-                </div>
-            )
-        }
     },
     {
         accessorKey: "ssnItin",
         header: "SSN/ITIN",
-        cell: ({ row }) => {
-            const financingPersonal = row.original.personal
-            return (
-                <div className="flex items-center gap-3">
-                    <div className="grid gap-0.5">
-                        <p className="font-medium hidden md:table-cell">{financingPersonal.ssnItin}</p>
-                    </div>
-                </div>
-            )
-        }
     },
     {
         accessorKey: "phone",
@@ -150,7 +110,6 @@ export const columns: ColumnDef<FinancingDataTypes>[] = [
         cell: ({ row }) => {
             const financing = row.original;
             const isRowSelected = row.getIsSelected();
-
             return (
                 <ActionsCell data={financing} isRowSelected={isRowSelected} detail="financing-requests" />
             );

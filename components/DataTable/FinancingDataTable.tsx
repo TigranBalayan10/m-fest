@@ -16,6 +16,7 @@ const FinancingDataTable = () => {
         ...item,
         'phone': item.contact.phone,
         "firstName": item.personal.firstName,
+        "lastName": item.personal.lastName,
     }));
 
     if (error) {
@@ -38,11 +39,10 @@ const FinancingDataTable = () => {
             <DataTable
                 columns={columns}
                 data={flattenedData}
-                smallScreenColumnIds={["lastName", "phone", "actions"]}
+                smallScreenColumnIds={["firstName", "phone", "actions"]}
                 filterColumn="phone"
                 filterPlaceholder="Filter by phone..."
-                deleteEndpoint="/api/delete-inventory-bulk"
-                archiveEndpoint="/api/archive-inventory-bulk"
+                deleteEndpoint="/api/delete-financing-request-bulk"
                 mutateEndpoint="/api/get-financing-requests"
             />
         </div>
