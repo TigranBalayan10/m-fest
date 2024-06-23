@@ -106,12 +106,30 @@ export const columns: ColumnDef<Car>[] = [
     },
     {
         accessorKey: "price",
-        header: "Price",
+        header: ({ column }) => {
+            return (
+                <div className="text-left">
+                    <Button
+                        variant="ghost"
+                        className="p-0"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        Price
+                        <ArrowUpDown className="ml-2 h-4 w-4" />
+                    </Button>
+                </div>
+            )
+        },
         cell: ({ row }) => {
-            if (row.original.price) {
-                return <div className="">${row.original.price}</div>
-            }
-        }
+            return (
+                <div className="text-left">
+                    {new Intl.NumberFormat("en-US", {
+                        style: "currency",
+                        currency: "USD",
+                    }).format(row.original.price)}
+                </div>
+            )
+        },
     },
     {
         accessorKey: "createdAt",
