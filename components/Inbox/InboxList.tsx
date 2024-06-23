@@ -35,43 +35,65 @@ export default function InboxList() {
     })
 
     const { isSubmitting } = form.formState;
+    const messageIds = form.getValues().ids;
 
     const onSubmit = async (data: z.infer<typeof MarkedReadSchema>) => {
         try {
+            // Optimistically update the data before making the fetch request
+            mutate(
+                (prevData: Customer) => {
+                    if (Array.isArray(prevData?.message)) {
+                        return {
+                            ...prevData,
+                            message: prevData.message.map((message: { id: string; isNew: boolean }) =>
+                                data.ids.includes(message.id) ? { ...message, isNew: false } : message
+                            ),
+                        };
+                    }
+                    return prevData;
+                },
+                false
+            );
+
             const response = await fetch('/api/update-message', {
                 method: 'PUT',
                 body: JSON.stringify(data),
                 headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            console.log(response, "response")
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            console.log(response, 'response');
+
             if (response.ok) {
-                mutate('/api/get-all-messages');
+                // Revalidate the data after the successful fetch request
+                mutate();
                 form.reset();
                 toast({
-                    variant: "success",
-                    title: "Success",
-                    description: "Message marked as read successfully.",
+                    variant: 'success',
+                    title: 'Success',
+                    description: 'Messages marked as read successfully.',
                 });
             } else {
+                // Revert the optimistic update if the fetch request fails
                 mutate();
                 toast({
-                    variant: "destructive",
-                    title: "Error",
-                    description: "Failed to mark message as read.",
+                    variant: 'destructive',
+                    title: 'Error',
+                    description: 'Failed to mark messages as read.',
                 });
             }
         } catch (error) {
             console.error('Error:', error);
+            // Revert the optimistic update if an error occurs
             mutate();
             toast({
-                variant: "destructive",
-                title: "Error:",
-                description: "Failed to mark message as read.",
+                variant: 'destructive',
+                title: 'Error:',
+                description: 'Failed to mark messages as read.',
             });
         }
-    }
+    };
 
     const handleViewMessage = async (messageId: string, isNew: boolean) => {
         if (isNew === false) {
@@ -117,7 +139,6 @@ export default function InboxList() {
 
     const onClickDelete = async (event: React.MouseEvent) => {
         event.preventDefault()
-        const messageIds = form.getValues().ids;
         setIsDeleting(true);
         try {
             // Optimistic update for deleting messages
@@ -160,7 +181,6 @@ export default function InboxList() {
 
     const onClickArchive = async (event: React.MouseEvent) => {
         event.preventDefault()
-        const messageIds = form.getValues().ids;
         setIsArchiving(true);
         try {
             // Optimistic update for archiving a message
@@ -226,8 +246,8 @@ export default function InboxList() {
                 <form onSubmit={form.handleSubmit(onSubmit)}>
                     <div className="w-full max-w-3xl mx-auto py-6 px-4 md:px-6">
                         <div className="flex items-center justify-between mb-4">
-                            <div className="flex items-center space-x-4">
-                                <Button variant="outline">
+                            <div className="flex items-center space-x-1">
+                                <Button variant="outline" disabled={messageIds.length === 0}>
                                     {isSubmitting ? (
                                         <>
                                             <FaSpinner className="animate-spin inline-block mr-2" />
@@ -240,29 +260,25 @@ export default function InboxList() {
                                         </>
                                     )}
                                 </Button>
-                                <Button variant="destructive" onClick={onClickDelete}>
+                                <Button variant="destructive" size="icon" onClick={onClickDelete} disabled={messageIds.length === 0}>
                                     {isDeleting ? (
                                         <>
-                                            <FaSpinner className="animate-spin inline-block mr-2" />
-                                            Deleting...
+                                            <FaSpinner className="animate-spin inline-block" />
                                         </>
                                     ) : (
                                         <>
-                                            <FaRegTrashCan className="w-4 h-4 mr-1" />
-                                            Delete
+                                            <FaRegTrashCan className="w-4 h-4" />
                                         </>
                                     )}
                                 </Button>
-                                <Button variant="archive" onClick={onClickArchive}>
+                                <Button variant="archive" onClick={onClickArchive} size="icon" disabled={messageIds.length === 0}>
                                     {isArchiving ? (
                                         <>
-                                            <FaSpinner className="animate-spin inline-block mr-2" />
-                                            Archiving...
+                                            <FaSpinner className="animate-spin inline-block" />
                                         </>
                                     ) : (
                                         <>
-                                            <FaBoxArchive className="w-4 h-4 mr-1" />
-                                            Archive
+                                            <FaBoxArchive className="w-4 h-4" />
                                         </>
                                     )}
                                 </Button>
