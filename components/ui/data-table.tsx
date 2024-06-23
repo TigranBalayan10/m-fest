@@ -14,6 +14,16 @@ import {
 } from "@tanstack/react-table"
 
 import {
+    Pagination,
+    PaginationContent,
+    PaginationEllipsis,
+    PaginationItem,
+    PaginationLink,
+    PaginationNext,
+    PaginationPrevious,
+} from "@/components/ui/pagination"
+
+import {
     Table,
     TableBody,
     TableCell,
@@ -32,6 +42,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import DialogDash from "../CustomUi/DialogDashInventory"
+import { useMediaQuery } from "@react-hookz/web"
 
 interface DataTableProps<TData extends { id?: string }, TValue> {
     columns: ColumnDef<TData, TValue>[];
@@ -80,6 +91,8 @@ export function DataTable<TData extends { id?: string }, TValue>({
     });
 
     useSmallScreenColumnVisibility<TData>(table, smallScreenColumnIds);
+
+    const isSmallScreen = useMediaQuery("(max-width: 640px)");
 
     useEffect(() => {
         const ids = Object.entries(rowSelection)
@@ -193,23 +206,41 @@ export function DataTable<TData extends { id?: string }, TValue>({
                     </TableBody>
                 </Table>
             </div>
-            <div className="flex items-center justify-end space-x-2 py-4">
-                <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => table.previousPage()}
-                    disabled={!table.getCanPreviousPage()}
-                >
-                    Previous
-                </Button>
-                <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => table.nextPage()}
-                    disabled={!table.getCanNextPage()}
-                >
-                    Next
-                </Button>
+            <div>
+                {table.getPageCount() > 1 && (
+                    <Pagination className="mt-2">
+                        <PaginationContent>
+                            <PaginationItem>
+                                <PaginationPrevious
+                                    href="#"
+                                    onClick={() => table.previousPage()}
+                                    disabled={!table.getCanPreviousPage()}
+                                />
+                            </PaginationItem>
+                            {Array.from({ length: table.getPageCount() }, (_, index) => (
+                                <PaginationItem key={index}>
+                                    <PaginationLink
+                                        href="#"
+                                        isActive={index === table.getState().pagination.pageIndex}
+                                        onClick={() => table.setPageIndex(index)}
+                                    >
+                                        {index + 1}
+                                    </PaginationLink>
+                                </PaginationItem>
+                            ))}
+                            <PaginationItem>
+                                <PaginationNext
+                                    href="#"
+                                    onClick={() => table.nextPage()}
+                                    disabled={!table.getCanNextPage()}
+                                />
+                            </PaginationItem>
+                        </PaginationContent>
+                    </Pagination>
+                )}
+                <div className="text-sm text-center mt-2 text-gray-500">
+                    Showing {table.getRowModel().rows?.length} of {data.length} results.
+                </div>
             </div>
         </div>
     )
