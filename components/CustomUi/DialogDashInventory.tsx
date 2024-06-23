@@ -70,7 +70,7 @@ const DialogDash = ({
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger asChild>
-                <Button variant={action === "Delete" ? "destructive" : "archive"} size="sm">
+                <Button variant={action === "Delete" ? "destructive" : "archive"} size="sm" disabled={itemIds.length === 0}>
                     {action}
                 </Button>
             </DialogTrigger>
