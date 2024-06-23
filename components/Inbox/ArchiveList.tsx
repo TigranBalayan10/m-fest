@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { FaRegTrashCan, FaSpinner } from "react-icons/fa6";
+import { FaRegTrashCan, FaSpinner, FaBoxOpen } from "react-icons/fa6";
 import { RxDotFilled } from "react-icons/rx";
 import MessageFull from "./MessageFull";
 import { fetcher } from "@/lib/swrFetcher";
@@ -18,6 +18,7 @@ import { useToast } from "@/components/ui/use-toast";
 
 export default function ArchiveList() {
     const [isDeleting, setIsDeleting] = useState(false);
+    const [isUnarchive, setIsUnarchive] = useState(false);
     const { toast } = useToast();
 
     const { data, isLoading, error, mutate } = useSWR("/api/get-all-messages", fetcher);
@@ -27,10 +28,10 @@ export default function ArchiveList() {
             ids: [],
         },
     });
+    const messageIds = form.getValues().ids;
 
     const onClickDelete = async (event: React.MouseEvent) => {
         event.preventDefault();
-        const messageIds = form.getValues().ids;
         setIsDeleting(true);
         try {
             // Optimistic update for deleting a message
@@ -69,6 +70,46 @@ export default function ArchiveList() {
         setIsDeleting(false);
     };
 
+    const onClickUnarchive = async (event: React.MouseEvent) => {
+        event.preventDefault();
+        setIsUnarchive(true);
+        try {
+            // Optimistic update for deleting a message
+            messageIds.forEach((messageId: string) => {
+                mutate(getOptimisticUpdate(messageId, () => undefined), false);
+            });
+            const response = await fetch("/api/unarchive-message", {
+                method: "PUT",
+                body: JSON.stringify(form.getValues()),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            if (response.ok) {
+                mutate();
+                form.reset();
+                toast({
+                    variant: "success",
+                    title: "Success",
+                    description: "Message restored successfully. Check the inbox for the message",
+                });
+            } else {
+                toast({
+                    variant: "destructive",
+                    title: "Error",
+                    description: "Failed to restore message",
+                });
+            }
+        } catch (error) {
+            toast({
+                variant: "destructive",
+                title: "Error",
+                description: "Failed to restore message",
+            });
+        }
+        setIsUnarchive(false);
+    };
+
     const allCustomersMessages: Customer[] = data?.messageData;
 
     if (isLoading) {
@@ -91,17 +132,26 @@ export default function ArchiveList() {
                 <form>
                     <div className="w-full max-w-3xl mx-auto py-6 px-4 md:px-6">
                         <div className="flex items-center justify-between mb-4">
-                            <div className="flex items-center space-x-4">
-                                <Button variant="destructive" onClick={onClickDelete}>
+                            <div className="flex items-center space-x-1">
+                                <Button variant="destructive" onClick={onClickDelete} disabled={messageIds.length === 0}>
                                     {isDeleting ? (
                                         <>
-                                            <FaSpinner className="animate-spin inline-block mr-2" />
-                                            Deleting...
+                                            <FaSpinner className="animate-spin inline-block" />
                                         </>
                                     ) : (
                                         <>
-                                            <FaRegTrashCan className="w-4 h-4 mr-1" />
-                                            Delete
+                                            <FaRegTrashCan className="w-4 h-4 " />
+                                        </>
+                                    )}
+                                </Button>
+                                <Button variant="unArchive" onClick={onClickUnarchive} disabled={messageIds.length === 0}>
+                                    {isUnarchive ? (
+                                        <>
+                                            <FaSpinner className="animate-spin inline-block" />
+                                        </>
+                                    ) : (
+                                        <>
+                                            <FaBoxOpen className="w-4 h-4 " />
                                         </>
                                     )}
                                 </Button>

@@ -4,8 +4,7 @@ import { Button } from "@/components/ui/button"
 import { FaCheck, FaRegTrashCan, FaBoxArchive, FaSpinner } from "react-icons/fa6";
 import { RxDotFilled } from "react-icons/rx";
 import MessageFull from "./MessageFull";
-import { fetcher } from "@/lib/swrFetcher";
-import { Customer } from "@/lib/Types/ContactUsTypes";
+import { Customer, Message } from "@/lib/Types/ContactUsTypes";
 import { formatDate } from "@/lib/FormatDate";
 import useSWR from "swr";
 import InboxSkeleton from "./InboxSkeleton";
@@ -25,7 +24,10 @@ export default function InboxList() {
     const [isArchiving, setIsArchiving] = useState(false);
     const { toast } = useToast();
 
-    const { data, isLoading, error, mutate } = useSWR('/api/get-all-messages', fetcher);
+    const { data, isLoading, error, mutate } = useSWR('/api/get-all-messages');
+    const messageData = data?.messageData;
+    const message = messageData?.map((customer: Customer) => customer.message);
+
 
     const form = useForm<z.infer<typeof MarkedReadSchema>>({
         resolver: zodResolver(MarkedReadSchema),
@@ -247,7 +249,7 @@ export default function InboxList() {
                     <div className="w-full max-w-3xl mx-auto py-6 px-4 md:px-6">
                         <div className="flex items-center justify-between mb-4">
                             <div className="flex items-center space-x-1">
-                                <Button variant="outline" disabled={messageIds.length === 0}>
+                                <Button variant="outline" disabled={messageIds.length === 0 || !message?.some((msg) => messageIds.includes(msg?.id) && msg?.isNew)}>
                                     {isSubmitting ? (
                                         <>
                                             <FaSpinner className="animate-spin inline-block mr-2" />
