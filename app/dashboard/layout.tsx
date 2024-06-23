@@ -5,6 +5,7 @@ import DashboardNav from "@/components/DashboardNavigation/DashboardNav";
 import DashboardSideBar from "@/components/DashboardNavigation/DashboardSideBar";
 import { Toaster } from "@/components/ui/toaster";
 import Providers from "./Providers";
+import { Header } from "@/components/DashboardHeader/Header";
 
 
 const dm_sans = DM_Sans({
@@ -24,6 +25,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </div>
         <div className="flex-1 bg-gray-50 p-4 md:p-6">
           <Providers>
+            <Header />
             {children}
           </Providers>
           <Toaster />
