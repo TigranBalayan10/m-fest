@@ -35,6 +35,7 @@ const DialogDash = ({
     const [isOpen, setIsOpen] = useState(false);
     const { toast } = useToast();
     const { mutate } = useSWRConfig();
+    const count = itemIds.length;
 
     const handleAction = async () => {
         setIsLoading(true);
@@ -51,7 +52,7 @@ const DialogDash = ({
                 toast({
                     variant: action === "Delete" ? "success" : "archived",
                     title: "Success",
-                    description: successMessage,
+                    description: `${count} ${successMessage}`,
                 });
                 setIsOpen(false);
                 resetSelection();
@@ -76,14 +77,19 @@ const DialogDash = ({
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Are you absolutely sure you want to {action}?</DialogTitle>
+                    <DialogTitle>{`Are you sure you want to ${action} ${count} item(s)?`}</DialogTitle>
                     <DialogDescription>
                         {action === "Delete"
-                            ? "This action cannot be undone. This will permanently delete the selected items."
+                            ? `This action cannot be undone. This will permanently delete the selected items.`
                             : "This will archive the selected items."}
                     </DialogDescription>
                 </DialogHeader>
                 <DialogFooter>
+                    <DialogClose className="sm:mt-0 mt-2" asChild>
+                        <Button type="button" variant="secondary">
+                            Close
+                        </Button>
+                    </DialogClose>
                     <Button
                         type="button"
                         variant={action === "Delete" ? "destructive" : "archive"}
@@ -93,11 +99,6 @@ const DialogDash = ({
                         {isLoading ? <FaSpinner className="animate-spin mr-2" /> : null}
                         {action}
                     </Button>
-                    <DialogClose asChild>
-                        <Button type="button" variant="secondary">
-                            Close
-                        </Button>
-                    </DialogClose>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

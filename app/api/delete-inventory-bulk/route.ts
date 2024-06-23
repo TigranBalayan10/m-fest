@@ -34,7 +34,7 @@ export async function DELETE(request: any) {
       },
     });
     console.log(deleteInventory, "Deleted Inventory");
-    return NextResponse.json(deleteInventory);
+    return NextResponse.json({ count: deleteInventory.count });
   } catch (error) {
     // If an error occurred, send a response with the error message
     if (error instanceof Error) {
