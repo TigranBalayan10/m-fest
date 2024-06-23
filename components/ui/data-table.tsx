@@ -89,16 +89,8 @@ export function DataTable<TData extends { id?: string }, TValue>({
     }, [rowSelection, data]);
     return (
         <div>
-            <div className="flex items-center py-4">
-                <div className="flex gap-1 items-center mr-1">
-                    <Input
-                        placeholder={filterPlaceholder}
-                        value={(table.getColumn(filterColumn)?.getFilterValue() as string) ?? ""}
-                        onChange={(event) =>
-                            table.getColumn(filterColumn)?.setFilterValue(event.target.value)
-                        }
-                        className="max-w-sm"
-                    />
+            <div className="flex justify-between space-x-1 items-center py-4">
+                <div className="flex space-x-1 items-center mr-1">
                     <DialogDash
                         action="Delete"
                         itemIds={selectedRowIds.filter((id): id is string => id !== undefined)}
@@ -117,6 +109,16 @@ export function DataTable<TData extends { id?: string }, TValue>({
                             successMessage="Item(s) archived successfully."
                         />
                     )}
+                </div>
+                <div>
+                    <Input
+                        placeholder={filterPlaceholder}
+                        value={(table.getColumn(filterColumn)?.getFilterValue() as string) ?? ""}
+                        onChange={(event) =>
+                            table.getColumn(filterColumn)?.setFilterValue(event.target.value)
+                        }
+                        className="max-w-sm"
+                    />
                 </div>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
