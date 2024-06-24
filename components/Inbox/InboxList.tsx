@@ -249,7 +249,7 @@ export default function InboxList() {
                     <div className="w-full max-w-3xl mx-auto py-6 px-4 md:px-6">
                         <div className="flex items-center justify-between mb-4">
                             <div className="flex items-center space-x-1">
-                                <Button variant="outline" disabled={messageIds.length === 0 || !message?.some((msg) => messageIds.includes(msg?.id) && msg?.isNew)}>
+                                <Button variant="outline" disabled={messageIds.length === 0 || !message?.some((msg: Message) => messageIds.includes(msg?.id) && msg?.isNew)}>
                                     {isSubmitting ? (
                                         <>
                                             <FaSpinner className="animate-spin inline-block mr-2" />

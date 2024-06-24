@@ -24,8 +24,8 @@ async function main() {
   );
 
   // Create mock car listings
-  const carListings = Array.from({ length: 10 }, () => {
-    const imageCount = faker.number.int({ min: 5, max: 8 });
+  const carListings = Array.from({ length: 15 }, () => {
+    const imageCount = faker.number.int({ min: 5, max: 6 });
     const imageUrls = getUniquePublicIds(availablePublicIds, imageCount);
 
     return {
@@ -35,7 +35,7 @@ async function main() {
       price: faker.number.int({ min: 10000, max: 100000 }),
       milage: faker.number.int({ min: 0, max: 200000 }),
       vin: faker.vehicle.vin({ min: 17, max: 17 }),
-      drivetrain: faker.helpers.arrayElement(["FWD", "RWD", "AWD", "4WD"]),
+      drivetrain: faker.helpers.arrayElement(["front wheel drive", "rear wheel drive", "all wheel drive", "four wheel drive"]),
       transmission: faker.helpers.arrayElement(["Automatic", "Manual"]),
       engine: generateEngineInfo(),
       mpg: `${faker.number.int({ min: 15, max: 40 })}/${faker.number.int({
